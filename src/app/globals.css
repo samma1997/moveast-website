@@ -25,8 +25,16 @@
   --spacing-section-lg: 10rem;
 }
 
-html {
-  scroll-behavior: smooth;
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
 }
 
 body {
@@ -79,4 +87,29 @@ body {
   height: 3px;
   background: var(--color-brand);
   border: none;
+}
+
+/* SplitType word/char wrappers */
+.word {
+  display: inline-block;
+  overflow: hidden;
+}
+
+.char {
+  display: inline-block;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 0;
+  display: none;
+}
+
+/* Pin spacer fix */
+.pin-spacer {
+  pointer-events: none !important;
+}
+
+.pin-spacer > * {
+  pointer-events: auto !important;
 }

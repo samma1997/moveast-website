@@ -1,21 +1,21 @@
-import { HeroSection } from "@/components/home/HeroSection";
-import { StatsSection } from "@/components/home/StatsSection";
-import { ServicesSection } from "@/components/home/ServicesSection";
-import { SectorsSection } from "@/components/home/SectorsSection";
-import { CaseStudySection } from "@/components/home/CaseStudySection";
-import { TrustSection } from "@/components/home/TrustSection";
-import { CTASection } from "@/components/home/CTASection";
+import { Hero } from "@/components/home/Hero";
+import { StatsBar } from "@/components/home/StatsBar";
+import { Services } from "@/components/home/Services";
+import { HorizontalScroll } from "@/components/home/HorizontalScroll";
+import { CaseStudy } from "@/components/home/CaseStudy";
+import { Values } from "@/components/home/Values";
+import { CTA } from "@/components/home/CTA";
 
 export default function HomePage() {
   return (
     <>
-      <HeroSection />
-      <StatsSection />
-      <ServicesSection />
-      <SectorsSection />
-      <CaseStudySection />
-      <TrustSection />
-      <CTASection />
+      <Hero />
+      <StatsBar />
+      <Services />
+      <HorizontalScroll />
+      <CaseStudy />
+      <Values />
+      <CTA />
     </>
   );
 }
