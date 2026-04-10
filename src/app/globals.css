@@ -1,26 +1,62 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-brand-orange: #D4782F;
+  --color-brand-orange-light: #E8944D;
+  --color-brand-orange-dark: #B8631F;
+  --color-brand-black: #1A1A1A;
+  --color-brand-dark: #2D2D2D;
+  --color-brand-gray: #6B7280;
+  --color-brand-light: #F5F5F5;
+  --color-brand-white: #FFFFFF;
+  --color-brand-border: #E5E7EB;
+
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-playfair);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-brand-white);
+  color: var(--color-brand-black);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--color-brand-orange);
+  color: white;
+}
+
+/* Section label style from brochure */
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-brand-orange);
+}
+
+/* Diagonal accent bar from brochure */
+.diagonal-accent {
+  position: relative;
+}
+.diagonal-accent::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 4px;
+  height: 60px;
+  background: var(--color-brand-orange);
+  transform: skewX(-15deg);
+}
+
+/* Counter animation helper */
+.counter-value {
+  font-variant-numeric: tabular-nums;
 }
