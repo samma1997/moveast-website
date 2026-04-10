@@ -13,16 +13,12 @@ export function CTASection() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(".cta-content", {
+      gsap.from(".cta-inner", {
         y: 50,
         opacity: 0,
-        duration: 0.8,
+        duration: 1,
         ease: "power3.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 80%",
-          toggleActions: "play none none none",
-        },
+        scrollTrigger: { trigger: sectionRef.current, start: "top 75%" },
       });
     }, sectionRef);
 
@@ -30,42 +26,32 @@ export function CTASection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="bg-white py-20 lg:py-28">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="cta-content relative overflow-hidden rounded-3xl bg-brand-black px-8 py-16 lg:px-16 lg:py-24 text-center">
-          {/* Decorative elements */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-brand-orange/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-48 h-48 bg-brand-orange/5 rounded-full blur-2xl" />
-
-          <div className="relative z-10">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight">
-              Ready to Source from China{" "}
-              <span className="text-brand-orange">with Confidence?</span>
-            </h2>
-            <p className="mt-6 text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed">
-              Whether you need a single component or full project procurement, our team in
-              Shenzhen is ready to structure a solution tailored to your requirements. No
-              middlemen. No guesswork. Just verified sourcing backed by on-the-ground expertise.
-            </p>
-            <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/contact"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand-orange text-white font-semibold rounded-full hover:bg-brand-orange-dark transition-colors group"
-              >
-                Contact Our Team
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <Link
-                href="/services/sourcing"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-white/20 text-white font-medium rounded-full hover:bg-white/10 transition-colors"
-              >
-                Explore Our Services
-              </Link>
-            </div>
+    <section ref={sectionRef} className="bg-white py-[var(--spacing-section)] lg:py-[var(--spacing-section-lg)]">
+      <div className="max-w-[1400px] mx-auto px-8 lg:px-12">
+        <div className="cta-inner text-center max-w-3xl mx-auto">
+          <span className="label">Get Started</span>
+          <h2 className="mt-5 heading-display text-[clamp(2rem,4.5vw,3.75rem)] text-dark">
+            Ready to source from China<br className="hidden md:block" /> with confidence?
+          </h2>
+          <p className="mt-6 text-[1.0625rem] text-text-muted leading-relaxed max-w-xl mx-auto">
+            Our team in Shenzhen is ready to structure a solution tailored to your
+            requirements. No middlemen. No guesswork. Just verified sourcing.
+          </p>
+          <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/contact"
+              className="group inline-flex items-center justify-center gap-3 px-10 py-4.5 bg-brand text-white text-[0.9375rem] font-semibold rounded-xl hover:bg-brand-dark transition-all duration-300"
+            >
+              Contact Our Team
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+            <Link
+              href="/services/sourcing"
+              className="inline-flex items-center justify-center gap-3 px-10 py-4.5 text-text text-[0.9375rem] font-medium rounded-xl border border-light-muted hover:border-brand/30 hover:bg-brand-subtle transition-all duration-300"
+            >
+              Explore Services
+            </Link>
           </div>
-
-          {/* Diagonal accent */}
-          <div className="absolute bottom-0 left-8 w-1 h-20 bg-brand-orange transform -skew-x-12" />
         </div>
       </div>
     </section>

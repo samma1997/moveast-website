@@ -2,7 +2,8 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
-import { Search, Repeat, Truck, ArrowUpRight } from "lucide-react";
+import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -10,47 +11,41 @@ gsap.registerPlugin(ScrollTrigger);
 
 const services = [
   {
-    icon: Search,
-    title: "Strategic Sourcing & Procurement",
-    description:
-      "We identify, vet, and manage Chinese manufacturers on your behalf — ensuring quality, compliance, and competitive pricing through a structured, transparent process.",
+    num: "01",
+    title: "Strategic Sourcing\n& Procurement",
+    description: "We identify, vet, and manage Chinese manufacturers on your behalf — ensuring quality, compliance, and competitive pricing through a structured, transparent process.",
+    image: "https://images.pexels.com/photos/1267338/pexels-photo-1267338.jpeg",
     href: "/services/sourcing",
   },
   {
-    icon: Repeat,
-    title: "Technology Transfer & Project Integration",
-    description:
-      "From specification alignment to regulatory compliance, we facilitate the transfer of Chinese technology and industrial solutions into international projects.",
+    num: "02",
+    title: "Technology Transfer\n& Project Integration",
+    description: "From specification alignment to regulatory compliance, we facilitate the transfer of advanced Chinese technology into international infrastructure projects.",
+    image: "https://images.pexels.com/photos/2760243/pexels-photo-2760243.jpeg",
     href: "/services/technology-transfer",
   },
   {
-    icon: Truck,
-    title: "Trading & Supply Chain Management",
-    description:
-      "End-to-end coordination of logistics, customs, and delivery — leveraging Shenzhen's position as the world's 4th busiest port to move goods reliably and on schedule.",
+    num: "03",
+    title: "Trading & Supply\nChain Management",
+    description: "End-to-end coordination from Shenzhen's port — the world's 4th busiest — managing logistics, customs, and delivery with full visibility at every stage.",
+    image: "https://images.pexels.com/photos/1427107/pexels-photo-1427107.jpeg",
     href: "/services/supply-chain",
   },
 ];
 
 export function ServicesSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      cardsRef.current.forEach((card, i) => {
-        if (!card) return;
-        gsap.from(card, {
+      gsap.utils.toArray<HTMLElement>(".service-item").forEach((item, i) => {
+        gsap.from(item, {
           y: 60,
           opacity: 0,
-          duration: 0.8,
+          duration: 1,
           delay: i * 0.15,
           ease: "power3.out",
-          scrollTrigger: {
-            trigger: card,
-            start: "top 85%",
-            toggleActions: "play none none none",
-          },
+          scrollTrigger: { trigger: item, start: "top 85%" },
         });
       });
     }, sectionRef);
@@ -59,40 +54,56 @@ export function ServicesSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="bg-brand-light py-20 lg:py-28">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <p className="section-label mb-4">Services</p>
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-brand-black tracking-tight">
-          How We <span className="text-brand-orange">Operate</span>
-        </h2>
-        <p className="mt-4 text-lg text-brand-gray max-w-2xl">
-          Three core service lines, one integrated approach to China procurement.
-        </p>
+    <section ref={sectionRef} className="bg-light py-[var(--spacing-section)] lg:py-[var(--spacing-section-lg)]">
+      <div className="max-w-[1400px] mx-auto px-8 lg:px-12">
+        {/* Header */}
+        <div className="max-w-2xl">
+          <span className="label">How We Operate</span>
+          <h2 className="mt-5 heading-display text-[clamp(2rem,4vw,3.5rem)] text-dark">
+            Three service lines,<br />one integrated approach
+          </h2>
+        </div>
 
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-          {services.map((service, i) => {
-            const Icon = service.icon;
-            return (
-              <div
-                key={service.title}
-                ref={(el) => { cardsRef.current[i] = el; }}
-                className="group bg-white rounded-2xl p-8 border border-brand-border hover:border-brand-orange/30 hover:shadow-xl transition-all duration-300"
-              >
-                <div className="w-12 h-12 rounded-xl bg-brand-orange/10 flex items-center justify-center mb-6 group-hover:bg-brand-orange group-hover:text-white transition-colors">
-                  <Icon className="w-6 h-6 text-brand-orange group-hover:text-white transition-colors" />
+        {/* Cards */}
+        <div className="mt-16 lg:mt-20 space-y-6">
+          {services.map((service) => (
+            <Link
+              key={service.num}
+              href={service.href}
+              className="service-item group block bg-white rounded-2xl overflow-hidden border border-light-muted hover:border-brand/20 hover:shadow-[0_20px_60px_rgba(0,0,0,0.06)] transition-all duration-500"
+            >
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
+                {/* Image */}
+                <div className="lg:col-span-4 relative h-64 lg:h-auto overflow-hidden">
+                  <Image
+                    src={service.image}
+                    alt={service.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    sizes="(max-width: 1024px) 100vw, 33vw"
+                  />
                 </div>
-                <h3 className="text-xl font-bold text-brand-black">{service.title}</h3>
-                <p className="mt-3 text-sm text-brand-gray leading-relaxed">{service.description}</p>
-                <Link
-                  href={service.href}
-                  className="inline-flex items-center gap-1 mt-6 text-sm font-semibold text-brand-orange hover:text-brand-orange-dark transition-colors group/link"
-                >
-                  Learn More
-                  <ArrowUpRight className="w-4 h-4 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
-                </Link>
+
+                {/* Content */}
+                <div className="lg:col-span-8 p-8 lg:p-12 flex flex-col justify-center">
+                  <div className="flex items-start justify-between gap-8">
+                    <div>
+                      <span className="text-[0.8rem] font-semibold text-brand">{service.num}</span>
+                      <h3 className="mt-3 text-[clamp(1.5rem,2.5vw,2rem)] font-bold text-dark leading-tight whitespace-pre-line">
+                        {service.title}
+                      </h3>
+                      <p className="mt-4 text-text-muted leading-relaxed max-w-lg">
+                        {service.description}
+                      </p>
+                    </div>
+                    <div className="hidden lg:flex items-center justify-center w-12 h-12 rounded-xl bg-light group-hover:bg-brand group-hover:text-white text-text-subtle transition-all duration-300 shrink-0">
+                      <ArrowUpRight className="w-5 h-5" />
+                    </div>
+                  </div>
+                </div>
               </div>
-            );
-          })}
+            </Link>
+          ))}
         </div>
       </div>
     </section>

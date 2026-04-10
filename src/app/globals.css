@@ -1,18 +1,28 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-brand-orange: #D4782F;
-  --color-brand-orange-light: #E8944D;
-  --color-brand-orange-dark: #B8631F;
-  --color-brand-black: #1A1A1A;
-  --color-brand-dark: #2D2D2D;
-  --color-brand-gray: #6B7280;
-  --color-brand-light: #F5F5F5;
-  --color-brand-white: #FFFFFF;
-  --color-brand-border: #E5E7EB;
+  --color-brand: #D4782F;
+  --color-brand-light: #E8944D;
+  --color-brand-dark: #B8631F;
+  --color-brand-subtle: #FDF4ED;
+
+  --color-dark: #0C0C0C;
+  --color-dark-soft: #1A1A1A;
+  --color-dark-muted: #2D2D2D;
+
+  --color-light: #FAFAF9;
+  --color-light-soft: #F5F4F2;
+  --color-light-muted: #EEEBE8;
+
+  --color-text: #1F242E;
+  --color-text-muted: #6B7280;
+  --color-text-subtle: #ACAFB2;
 
   --font-sans: var(--font-inter);
   --font-display: var(--font-playfair);
+
+  --spacing-section: 8rem;
+  --spacing-section-lg: 10rem;
 }
 
 html {
@@ -20,43 +30,53 @@ html {
 }
 
 body {
-  background: var(--color-brand-white);
-  color: var(--color-brand-black);
+  background: #FFFFFF;
+  color: var(--color-text);
   font-family: var(--font-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 ::selection {
-  background: var(--color-brand-orange);
+  background: var(--color-brand);
   color: white;
 }
 
-/* Section label style from brochure */
-.section-label {
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.15em;
+/* Premium label */
+.label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--color-brand-orange);
+  color: var(--color-brand);
 }
 
-/* Diagonal accent bar from brochure */
-.diagonal-accent {
-  position: relative;
-}
-.diagonal-accent::before {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 4px;
-  height: 60px;
-  background: var(--color-brand-orange);
-  transform: skewX(-15deg);
+.label-light {
+  color: rgba(255,255,255,0.5);
 }
 
-/* Counter animation helper */
-.counter-value {
-  font-variant-numeric: tabular-nums;
+/* Display heading */
+.heading-display {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+
+/* Smooth reveal animation */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.8s ease-out forwards;
+}
+
+/* Horizontal rule accent */
+.hr-brand {
+  width: 48px;
+  height: 3px;
+  background: var(--color-brand);
+  border: none;
 }

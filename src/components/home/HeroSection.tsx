@@ -7,81 +7,103 @@ import { ArrowRight } from "lucide-react";
 import gsap from "gsap";
 
 export function HeroSection() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const headingRef = useRef<HTMLHeadingElement>(null);
-  const subRef = useRef<HTMLParagraphElement>(null);
-  const ctaRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      const tl = gsap.timeline({ defaults: { ease: "power4.out", duration: 1.2 } });
 
-      tl.from(headingRef.current, { y: 60, opacity: 0, duration: 1 })
-        .from(subRef.current, { y: 40, opacity: 0, duration: 0.8 }, "-=0.5")
-        .from(ctaRef.current, { y: 30, opacity: 0, duration: 0.6 }, "-=0.4")
-        .from(imageRef.current, { scale: 1.1, opacity: 0, duration: 1.2 }, "-=1");
-    }, sectionRef);
+      tl.from(".hero-label", { y: 20, opacity: 0, duration: 0.6 })
+        .from(".hero-line", { y: 80, opacity: 0, stagger: 0.12 }, "-=0.3")
+        .from(".hero-sub", { y: 30, opacity: 0, duration: 0.8 }, "-=0.4")
+        .from(".hero-cta", { y: 20, opacity: 0, stagger: 0.1, duration: 0.6 }, "-=0.3")
+        .from(".hero-image", { scale: 1.15, opacity: 0, duration: 2, ease: "power2.out" }, 0)
+        .from(".hero-badge", { x: -30, opacity: 0, stagger: 0.1, duration: 0.6 }, "-=0.8");
+    }, containerRef);
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative min-h-screen flex items-center bg-brand-black overflow-hidden pt-20">
-      {/* Background Image */}
-      <div ref={imageRef} className="absolute inset-0">
+    <section ref={containerRef} className="relative min-h-screen flex items-end lg:items-center overflow-hidden bg-dark">
+      {/* Background */}
+      <div className="hero-image absolute inset-0">
         <Image
-          src="https://images.pexels.com/photos/2526935/pexels-photo-2526935.jpeg"
-          alt="Shenzhen skyline and port infrastructure"
+          src="https://images.pexels.com/photos/1427541/pexels-photo-1427541.jpeg"
+          alt="Modern infrastructure and global trade"
           fill
-          className="object-cover opacity-30"
+          className="object-cover"
           priority
           sizes="100vw"
+          quality={90}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-black via-brand-black/80 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-dark via-dark/70 to-dark/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-dark/40" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-20 lg:py-32">
-        <div className="max-w-3xl">
-          <p className="section-label mb-6">Shenzhen, China</p>
+      <div className="relative z-10 max-w-[1400px] mx-auto px-8 lg:px-12 w-full py-32 lg:py-0">
+        <div className="max-w-[720px]">
+          {/* Label */}
+          <div className="hero-label">
+            <span className="label label-light">Shenzhen &mdash; Hong Kong &mdash; Rome &mdash; Addis Ababa</span>
+          </div>
 
-          <h1
-            ref={headingRef}
-            className="text-4xl md:text-5xl lg:text-7xl font-bold text-white leading-[1.1] tracking-tight"
-          >
-            Your Strategic Partner for{" "}
-            <span className="text-brand-orange">Procurement</span> in China
+          {/* Headline */}
+          <h1 className="mt-8">
+            <span className="hero-line block heading-display text-[clamp(2.5rem,6vw,5rem)] text-white">
+              Strategic
+            </span>
+            <span className="hero-line block heading-display text-[clamp(2.5rem,6vw,5rem)] text-white">
+              Procurement
+            </span>
+            <span className="hero-line block heading-display text-[clamp(2.5rem,6vw,5rem)] text-brand">
+              from China
+            </span>
           </h1>
 
-          <p
-            ref={subRef}
-            className="mt-6 text-lg md:text-xl text-gray-300 leading-relaxed max-w-2xl"
-          >
-            Move East Trading connects global enterprises with China&apos;s industrial
-            ecosystem — delivering verified sourcing, structured procurement, and
-            end-to-end supply chain management from Shenzhen to the world.
+          {/* Subtitle */}
+          <p className="hero-sub mt-8 text-[1.125rem] text-white/50 leading-relaxed max-w-[540px]">
+            Connecting global enterprises with China&apos;s industrial ecosystem.
+            Verified sourcing, technology transfer, and supply chain management
+            — with on-the-ground expertise from Shenzhen.
           </p>
 
-          <div ref={ctaRef} className="mt-10 flex flex-col sm:flex-row gap-4">
+          {/* CTAs */}
+          <div className="mt-12 flex flex-col sm:flex-row gap-4">
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand-orange text-white font-semibold rounded-full hover:bg-brand-orange-dark transition-all group"
+              className="hero-cta group inline-flex items-center justify-center gap-3 px-8 py-4 bg-brand text-white text-[0.9375rem] font-semibold rounded-xl hover:bg-brand-dark transition-all duration-300"
             >
-              Start Your Procurement Project
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              Start a Project
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
               href="/case-studies"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-white/20 text-white font-medium rounded-full hover:bg-white/10 transition-colors"
+              className="hero-cta inline-flex items-center justify-center gap-3 px-8 py-4 text-white/70 text-[0.9375rem] font-medium rounded-xl border border-white/15 hover:bg-white/5 hover:border-white/25 transition-all duration-300"
             >
               View Case Studies
             </Link>
           </div>
+
+          {/* Badges */}
+          <div className="mt-16 flex flex-wrap gap-3">
+            {["CICC Board Member", "UNGM Registered", "4 Global Offices"].map((badge) => (
+              <span
+                key={badge}
+                className="hero-badge inline-flex items-center px-4 py-2 rounded-lg bg-white/5 backdrop-blur-sm border border-white/8 text-[0.8rem] text-white/40"
+              >
+                {badge}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Diagonal accent bar from brochure */}
-      <div className="absolute bottom-0 left-8 w-1 h-24 bg-brand-orange transform -skew-x-12 hidden lg:block" />
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10">
+        <span className="text-[0.7rem] text-white/25 uppercase tracking-widest">Scroll</span>
+        <div className="w-px h-8 bg-gradient-to-b from-white/30 to-transparent" />
+      </div>
     </section>
   );
 }
