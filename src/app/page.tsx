@@ -1,21 +1,19 @@
 import { Hero } from "@/components/home/Hero";
-import { StatsBar } from "@/components/home/StatsBar";
+import { Results } from "@/components/home/Results";
 import { Services } from "@/components/home/Services";
-import { HorizontalScroll } from "@/components/home/HorizontalScroll";
-import { CaseStudy } from "@/components/home/CaseStudy";
-import { Values } from "@/components/home/Values";
-import { CTA } from "@/components/home/CTA";
+import { About } from "@/components/home/About";
+import { Sectors } from "@/components/home/Sectors";
+import { Blog } from "@/components/home/Blog";
 
 export default function HomePage() {
   return (
     <>
       <Hero />
-      <StatsBar />
+      <Results />
       <Services />
-      <HorizontalScroll />
-      <CaseStudy />
-      <Values />
-      <CTA />
+      <About />
+      <Sectors />
+      <Blog />
     </>
   );
 }

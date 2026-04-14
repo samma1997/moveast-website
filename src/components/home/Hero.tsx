@@ -1,212 +1,75 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Image from "next/image";
 import Link from "next/link";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import SplitType from "split-type";
-
-gsap.registerPlugin(ScrollTrigger);
-
-const badges = [
-  "CICC Board Member",
-  "UNGM Registered",
-  "4 Global Offices",
-];
+import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
+import gsap from "gsap";
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
-  const headlineRef = useRef<HTMLHeadingElement>(null);
-  const subtitleRef = useRef<HTMLParagraphElement>(null);
-  const ctaRef = useRef<HTMLDivElement>(null);
-  const badgesRef = useRef<HTMLDivElement>(null);
-  const scrollIndicatorRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const section = sectionRef.current;
-    const headline = headlineRef.current;
-    const subtitle = subtitleRef.current;
-    const cta = ctaRef.current;
-    const badgesEl = badgesRef.current;
-    const scrollIndicator = scrollIndicatorRef.current;
-    const imageContainer = imageRef.current;
-
-    if (!section || !headline || !subtitle || !cta || !badgesEl || !scrollIndicator || !imageContainer) return;
-
     const ctx = gsap.context(() => {
-      // Split headline into words
-      const split = new SplitType(headline, { types: "words" });
-      const words = split.words;
-
-      if (!words) return;
-
-      // Set initial states
-      gsap.set(words, { y: 120, opacity: 0 });
-      gsap.set(subtitle, { y: 40, opacity: 0 });
-      gsap.set(cta.children, { y: 50, opacity: 0 });
-      gsap.set(badgesEl.children, { y: 30, opacity: 0 });
-      gsap.set(scrollIndicator, { opacity: 0 });
-
-      // Master timeline
-      const tl = gsap.timeline({
-        defaults: { ease: "power4.out" },
-        delay: 0.3,
-      });
-
-      // Words stagger in
-      tl.to(words, {
-        y: 0,
-        opacity: 1,
-        duration: 1.2,
-        stagger: 0.08,
-      });
-
-      // Subtitle fades in
-      tl.to(subtitle, {
-        y: 0,
-        opacity: 1,
-        duration: 0.8,
-      }, "-=0.4");
-
-      // CTAs slide up
-      tl.to(cta.children, {
-        y: 0,
-        opacity: 1,
-        duration: 0.7,
-        stagger: 0.12,
-      }, "-=0.4");
-
-      // Badges fade in
-      tl.to(badgesEl.children, {
-        y: 0,
-        opacity: 1,
-        duration: 0.6,
-        stagger: 0.1,
-      }, "-=0.3");
-
-      // Scroll indicator
-      tl.to(scrollIndicator, {
-        opacity: 1,
-        duration: 0.6,
-      }, "-=0.2");
-
-      // Parallax on background image
-      gsap.to(imageContainer, {
-        y: 200,
-        ease: "none",
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-
-      // Scroll indicator pulse
-      gsap.to(scrollIndicator.querySelector(".scroll-line"), {
-        scaleY: 1.5,
-        opacity: 0.3,
-        duration: 1.2,
-        repeat: -1,
-        yoyo: true,
-        ease: "power2.inOut",
-      });
-    }, section);
-
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      tl.from(".hero-label", { y: 20, opacity: 0, duration: 0.5 })
+        .from(".hero-title span", { y: 80, opacity: 0, stagger: 0.08, duration: 0.9 }, "-=0.2")
+        .from(".hero-desc", { y: 30, opacity: 0, duration: 0.7 }, "-=0.4")
+        .from(".hero-card", { x: 60, opacity: 0, duration: 0.8 }, "-=0.5");
+    }, sectionRef);
     return () => ctx.revert();
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative h-screen w-full overflow-hidden flex items-center justify-center"
-    >
-      {/* Background image with parallax */}
-      <div ref={imageRef} className="absolute inset-0 -top-[100px] -bottom-[100px]">
-        <Image
-          src="https://images.pexels.com/photos/1427541/pexels-photo-1427541.jpeg"
-          alt="Infrastructure and skyline"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-        />
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-dark/60" />
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-dark/30" />
-      </div>
+    <section ref={sectionRef} className="pt-[72px]">
+      <div className="max-w-[1280px] mx-auto px-6 lg:px-8 py-16 lg:py-24">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          {/* Left — Title */}
+          <div className="lg:col-span-7">
+            <div className="hero-label label mb-6">
+              Shenzhen · Hong Kong · Rome · Addis Ababa
+            </div>
 
-      {/* Content */}
-      <div className="relative z-10 max-w-[1400px] mx-auto px-8 lg:px-12 w-full">
-        <div className="max-w-4xl">
-          {/* Label */}
-          <p className="label label-light mb-8 tracking-[0.15em]">
-            China Procurement Partner
-          </p>
+            <h1 className="hero-title font-[family-name:var(--font-jakarta)] text-[clamp(2.5rem,5.5vw,4.5rem)] font-extrabold leading-[1.05] tracking-tight text-[var(--text)]">
+              <span className="block overflow-hidden"><span className="inline-block">Strategic</span></span>
+              <span className="block overflow-hidden"><span className="inline-block">Procurement</span></span>
+              <span className="block overflow-hidden"><span className="inline-block text-[var(--brand)]">from China</span></span>
+            </h1>
 
-          {/* Headline */}
-          <h1
-            ref={headlineRef}
-            className="heading-display text-white text-[clamp(2.5rem,7vw,6rem)] mb-8 overflow-hidden"
-          >
-            Strategic Procurement from China
-          </h1>
+            <p className="hero-desc mt-8 text-[1.0625rem] text-[var(--text-secondary)] leading-relaxed max-w-[480px]">
+              Connecting global enterprises with China&apos;s industrial ecosystem. Verified sourcing, technology transfer, and supply chain management.
+            </p>
+          </div>
 
-          {/* Subtitle */}
-          <p
-            ref={subtitleRef}
-            className="text-white/60 text-lg lg:text-xl max-w-xl leading-relaxed mb-12"
-          >
-            Connecting global enterprises with China&apos;s industrial ecosystem.
-            From sourcing to delivery, we structure every step.
-          </p>
-
-          {/* CTAs */}
-          <div ref={ctaRef} className="flex flex-wrap gap-5">
-            <Link
-              href="/contact"
-              className="inline-flex items-center px-8 py-4 bg-brand text-white text-[0.9rem] font-semibold rounded-xl hover:bg-brand-dark transition-all duration-300 hover:translate-y-[-2px] hover:shadow-[0_8px_30px_rgba(212,120,47,0.3)]"
-            >
-              Start a Project
-            </Link>
-            <Link
-              href="/case-studies"
-              className="inline-flex items-center px-8 py-4 border border-white/25 text-white text-[0.9rem] font-semibold rounded-xl hover:bg-white/10 transition-all duration-300 hover:border-white/40"
-            >
-              View Case Studies
-            </Link>
+          {/* Right — Case Study Card */}
+          <div className="lg:col-span-5 lg:pt-16">
+            <div className="hero-card group relative bg-[var(--bg-alt)] border border-[var(--border)] rounded-2xl overflow-hidden hover:border-[var(--brand)]/30 transition-colors">
+              <div className="aspect-[4/3] relative">
+                <Image
+                  src="https://images.pexels.com/photos/6964174/pexels-photo-6964174.jpeg"
+                  alt="Ethiopia-Djibouti Railway — Move East Trading case study"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                />
+              </div>
+              <div className="p-5 flex items-start justify-between gap-4">
+                <div>
+                  <p className="text-[0.75rem] text-[var(--text-secondary)]">Case Study</p>
+                  <p className="text-[0.9375rem] font-semibold text-[var(--text)] mt-1">
+                    Ethiopia-Djibouti Railway — Official outsourcing agent in China
+                  </p>
+                </div>
+                <Link
+                  href="/case-studies/ethiopia-railway"
+                  className="shrink-0 w-10 h-10 rounded-lg bg-[var(--text)] text-[var(--bg)] flex items-center justify-center group-hover:bg-[var(--brand)] transition-colors"
+                >
+                  <ArrowUpRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-
-      {/* Bottom badges */}
-      <div
-        ref={badgesRef}
-        className="absolute bottom-28 left-0 right-0 z-10"
-      >
-        <div className="max-w-[1400px] mx-auto px-8 lg:px-12 flex flex-wrap gap-8 lg:gap-12">
-          {badges.map((badge) => (
-            <div
-              key={badge}
-              className="flex items-center gap-3 text-white/40 text-[0.8rem] tracking-wider uppercase"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-brand" />
-              {badge}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Scroll indicator */}
-      <div
-        ref={scrollIndicatorRef}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-3"
-      >
-        <span className="text-white/30 text-[0.65rem] uppercase tracking-[0.2em]">Scroll</span>
-        <div className="scroll-line w-px h-8 bg-white/30 origin-top" />
       </div>
     </section>
   );

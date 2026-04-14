@@ -1,154 +1,108 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import SplitType from "split-type";
-import { ArrowRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
-gsap.registerPlugin(ScrollTrigger);
-
-interface Service {
-  number: string;
-  title: string;
-  description: string;
-  href: string;
-}
-
-const services: Service[] = [
+const SERVICES = [
   {
-    number: "01",
+    num: "01",
     title: "Strategic Sourcing & Procurement",
     description:
-      "End-to-end procurement management across China's industrial landscape. We identify, qualify, and manage suppliers to ensure quality, compliance, and cost efficiency.",
+      "We identify, vet, and manage Chinese manufacturers on your behalf — ensuring quality, compliance, and competitive pricing through a structured, transparent process.",
     href: "/services/sourcing",
   },
   {
-    number: "02",
-    title: "Technology Transfer & Integration",
+    num: "02",
+    title: "Technology Transfer & Project Integration",
     description:
-      "Bridging the gap between Chinese manufacturing capabilities and international standards. From technical specifications to production oversight.",
+      "From specification alignment to regulatory compliance, we facilitate the transfer of advanced Chinese technology into international infrastructure projects.",
     href: "/services/technology-transfer",
   },
   {
-    number: "03",
+    num: "03",
     title: "Trading & Supply Chain Management",
     description:
-      "Full supply chain orchestration from factory floor to final destination. Logistics, customs, quality control, and delivery — structured for reliability.",
+      "End-to-end coordination from Shenzhen's port — the world's 4th busiest — managing logistics, customs, and delivery with full visibility at every stage.",
     href: "/services/supply-chain",
   },
 ];
 
 export function Services() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const headingRef = useRef<HTMLHeadingElement>(null);
-
-  useEffect(() => {
-    const section = sectionRef.current;
-    const heading = headingRef.current;
-    if (!section || !heading) return;
-
-    const ctx = gsap.context(() => {
-      // Split heading text
-      const split = new SplitType(heading, { types: "words" });
-      if (split.words) {
-        gsap.from(split.words, {
-          y: 60,
-          opacity: 0,
-          duration: 1,
-          stagger: 0.05,
-          ease: "power4.out",
-          scrollTrigger: {
-            trigger: heading,
-            start: "top 80%",
-          },
-        });
-      }
-
-      // Left paragraph
-      gsap.from(section.querySelector(".services-desc"), {
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: section.querySelector(".services-desc"),
-          start: "top 85%",
-        },
-      });
-
-      // Service items stagger from right
-      const items = section.querySelectorAll(".service-item");
-      items.forEach((item, i) => {
-        gsap.from(item, {
-          x: 80,
-          opacity: 0,
-          duration: 1,
-          delay: i * 0.15,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: item,
-            start: "top 85%",
-          },
-        });
-      });
-    }, section);
-
-    return () => ctx.revert();
-  }, []);
+  const [active, setActive] = useState(0);
 
   return (
-    <section ref={sectionRef} className="bg-light py-section lg:py-section-lg overflow-hidden">
-      <div className="max-w-[1400px] mx-auto px-8 lg:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-20">
-          {/* Left */}
-          <div className="lg:col-span-5">
-            <p className="label mb-6">What We Do</p>
-            <h2
-              ref={headingRef}
-              className="heading-display text-text text-[clamp(2rem,4vw,3.2rem)] mb-6"
-            >
-              How We Operate
-            </h2>
-            <p className="services-desc text-text-muted text-[0.95rem] leading-relaxed max-w-md">
-              We structure procurement from China as a managed process — not a transaction.
-              Every project follows a rigorous methodology built over 15 years on the ground.
-            </p>
+    <section className="border-t border-[var(--border)] bg-[var(--bg-alt)]">
+      <div className="max-w-[1280px] mx-auto px-6 lg:px-8 py-16 lg:py-24">
+        <p className="label mb-4">How We Operate</p>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 mt-8">
+          {/* Left — Image */}
+          <div className="lg:col-span-5 reveal">
+            <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-[var(--surface)]">
+              <Image
+                src="https://images.pexels.com/photos/1267338/pexels-photo-1267338.jpeg"
+                alt="Move East Trading sourcing operations in Shenzhen"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 40vw"
+              />
+            </div>
           </div>
 
-          {/* Right — Service items */}
-          <div className="lg:col-span-7 space-y-0">
-            {services.map((service, i) => (
-              <Link
-                key={service.number}
-                href={service.href}
-                className={`service-item group block py-10 ${
-                  i < services.length - 1 ? "border-b border-text/[0.08]" : ""
-                } transition-all duration-300`}
-              >
-                <div className="flex items-start gap-8">
-                  {/* Number */}
-                  <span className="heading-display text-[1.8rem] text-text-subtle group-hover:text-brand transition-colors duration-500 shrink-0 pt-1">
-                    {service.number}
-                  </span>
+          {/* Right — Accordion */}
+          <div className="lg:col-span-7">
+            <h2 className="font-[family-name:var(--font-jakarta)] text-[clamp(1.75rem,3.5vw,2.5rem)] font-bold leading-tight text-[var(--text)] mb-4">
+              Three service lines,<br className="hidden md:block" /> one integrated approach
+            </h2>
+            <p className="text-[0.9375rem] text-[var(--text-secondary)] leading-relaxed max-w-lg mb-10">
+              We manage complex procurement operations where reliability, technical alignment, and communication efficiency are essential.
+            </p>
 
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between mb-3">
-                      <h3 className="text-[1.25rem] lg:text-[1.4rem] font-semibold text-text group-hover:text-brand transition-colors duration-300">
-                        {service.title}
-                      </h3>
-                      <ArrowRight className="w-5 h-5 text-text-subtle group-hover:text-brand group-hover:translate-x-1.5 transition-all duration-300 shrink-0 ml-4" />
+            <div className="space-y-0">
+              {SERVICES.map((s, i) => (
+                <div
+                  key={s.num}
+                  className={`border-t border-[var(--border)] ${i === SERVICES.length - 1 ? "border-b" : ""}`}
+                >
+                  <button
+                    onClick={() => setActive(active === i ? -1 : i)}
+                    className="w-full flex items-center justify-between py-5 text-left group"
+                  >
+                    <div className="flex items-center gap-4">
+                      <span className="text-[0.8125rem] font-semibold text-[var(--brand)]">{s.num}</span>
+                      <span className="text-[1.0625rem] font-semibold text-[var(--text)] group-hover:text-[var(--brand)] transition-colors">
+                        {s.title}
+                      </span>
                     </div>
-                    <p className="text-text-muted text-[0.9rem] leading-relaxed max-w-lg">
-                      {service.description}
-                    </p>
-                    {/* Underline that grows on hover */}
-                    <div className="mt-4 h-px bg-brand scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-500" />
+                    <span className={`text-[var(--text-secondary)] transition-transform duration-300 ${active === i ? "rotate-45" : ""}`}>
+                      +
+                    </span>
+                  </button>
+
+                  <div
+                    className={`grid transition-all duration-300 ease-in-out ${
+                      active === i ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                    }`}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="pb-5 pl-10">
+                        <p className="text-[0.9375rem] text-[var(--text-secondary)] leading-relaxed max-w-md">
+                          {s.description}
+                        </p>
+                        <Link
+                          href={s.href}
+                          className="inline-flex items-center gap-1.5 mt-4 text-[0.8125rem] font-semibold text-[var(--text)] border border-[var(--border)] px-4 py-2 rounded-lg hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors"
+                        >
+                          Parla con noi <ArrowUpRight className="w-3.5 h-3.5" />
+                        </Link>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </Link>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>
