@@ -39,7 +39,15 @@ yarn-error.log*
 # design reference (only for local dev, huge HTML files)
 /_design-reference/
 /_copy/
+/_design-bundle/
+
+# payload local uploads (storage goes to Vercel Blob in prod)
+/media/
+
+# payload generated types (regenerated via `npm run generate:types`)
+/src/types/payload.ts
 
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+.env*.local

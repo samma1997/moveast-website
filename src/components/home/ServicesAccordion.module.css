@@ -1,0 +1,212 @@
+/* ============================================================
+   Services section — sticky media + accordion
+   ============================================================ */
+
+.section {
+  padding: 64px 0 96px;
+  position: relative;
+}
+
+.inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 64px;
+  align-items: start;
+}
+
+.media {
+  position: sticky;
+  top: 120px;
+  aspect-ratio: 4 / 5;
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity .5s var(--ease-out);
+}
+.slide.on { opacity: 1; }
+
+.slide .idx {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+.slide .tag {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: clamp(36px, 4.6vw, 60px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  font-weight: 600;
+  margin: 20px 0;
+  max-width: 16ch;
+}
+.title em {
+  font-style: italic;
+  font-family: var(--font-serif);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  font-size: 1.04em;
+}
+
+.lede {
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--ink-2);
+  max-width: 46ch;
+  margin: 0 0 40px;
+  font-weight: 500;
+}
+
+.accordion { border-top: 1px solid var(--line); }
+.item { border-bottom: 1px solid var(--line); }
+
+.head {
+  appearance: none;
+  width: 100%;
+  background: transparent;
+  border: 0;
+  font: inherit;
+  color: var(--ink);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px;
+  align-items: center;
+  padding: 22px 4px;
+  cursor: pointer;
+  text-align: left;
+  transition: color .2s var(--ease-out);
+}
+.head .t {
+  font-size: clamp(18px, 1.7vw, 22px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.head .n {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--muted);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+.item.open .head .n {
+  color: var(--ink);
+}
+
+.body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .45s var(--ease-out);
+}
+.item.open .body {
+  max-height: 420px;
+}
+
+.innerBody {
+  display: grid;
+  grid-template-columns: 1fr 132px;
+  gap: 24px;
+  align-items: start;
+  padding: 0 4px 24px;
+}
+
+.desc {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink-2);
+  margin: 0 0 18px;
+  max-width: 48ch;
+  font-weight: 500;
+}
+
+.ctaBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  padding: 8px 8px 8px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: transform .2s var(--ease-out);
+}
+.ctaBtn:hover { transform: translateY(-1px); }
+.ctaBtn .arrow {
+  width: 22px;
+  height: 22px;
+  background: var(--accent);
+  color: #fff;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 999px;
+}
+.ctaBtn .arrow svg { width: 10px; height: 10px; stroke: #fff; }
+
+.thumb {
+  aspect-ratio: 1 / 1;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+}
+.thumb .ph {
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(135deg, color-mix(in oklab, var(--ink) 5%, transparent) 0 6px, transparent 6px 12px),
+    var(--surface-2);
+}
+
+@media (max-width: 900px) {
+  .section { padding: 32px 0 64px; }
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .media {
+    position: relative;
+    top: 0;
+    aspect-ratio: 4 / 3;
+  }
+  .innerBody { grid-template-columns: 1fr; }
+  .thumb { max-width: 180px; }
+}

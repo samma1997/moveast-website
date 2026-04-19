@@ -1,0 +1,281 @@
+/* ============================================================
+   Mobile Drawer — slide from right
+   ============================================================ */
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / .35);
+  z-index: 90;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .28s var(--ease-out);
+}
+.backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100dvh;
+  width: min(420px, 92vw);
+  background: var(--surface);
+  border-left: 1px solid var(--line);
+  z-index: 100;
+  transform: translateX(100%);
+  transition: transform .32s var(--ease-out);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.drawer.open {
+  transform: translateX(0);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--line);
+  flex-shrink: 0;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+}
+
+.close {
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background .2s var(--ease-out), border-color .2s var(--ease-out);
+}
+.close:hover {
+  background: var(--surface-2);
+  border-color: var(--ink);
+}
+.close svg { width: 14px; height: 14px; }
+
+.navScroll {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.navItem {
+  border-bottom: 1px solid var(--line);
+}
+
+.navRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 22px;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--ink);
+  background: transparent;
+  border: 0;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  transition: background .15s var(--ease-out);
+}
+.navRow:hover {
+  background: color-mix(in oklab, var(--ink) 4%, transparent);
+}
+
+.navMeta {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.num {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+}
+
+.chev {
+  width: 12px;
+  height: 12px;
+  transition: transform .25s var(--ease-out);
+  color: var(--ink-2);
+}
+.navItem.open .chev {
+  transform: rotate(180deg);
+}
+
+.sub {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .35s var(--ease-out);
+}
+.navItem.open .sub {
+  max-height: 600px;
+}
+
+.subInner {
+  padding: 0 22px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.subItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg);
+  color: var(--ink);
+  transition: border-color .2s var(--ease-out), transform .2s var(--ease-out);
+}
+.subItem:hover {
+  border-color: var(--ink);
+  transform: translateX(2px);
+}
+
+.subDot {
+  width: 8px;
+  height: 8px;
+  background: var(--ink);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.subLabel {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.subArrow {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  color: var(--ink);
+  flex-shrink: 0;
+}
+.subItem:hover .subArrow {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.subArrow svg { width: 10px; height: 10px; }
+
+/* "All X" highlighted row */
+.subItemAll {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+}
+.subItemAll .subDot { background: var(--accent); }
+.subItemAll .subArrow {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.subItemAll:hover {
+  transform: translateX(2px);
+}
+
+/* Footer of drawer */
+.foot {
+  padding: 18px 22px 22px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex-shrink: 0;
+  background: var(--surface);
+}
+
+.themeRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.themeLabel {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.themeToggle {
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+.themeToggle button {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 12.5px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background .2s var(--ease-out), color .2s var(--ease-out);
+}
+.themeToggle button.on {
+  background: var(--ink);
+  color: var(--bg);
+}
+.themeToggle svg {
+  width: 12px;
+  height: 12px;
+}
+
+.footMeta {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}

@@ -1,0 +1,305 @@
+/* ============================================================
+   Header — pill-shaped sticky navigation
+   ============================================================ */
+
+.wrap {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding: 20px 0;
+  pointer-events: none;
+}
+
+.header {
+  pointer-events: auto;
+  background: color-mix(in oklab, var(--surface) 82%, transparent);
+  backdrop-filter: saturate(140%) blur(14px);
+  -webkit-backdrop-filter: saturate(140%) blur(14px);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 6px 6px 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  max-width: 820px;
+  margin: 0 auto;
+  box-shadow: var(--shadow-card);
+  transition: background-color .4s ease, border-color .4s ease;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+  padding-right: 4px;
+  flex-shrink: 0;
+}
+
+.logoMark {
+  width: 22px;
+  height: 22px;
+  display: inline-grid;
+  place-items: center;
+}
+.logoMark svg { width: 100%; height: 100%; display: block; }
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 4px;
+  margin-right: auto;
+}
+
+.navLink {
+  background: transparent;
+  border: 0;
+  font: inherit;
+  color: var(--ink-2);
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: background .2s var(--ease-out), color .2s var(--ease-out);
+}
+.navLink:hover,
+.navLink[aria-current="page"] {
+  background: var(--surface-2);
+  color: var(--ink);
+}
+.navLink svg.chev {
+  width: 10px;
+  height: 10px;
+  opacity: .55;
+  transition: transform .2s var(--ease-out);
+}
+.navLink:hover svg.chev { transform: translateY(1px); }
+
+/* ---- Theme toggle button (header inline) ---- */
+.themeBtn {
+  background: transparent;
+  color: var(--ink-2);
+  border: 0;
+  cursor: pointer;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  transition: color .2s var(--ease-out), background .2s var(--ease-out);
+  flex-shrink: 0;
+}
+.themeBtn:hover {
+  color: var(--ink);
+  background: color-mix(in oklab, var(--ink) 6%, transparent);
+}
+.themeBtn svg { width: 15px; height: 15px; }
+
+/* ---- Hamburger (mobile only) ---- */
+.hamburger {
+  display: none;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+  transition: background .2s var(--ease-out);
+}
+.hamburger:hover {
+  background: color-mix(in oklab, var(--ink) 6%, transparent);
+}
+.hamburgerIco {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 18px;
+}
+.hamburgerIco span {
+  display: block;
+  height: 1.6px;
+  background: currentColor;
+  border-radius: 1px;
+}
+
+/* ============================================================
+   Mega Menu (Services + Sectors)
+   ============================================================ */
+
+.megaTrigger { position: relative; }
+
+.mega {
+  position: fixed;
+  top: 88px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  width: min(760px, calc(100vw - 32px));
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 12px;
+  box-shadow: 0 24px 60px rgb(0 0 0 / .12);
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s var(--ease-out), transform .2s var(--ease-out);
+}
+.mega::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -28px;
+  height: 28px;
+  pointer-events: none;
+}
+.mega.open::before { pointer-events: auto; }
+.mega.open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.megaGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 8px;
+}
+.megaList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.megaItem {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 12px;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background .18s var(--ease-out);
+  border: 1px solid transparent;
+}
+.megaItem:hover,
+.megaItem.on {
+  background: var(--bg);
+  border-color: var(--line);
+}
+
+.megaIco {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: var(--accent);
+  color: #fff;
+}
+.megaIco svg { width: 16px; height: 16px; }
+
+.megaText b {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 1px;
+}
+.megaText span {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.megaPreview {
+  position: relative;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  min-height: 240px;
+}
+.megaSlide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity .3s var(--ease-out);
+}
+.megaSlide.on { opacity: 1; }
+.megaSlideBg {
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(135deg, color-mix(in oklab, var(--ink) 5%, transparent) 0 10px, transparent 10px 20px),
+    var(--surface-2);
+}
+.megaChip {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  background: var(--ink);
+  color: var(--bg);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.megaFoot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+  padding: 10px 8px 2px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+}
+.megaFoot a {
+  color: var(--ink-2);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 4px;
+  font-weight: 500;
+  transition: color .2s var(--ease-out);
+}
+.megaFoot a:hover { color: var(--ink); }
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+
+@media (max-width: 900px) {
+  .header {
+    max-width: none;
+    padding: 6px 6px 6px 16px;
+    gap: 12px;
+    margin: 0 16px;
+  }
+  .nav { display: none; }
+  .themeBtn { display: none; }
+  .hamburger { display: inline-flex; }
+  .mega { display: none; }
+  .megaCta { display: none; }
+}
+
+/* Hide CTA label on very small screens — keep only pill */
+@media (max-width: 420px) {
+  .cta span:not(.arrow) { display: none; }
+}

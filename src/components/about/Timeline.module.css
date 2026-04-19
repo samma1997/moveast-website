@@ -1,0 +1,221 @@
+/* ============================================================
+   Timeline — horizontal scroll rail with year columns
+   ============================================================ */
+
+.timeline {
+  padding: 80px 0 120px;
+  position: relative;
+  overflow: hidden;
+}
+
+.head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 80px;
+  align-items: end;
+  max-width: var(--container);
+  margin: 0 auto 56px;
+  padding: 0 32px;
+}
+
+.headL { padding-bottom: 8px; }
+
+.title {
+  font-size: clamp(36px, 4.6vw, 60px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  font-weight: 600;
+  margin: 16px 0 0;
+  max-width: 16ch;
+}
+.title em {
+  font-style: italic;
+  font-family: var(--font-serif);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  font-size: 1.04em;
+}
+
+.headR {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 8px;
+}
+
+.lede {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink-2);
+  max-width: 44ch;
+  margin: 0;
+  font-weight: 500;
+}
+
+.navArrows {
+  display: inline-flex;
+  gap: 8px;
+  align-self: flex-end;
+}
+.navArrows button {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+  color: var(--ink-2);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background .2s var(--ease-out), color .2s var(--ease-out),
+              border-color .2s var(--ease-out), transform .2s var(--ease-out);
+}
+.navArrows button:hover { transform: translateY(-1px); }
+.navArrows button.active {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+}
+.navArrows button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none;
+}
+.navArrows svg { width: 14px; height: 14px; }
+
+/* ---- Rail ---- */
+.railWrap {
+  position: relative;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 10px;
+  scroll-snap-type: x mandatory;
+  padding-left: max(32px, calc((100vw - var(--container)) / 2 + 32px));
+  scroll-padding-left: max(32px, calc((100vw - var(--container)) / 2 + 32px));
+}
+.railWrap::-webkit-scrollbar { display: none; }
+
+.rail {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 300px;
+  gap: 0;
+  padding: 0 32px 0 0;
+  position: relative;
+}
+@media (min-width: 1200px) {
+  .rail { grid-auto-columns: 340px; }
+}
+@media (max-width: 900px) {
+  .rail { grid-auto-columns: 78vw; padding-right: 24px; }
+}
+
+.year {
+  position: relative;
+  padding: 0 20px 0 0;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+}
+
+.yearLabel {
+  font-size: clamp(48px, 4.4vw, 80px);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--ink);
+  margin-bottom: 18px;
+}
+
+.ticks {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.ticks i {
+  display: block;
+  width: 4px;
+  height: 4px;
+  background: var(--muted);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.ticks i.big {
+  width: 10px;
+  height: 10px;
+  background: var(--accent);
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 380px;
+}
+
+.media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+.media .cap {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 4px 8px;
+  border-radius: 5px;
+}
+
+.body {
+  padding: 16px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1;
+  justify-content: space-between;
+}
+.body p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: inline-block;
+  border: 1px solid var(--line);
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--bg);
+  align-self: flex-start;
+}
+
+@media (max-width: 900px) {
+  .timeline { padding: 48px 0 80px; }
+  .head {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-bottom: 28px;
+  }
+  .title { font-size: clamp(32px, 8vw, 52px); }
+  .navArrows { align-self: flex-start; }
+}

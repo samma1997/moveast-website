@@ -1,0 +1,146 @@
+/* ============================================================
+   About Hero — float grid with eyebrow + italic headline
+   ============================================================ */
+
+.hero {
+  padding: 48px 0 96px;
+  position: relative;
+  min-height: calc(100vh - 120px);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.inner {
+  position: relative;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 32px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 48px;
+  align-items: center;
+}
+
+.copy {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+}
+
+.title {
+  font-size: clamp(42px, 6.2vw, 96px);
+  line-height: 0.96;
+  letter-spacing: -0.035em;
+  font-weight: 600;
+  margin: 24px 0 0;
+  max-width: 18ch;
+}
+.title em {
+  font-style: italic;
+  font-family: var(--font-serif);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  font-size: 1.04em;
+}
+
+/* ---- Floating tiles grid ---- */
+.floatGrid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.float {
+  position: absolute;
+  width: clamp(120px, 14vw, 220px);
+  aspect-ratio: 4 / 3;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-card);
+  opacity: 0;
+  animation: floatIn 1s var(--ease-out) forwards;
+}
+@keyframes floatIn {
+  from { opacity: 0; transform: translateY(30px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.f1 {
+  top: 6%;
+  right: 14%;
+  animation-delay: 0.1s;
+}
+.f2 {
+  top: 34%;
+  right: 4%;
+  animation-delay: 0.25s;
+}
+.f3 {
+  bottom: 20%;
+  right: 22%;
+  animation-delay: 0.4s;
+}
+.f4 {
+  bottom: 6%;
+  right: 6%;
+  animation-delay: 0.55s;
+}
+
+.cap {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 4px 8px;
+  border-radius: 5px;
+}
+
+@media (max-width: 1024px) {
+  .f1 { right: 6%; }
+  .f2 { right: 2%; top: 40%; }
+  .f3 { right: 14%; }
+  .f4 { right: 4%; }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    min-height: auto;
+    padding: 32px 0 64px;
+  }
+  .floatGrid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 32px;
+    height: auto;
+  }
+  .float {
+    position: relative;
+    top: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    width: 100%;
+    animation: none;
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .float {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

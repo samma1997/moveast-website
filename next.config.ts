@@ -1,8 +1,16 @@
 import type { NextConfig } from "next";
+import { withPayload } from "@payloadcms/next/withPayload";
 
 const nextConfig: NextConfig = {
   compress: true,
   poweredByHeader: false,
+  reactStrictMode: true,
+
+  experimental: {
+    // Payload richiede Node workers per alcune operazioni admin
+    serverActions: { bodySizeLimit: "8mb" }, // upload media
+  },
+
   images: {
     formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
@@ -10,12 +18,14 @@ const nextConfig: NextConfig = {
     minimumCacheTTL: 31536000,
     remotePatterns: [
       { protocol: "https", hostname: "images.pexels.com" },
+      { protocol: "https", hostname: "*.public.blob.vercel-storage.com" },
     ],
   },
+
   async headers() {
     return [
       {
-        source: "/(.*)",
+        source: "/((?!admin|api).*)",
         headers: [
           { key: "X-Frame-Options", value: "SAMEORIGIN" },
           { key: "X-Content-Type-Options", value: "nosniff" },
@@ -26,18 +36,10 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/:path*.(jpg|jpeg|png|webp|avif|svg|ico|woff2)",
-        headers: [
-          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
-        ],
-      },
-      {
-        source: "/_next/static/:path*",
-        headers: [
-          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
-        ],
+        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
       },
     ];
   },
 };
 
-export default nextConfig;
+export default withPayload(nextConfig, { devBundleServerPackages: false });

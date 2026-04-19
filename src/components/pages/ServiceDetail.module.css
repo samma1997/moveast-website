@@ -1,0 +1,259 @@
+/* ============================================================
+   Service / Sector detail page — process + features + FAQ + CTA
+   ============================================================ */
+
+.section {
+  padding: 48px 0;
+}
+.section.dark {
+  background: var(--surface-2);
+}
+
+.inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.headRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 64px;
+  align-items: end;
+  margin-bottom: 48px;
+}
+
+.title {
+  font-size: clamp(32px, 4vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  font-weight: 600;
+  margin: 16px 0 0;
+  max-width: 16ch;
+}
+.title em {
+  font-style: italic;
+  font-family: var(--font-serif);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  font-size: 1.04em;
+}
+
+.lede {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink-2);
+  max-width: 44ch;
+  margin: 0;
+  font-weight: 500;
+  padding-bottom: 8px;
+}
+
+/* ---- Process steps ---- */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+.step {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 28px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.stepNum {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  font-weight: 500;
+  text-transform: uppercase;
+}
+.stepTitle {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+  margin: 0;
+}
+.stepDesc {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-2);
+  margin: 0;
+}
+
+/* ---- Features grid ---- */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+}
+.feature {
+  padding: 22px 24px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+.feature b {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+.feature p {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink-2);
+  margin: 0;
+}
+
+/* ---- Related cards ---- */
+.related {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+}
+.relatedCard {
+  display: block;
+  padding: 22px 24px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  color: inherit;
+  transition: border-color .2s var(--ease-out), transform .2s var(--ease-out);
+}
+.relatedCard:hover {
+  border-color: var(--ink);
+  transform: translateY(-2px);
+}
+.relatedEyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+  display: block;
+}
+.relatedTitle {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin: 0 0 8px;
+}
+.relatedDesc {
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: var(--ink-2);
+  margin: 0;
+}
+
+/* ---- FAQ ---- */
+.faq {
+  max-width: 840px;
+  margin: 0 auto;
+}
+.faqItem {
+  border-bottom: 1px solid var(--line);
+}
+.faqHead {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  padding: 22px 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: var(--ink);
+  transition: color .2s var(--ease-out);
+}
+.faqHead:hover { color: var(--accent); }
+.faqQ {
+  font-size: clamp(16px, 1.4vw, 20px);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+.faqToggle {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.faqBody {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .35s var(--ease-out);
+}
+.faqItem.open .faqBody {
+  max-height: 400px;
+}
+.faqA {
+  padding: 0 4px 24px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-2);
+  max-width: 72ch;
+}
+
+/* ---- CTA band ---- */
+.ctaBand {
+  background: var(--ink);
+  color: var(--bg);
+  border-radius: 22px;
+  padding: clamp(32px, 5vw, 64px);
+  margin: 48px 32px 32px;
+  max-width: calc(var(--container) - 64px);
+  margin-left: auto;
+  margin-right: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 40px;
+  align-items: center;
+}
+.ctaBand h2 {
+  font-size: clamp(28px, 3.4vw, 42px);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  font-weight: 600;
+  margin: 0 0 12px;
+}
+.ctaBand h2 em {
+  font-style: italic;
+  font-family: var(--font-serif);
+  font-weight: 500;
+}
+.ctaBand p {
+  font-size: 15px;
+  line-height: 1.55;
+  color: color-mix(in oklab, var(--bg) 80%, transparent);
+  margin: 0;
+  max-width: 48ch;
+}
+.ctaActions {
+  display: inline-flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-self: end;
+}
+
+@media (max-width: 900px) {
+  .headRow {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+  .ctaBand {
+    grid-template-columns: 1fr;
+    margin: 32px 20px;
+  }
+  .ctaActions { justify-self: start; }
+}

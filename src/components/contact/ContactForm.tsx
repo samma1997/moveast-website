@@ -1,56 +1,37 @@
 "use client";
 
 import { useState } from "react";
-import { Send, CheckCircle2 } from "lucide-react";
+import { sectors } from "@/content/sectors";
+import { ArrowUpRight } from "@/components/ui/ArrowIcon";
+import styles from "./ContactForm.module.css";
 
-const SECTORS = [
-  "Railway & Mobility",
-  "Renewable Energy & Storage",
-  "Medical Devices & Healthcare",
-  "Industrial Machinery & Smart Devices",
-  "Government & Infrastructure",
-  "Other — please specify in the message",
-];
-
-const REQUEST_TYPES = [
-  "Strategic Sourcing & Procurement",
-  "Technology Transfer & Project Integration",
-  "Supply Chain Management",
-  "Consultation / exploratory call",
-  "Media or partnership inquiry",
-];
-
-const BUDGETS = [
-  "Under $50,000",
-  "$50,000 – $250,000",
-  "$250,000 – $1,000,000",
-  "$1,000,000 – $10,000,000",
-  "Over $10,000,000",
-  "Prefer not to say",
-];
-
-const TIMELINES = [
-  "Within 30 days",
-  "1 – 3 months",
-  "3 – 6 months",
-  "6 – 12 months",
-  "Over 12 months",
-  "Exploratory — no fixed timeline",
-];
+type FieldErrors = Partial<Record<string, string[]>>;
 
 export function ContactForm() {
-  const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [errors, setErrors] = useState<FieldErrors>({});
+  const [globalError, setGlobalError] = useState<string | null>(null);
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setLoading(true);
+    setErrors({});
+    setGlobalError(null);
+    setSubmitting(true);
+
     const form = e.currentTarget;
-    const data = new FormData(form);
-    const payload: Record<string, string> = {};
-    data.forEach((value, key) => {
-      payload[key] = value.toString();
-    });
+    const fd = new FormData(form);
+    const payload = {
+      name: String(fd.get("name") ?? ""),
+      email: String(fd.get("email") ?? ""),
+      company: String(fd.get("company") ?? ""),
+      role: String(fd.get("role") ?? ""),
+      sector: String(fd.get("sector") ?? ""),
+      volume: String(fd.get("volume") ?? ""),
+      message: String(fd.get("message") ?? ""),
+      website: String(fd.get("website") ?? ""),
+      consent: fd.get("consent") === "on",
+    };
 
     try {
       const res = await fetch("/api/contact", {
@@ -58,209 +39,160 @@ export function ContactForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      if (!res.ok && res.status !== 501) {
-        throw new Error("Submission failed");
+
+      if (res.ok) {
+        setSuccess(true);
+        form.reset();
+        return;
       }
-      setSubmitted(true);
-      form.reset();
+
+      const data = await res.json().catch(() => ({}));
+      if (res.status === 400 && data.issues) {
+        setErrors(data.issues as FieldErrors);
+      } else if (res.status === 429) {
+        setGlobalError("Too many submissions. Please try again later.");
+      } else {
+        setGlobalError(data.error ?? "Something went wrong. Please try again.");
+      }
     } catch {
-      const subject = encodeURIComponent(
-        `New inquiry from ${payload.name || "website"}`
-      );
-      const lines = Object.entries(payload)
-        .map(([k, v]) => `${k}: ${v}`)
-        .join("\n");
-      const body = encodeURIComponent(lines);
-      window.location.href = `mailto:info@moveasttrading.com?subject=${subject}&body=${body}`;
-      setSubmitted(true);
+      setGlobalError("Network error. Please try again.");
     } finally {
-      setLoading(false);
+      setSubmitting(false);
     }
   }
 
-  if (submitted) {
+  if (success) {
     return (
-      <div className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-8 lg:p-10">
-        <div className="w-12 h-12 rounded-full bg-[var(--brand)]/10 flex items-center justify-center">
-          <CheckCircle2 className="w-6 h-6 text-[var(--brand)]" />
-        </div>
-        <h3 className="mt-6 font-[family-name:var(--font-heading)] text-[1.5rem] font-semibold text-[var(--text)]">
-          Thank you. Your message is on its way to Shenzhen.
-        </h3>
-        <p className="mt-4 text-[0.9375rem] text-[var(--text-secondary)] leading-relaxed">
-          A member of the Move East team will reply within 24 to 48 working hours. If your request is time-sensitive, you can also write directly to{" "}
-          <a
-            href="mailto:info@moveasttrading.com"
-            className="text-[var(--brand)] hover:underline"
-          >
-            info@moveasttrading.com
-          </a>{" "}
-          or reach Alessandro Petrini on{" "}
-          <a
-            href="https://www.linkedin.com/in/alessandropetrini"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[var(--brand)] hover:underline"
-          >
-            LinkedIn
-          </a>
-          .
+      <div className={styles.success}>
+        <h3>Message <em>received.</em></h3>
+        <p>
+          Thank you. Our team in Shenzhen will respond within 24–48 hours — typically sooner for sector-specific briefs.
         </p>
       </div>
     );
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 lg:p-10 space-y-6"
-    >
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <Field
-          label="Full name"
-          name="name"
-          required
-          placeholder="Jane Doe"
-          helper="Who should we address the reply to?"
-        />
-        <Field
-          label="Email"
-          name="email"
-          type="email"
-          required
-          placeholder="name@company.com"
-          helper="We will reply within 24 to 48 working hours."
-        />
+    <form className={styles.form} onSubmit={onSubmit} noValidate>
+      {globalError && <div className={styles.globalError}>{globalError}</div>}
+
+      <div className={styles.row}>
+        <div className={styles.field}>
+          <label htmlFor="cf-name" className={`${styles.label} ${styles.required}`}>Name</label>
+          <input
+            id="cf-name"
+            name="name"
+            type="text"
+            required
+            autoComplete="name"
+            className={styles.input}
+            disabled={submitting}
+          />
+          {errors.name && <span className={styles.error}>{errors.name[0]}</span>}
+        </div>
+
+        <div className={styles.field}>
+          <label htmlFor="cf-email" className={`${styles.label} ${styles.required}`}>Email</label>
+          <input
+            id="cf-email"
+            name="email"
+            type="email"
+            required
+            autoComplete="email"
+            className={styles.input}
+            disabled={submitting}
+          />
+          {errors.email && <span className={styles.error}>{errors.email[0]}</span>}
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <Field
-          label="Company or organisation"
-          name="company"
-          placeholder="ACME Infrastructure Ltd."
-          helper="Legal entity or project name. Optional."
-        />
-        <Field
-          label="Country or region"
-          name="country"
-          placeholder="Italy, Ethiopia, Germany, Kenya, UAE…"
-          helper="Where is your organisation based, or where will the procurement be delivered?"
-        />
+      <div className={styles.row}>
+        <div className={styles.field}>
+          <label htmlFor="cf-company" className={styles.label}>Company</label>
+          <input
+            id="cf-company"
+            name="company"
+            type="text"
+            autoComplete="organization"
+            className={styles.input}
+            disabled={submitting}
+          />
+        </div>
+        <div className={styles.field}>
+          <label htmlFor="cf-role" className={styles.label}>Role</label>
+          <input
+            id="cf-role"
+            name="role"
+            type="text"
+            autoComplete="organization-title"
+            className={styles.input}
+            disabled={submitting}
+          />
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <Select label="Sector" name="sector" required options={SECTORS} />
-        <Select
-          label="Type of request"
-          name="request_type"
-          required
-          options={REQUEST_TYPES}
-        />
+      <div className={styles.row}>
+        <div className={styles.field}>
+          <label htmlFor="cf-sector" className={styles.label}>Sector of interest</label>
+          <select id="cf-sector" name="sector" className={styles.select} disabled={submitting} defaultValue="">
+            <option value="">Select…</option>
+            {sectors.map((s) => (
+              <option key={s.slug} value={s.slug}>{s.shortLabel}</option>
+            ))}
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div className={styles.field}>
+          <label htmlFor="cf-volume" className={styles.label}>Estimated volume</label>
+          <select id="cf-volume" name="volume" className={styles.select} disabled={submitting} defaultValue="">
+            <option value="">Select…</option>
+            <option value="small">&lt; $50k</option>
+            <option value="medium">$50k – $500k</option>
+            <option value="large">$500k – $5M</option>
+            <option value="enterprise">&gt; $5M</option>
+          </select>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <Select label="Estimated budget" name="budget" options={BUDGETS} />
-        <Select label="Timeline" name="timeline" options={TIMELINES} />
-      </div>
-
-      <div>
-        <label className="block text-[0.8125rem] font-medium text-[var(--text)] mb-2">
-          Your message <span className="text-[var(--brand)]">*</span>
-        </label>
+      <div className={styles.field}>
+        <label htmlFor="cf-message" className={`${styles.label} ${styles.required}`}>Message</label>
         <textarea
+          id="cf-message"
           name="message"
           required
-          rows={5}
-          placeholder="Describe the project, the products or systems involved, and any specific technical or compliance requirements."
-          className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-3 text-[0.9375rem] text-[var(--text)] placeholder:text-[var(--text-secondary)] focus:outline-none focus:border-[var(--brand)] transition-colors resize-none"
+          minLength={20}
+          maxLength={4000}
+          className={styles.textarea}
+          disabled={submitting}
+          placeholder="Tell us about your project — target market, technical specs, timeline."
         />
-        <p className="mt-2 text-[0.75rem] text-[var(--text-secondary)]">
-          The more specific you are, the faster we can route your request to the right person on the team.
-        </p>
+        {errors.message && <span className={styles.error}>{errors.message[0]}</span>}
       </div>
 
-      <div className="pt-2">
-        <button
-          type="submit"
-          disabled={loading}
-          className="inline-flex items-center gap-2 px-6 py-3 text-[0.875rem] font-semibold bg-[var(--text)] text-[var(--bg)] rounded-full hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {loading ? "Sending…" : "Send to Shenzhen"}
-          <Send className="w-3.5 h-3.5" />
+      {/* Honeypot */}
+      <div className={styles.honeypot} aria-hidden="true">
+        <label>
+          If you&apos;re a human leave this blank:
+          <input type="text" name="website" tabIndex={-1} autoComplete="off" />
+        </label>
+      </div>
+
+      <label className={styles.consent}>
+        <input type="checkbox" name="consent" required disabled={submitting} />
+        <span>
+          I consent to Move East Trading processing my data to reply to this inquiry, as described in the{" "}
+          <a href="/privacy">Privacy Policy</a>. No marketing emails without explicit opt-in.
+        </span>
+      </label>
+      {errors.consent && <span className={styles.error}>{errors.consent[0]}</span>}
+
+      <div className={styles.actions}>
+        <button type="submit" className={styles.submit} disabled={submitting}>
+          {submitting ? "Sending…" : "Send message"}
+          <span className={styles.arrow} aria-hidden="true"><ArrowUpRight /></span>
         </button>
-        <p className="mt-5 text-[0.75rem] text-[var(--text-secondary)] leading-relaxed max-w-2xl">
-          By submitting this form you consent to Move East Trading Co., Ltd. processing the information provided in order to respond to your request. Data is stored securely, is never sold, and is handled in line with EU GDPR requirements. You can request access, correction, or deletion of your data at any time by writing to info@moveasttrading.com.
-        </p>
+        <span className={styles.help}>Response within 24–48h</span>
       </div>
     </form>
-  );
-}
-
-function Field({
-  label,
-  name,
-  type = "text",
-  required,
-  placeholder,
-  helper,
-}: {
-  label: string;
-  name: string;
-  type?: string;
-  required?: boolean;
-  placeholder?: string;
-  helper?: string;
-}) {
-  return (
-    <div>
-      <label className="block text-[0.8125rem] font-medium text-[var(--text)] mb-2">
-        {label} {required && <span className="text-[var(--brand)]">*</span>}
-      </label>
-      <input
-        type={type}
-        name={name}
-        required={required}
-        placeholder={placeholder}
-        className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-3 text-[0.9375rem] text-[var(--text)] placeholder:text-[var(--text-secondary)] focus:outline-none focus:border-[var(--brand)] transition-colors"
-      />
-      {helper && (
-        <p className="mt-2 text-[0.75rem] text-[var(--text-secondary)]">{helper}</p>
-      )}
-    </div>
-  );
-}
-
-function Select({
-  label,
-  name,
-  required,
-  options,
-}: {
-  label: string;
-  name: string;
-  required?: boolean;
-  options: string[];
-}) {
-  return (
-    <div>
-      <label className="block text-[0.8125rem] font-medium text-[var(--text)] mb-2">
-        {label} {required && <span className="text-[var(--brand)]">*</span>}
-      </label>
-      <select
-        name={name}
-        required={required}
-        defaultValue=""
-        className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 py-3 text-[0.9375rem] text-[var(--text)] focus:outline-none focus:border-[var(--brand)] transition-colors appearance-none cursor-pointer"
-      >
-        <option value="" disabled>
-          Select…
-        </option>
-        {options.map((opt) => (
-          <option key={opt} value={opt}>
-            {opt}
-          </option>
-        ))}
-      </select>
-    </div>
   );
 }

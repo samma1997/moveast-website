@@ -1,0 +1,150 @@
+/* ============================================================
+   Footer — dark block with awards + credits
+   ============================================================ */
+
+.footer {
+  background: #0E0E0C;
+  color: #F4F3EF;
+  border-radius: 24px 24px 0 0;
+  margin-top: 40px;
+  padding: 56px 40px 28px;
+  position: relative;
+  overflow: hidden;
+}
+
+:global(html[data-theme="dark"]) .footer {
+  background: #181816;
+  border: 1px solid #2A2A27;
+  border-bottom: 0;
+}
+
+.inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr) 1.1fr repeat(3, 0.9fr);
+  gap: 32px;
+  padding-bottom: 40px;
+}
+
+.col h5 {
+  margin: 0 0 16px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #F4F3EF;
+}
+.col p,
+.col a {
+  display: block;
+  font-size: 13px;
+  line-height: 1.7;
+  color: color-mix(in oklab, #F4F3EF 70%, transparent);
+  margin: 0;
+  transition: color .2s var(--ease-out);
+}
+.col a:hover { color: #F4F3EF; }
+.colMenu a { padding: 3px 0; }
+
+.awards {
+  max-width: var(--container);
+  margin: 0 auto;
+  display: flex;
+  gap: 14px;
+  padding: 28px 0;
+  border-top: 1px solid color-mix(in oklab, #F4F3EF 12%, transparent);
+  flex-wrap: wrap;
+}
+.award {
+  background: #1A1A18;
+  border: 1px solid #2A2A27;
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-size: 11px;
+  line-height: 1.25;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #F4F3EF;
+  min-width: 92px;
+}
+.awardSmall {
+  display: block;
+  font-size: 9px;
+  font-weight: 500;
+  opacity: 0.7;
+  margin-top: 4px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.bottom {
+  max-width: var(--container);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding-top: 24px;
+  border-top: 1px solid color-mix(in oklab, #F4F3EF 12%, transparent);
+  font-size: 12px;
+  color: color-mix(in oklab, #F4F3EF 60%, transparent);
+  flex-wrap: wrap;
+}
+.bottom a {
+  color: color-mix(in oklab, #F4F3EF 80%, transparent);
+  transition: color .2s var(--ease-out);
+}
+.bottom a:hover { color: #F4F3EF; }
+.spacer { flex: 1; }
+.credits {
+  display: inline-flex;
+  gap: 20px;
+}
+
+.social {
+  display: inline-flex;
+  gap: 8px;
+}
+.social a {
+  width: 32px;
+  height: 32px;
+  background: #1A1A18;
+  border: 1px solid #2A2A27;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  color: #F4F3EF;
+  transition: background .2s var(--ease-out);
+}
+.social a:hover { background: #2A2A27; }
+.social svg { width: 14px; height: 14px; }
+
+.decor {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  display: grid;
+  grid-template-columns: repeat(3, 14px);
+  gap: 6px;
+  pointer-events: none;
+}
+.decor i {
+  display: block;
+  width: 14px;
+  height: 14px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.decor i:nth-child(1) { opacity: 0.4; }
+.decor i:nth-child(3) { opacity: 0.7; }
+
+@media (max-width: 1100px) {
+  .inner {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 700px) {
+  .footer { padding: 40px 20px 20px; }
+  .inner { grid-template-columns: 1fr 1fr; gap: 24px; }
+  .bottom { gap: 12px; }
+  .credits { order: 3; width: 100%; }
+}

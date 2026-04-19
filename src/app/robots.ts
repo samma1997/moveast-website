@@ -1,19 +1,22 @@
 import type { MetadataRoute } from "next";
+import { site } from "@/content/site";
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
-      { userAgent: "Googlebot", allow: "/", disallow: ["/api/", "/admin/"] },
-      { userAgent: "GPTBot", allow: "/" },
-      { userAgent: "ChatGPT-User", allow: "/" },
-      { userAgent: "Claude-Web", allow: "/" },
-      { userAgent: "ClaudeBot", allow: "/" },
-      { userAgent: "PerplexityBot", allow: "/" },
-      { userAgent: "Applebot", allow: "/" },
-      { userAgent: "MJ12bot", disallow: "/" },
-      { userAgent: "DotBot", disallow: "/" },
-      { userAgent: "*", allow: "/", disallow: ["/api/", "/admin/"] },
+      {
+        userAgent: "*",
+        allow: "/",
+        disallow: ["/admin", "/admin/*", "/api/*"],
+      },
+      {
+        // AI crawlers — esplicito Allow (Move East vuole essere citata da ChatGPT/Perplexity/Google AI Overview)
+        userAgent: ["GPTBot", "ChatGPT-User", "Google-Extended", "PerplexityBot", "ClaudeBot", "anthropic-ai", "cohere-ai"],
+        allow: "/",
+        disallow: ["/admin", "/admin/*", "/api/*"],
+      },
     ],
-    sitemap: "https://moveasttrading.com/sitemap.xml",
+    sitemap: `${site.url}/sitemap.xml`,
+    host: site.url,
   };
 }
