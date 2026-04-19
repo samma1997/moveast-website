@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Plus_Jakarta_Sans } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -8,25 +8,26 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
-const jakarta = Plus_Jakarta_Sans({
-  variable: "--font-jakarta",
+const mono = JetBrains_Mono({
+  variable: "--font-mono",
   subsets: ["latin"],
+  weight: ["400", "500"],
   display: "swap",
-  weight: ["500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
-  title: "Move East Trading — Strategic Procurement & Sourcing from China",
+  title: "Move East Trading — Strategic Procurement from China",
   description:
-    "Connecting global enterprises with China's manufacturers. Strategic sourcing, technology transfer, and supply chain management from Shenzhen. CICC member, UNGM registered.",
+    "Connecting global enterprises with China's manufacturers. Strategic sourcing, technology transfer, and supply chain management from Shenzhen. CICC Board Member, UNGM Registered Vendor.",
   metadataBase: new URL("https://moveasttrading.com"),
   openGraph: {
-    title: "Move East Trading — Strategic Procurement Partner in China",
+    title: "Move East Trading — Your Bridge to China's Industrial Power",
     description:
-      "Connecting global enterprises with China's manufacturers. Strategic sourcing, technology transfer, and supply chain management from Shenzhen.",
+      "Strategic sourcing, technology transfer, and supply chain management from Shenzhen. Official outsourcing agent for the Ethiopia-Djibouti Railway.",
     type: "website",
     locale: "en_US",
     siteName: "Move East Trading",
@@ -35,16 +36,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${jakarta.variable}`}
+      className={`${inter.variable} ${mono.variable}`}
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
-      <body className="min-h-screen antialiased font-[family-name:var(--font-inter)]">
+      <body>
         <ThemeProvider>
           <Navbar />
           <main>{children}</main>

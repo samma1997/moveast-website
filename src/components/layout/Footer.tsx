@@ -1,88 +1,109 @@
 import Link from "next/link";
-
-const OFFICES = [
-  { city: "Shenzhen", address: "Guangdong Province, China", label: "HQ" },
-  { city: "Hong Kong", address: "Hong Kong SAR" },
-  { city: "Rome", address: "Italy" },
-  { city: "Addis Ababa", address: "Ethiopia" },
-];
-
-const LINKS = {
-  Services: [
-    { label: "Strategic Sourcing", href: "/services/sourcing" },
-    { label: "Technology Transfer", href: "/services/technology-transfer" },
-    { label: "Supply Chain", href: "/services/supply-chain" },
-  ],
-  Sectors: [
-    { label: "Mobility & Transport", href: "/sectors/railway" },
-    { label: "Renewable Energy", href: "/sectors/energy" },
-    { label: "Medical Devices", href: "/sectors/medical" },
-    { label: "Industrial Machinery", href: "/sectors/industrial" },
-  ],
-  Company: [
-    { label: "About", href: "/about" },
-    { label: "Case Studies", href: "/case-studies" },
-    { label: "Blog", href: "/blog" },
-    { label: "Contact", href: "/contact" },
-  ],
-};
+import { ThemeToggle } from "./ThemeToggle";
 
 export function Footer() {
   return (
-    <footer className="bg-[var(--bg-alt)] border-t border-[var(--border)]">
-      <div className="max-w-[1280px] mx-auto px-6 lg:px-8 py-16 lg:py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 lg:gap-8">
-          {/* Offices */}
-          {OFFICES.map((office) => (
-            <div key={office.city}>
-              <p className="text-[0.875rem] font-semibold text-[var(--text)]">
-                {office.city} {office.label && <span className="text-[var(--brand)] text-xs">({office.label})</span>}
-              </p>
-              <p className="text-[0.8125rem] text-[var(--text-secondary)] mt-1">{office.address}</p>
-            </div>
-          ))}
-
-          {/* Link columns */}
-          {Object.entries(LINKS).map(([title, links]) => (
-            <div key={title}>
-              <p className="text-[0.875rem] font-semibold text-[var(--text)] mb-3">{title}</p>
-              <ul className="space-y-2">
-                {links.map((link) => (
-                  <li key={link.href}>
-                    <Link href={link.href} className="text-[0.8125rem] text-[var(--text-secondary)] hover:text-[var(--text)] transition-colors">
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+    <>
+      <footer className="footer" data-screen-label="Footer">
+        <div className="foot-decor" aria-hidden="true">
+          <i />
+          <i />
+          <i />
         </div>
 
-        {/* Affiliations */}
-        <div className="mt-14 pt-8 border-t border-[var(--border)] flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-          <div className="flex items-center gap-6">
-            <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded bg-[var(--brand)]/10 flex items-center justify-center">
-                <span className="text-[var(--brand)] text-[9px] font-bold">CICC</span>
-              </div>
-              <span className="text-[0.75rem] text-[var(--text-secondary)]">Member</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded bg-[var(--brand)]/10 flex items-center justify-center">
-                <span className="text-[var(--brand)] text-[9px] font-bold">UN</span>
-              </div>
-              <span className="text-[0.75rem] text-[var(--text-secondary)]">UNGM Registered</span>
-            </div>
+        <div className="footer-inner">
+          <div className="foot-col">
+            <h5>Shenzhen (HQ)</h5>
+            <p>
+              Guangdong Province
+              <br />
+              China
+            </p>
+          </div>
+          <div className="foot-col">
+            <h5>Hong Kong</h5>
+            <p>Hong Kong SAR</p>
+          </div>
+          <div className="foot-col">
+            <h5>Rome</h5>
+            <p>Italy</p>
+          </div>
+          <div className="foot-col">
+            <h5>Addis Ababa</h5>
+            <p>Ethiopia</p>
+          </div>
+          <div className="foot-col">
+            <h5>Contact</h5>
+            <p>
+              info@moveasttrading.com
+              <br />
+              +39 06 4200 1212
+            </p>
           </div>
 
-          <div className="flex items-center gap-6 text-[0.75rem] text-[var(--text-secondary)]">
-            <span>&copy; {new Date().getFullYear()} Move East Trading Co. Ltd.</span>
-            <Link href="/privacy" className="hover:text-[var(--text)] transition-colors">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-[var(--text)] transition-colors">Terms</Link>
+          <div className="foot-col menu">
+            <h5>Services</h5>
+            <Link href="/services/sourcing">Strategic Sourcing</Link>
+            <Link href="/services/technology-transfer">Technology Transfer</Link>
+            <Link href="/services/supply-chain">Supply Chain Management</Link>
+          </div>
+          <div className="foot-col menu">
+            <h5>Sectors</h5>
+            <Link href="/sectors/mobility">Mobility &amp; Transport</Link>
+            <Link href="/sectors/renewable-energy">Renewable Energy</Link>
+            <Link href="/sectors/medical-devices">Medical Devices</Link>
+            <Link href="/sectors/industrial-machinery">Industrial Machinery</Link>
+          </div>
+          <div className="foot-col menu">
+            <h5>Resources</h5>
+            <Link href="/blog">Blog</Link>
+            <Link href="/blog/ethiopia-djibouti-railway-china-africa-procurement">EDR case study</Link>
+            <Link href="/blog/how-to-choose-china-sourcing-agent">China sourcing guide</Link>
+          </div>
+          <div className="foot-col menu">
+            <h5>Company</h5>
+            <Link href="/about">About</Link>
+            <Link href="/contact">Contact</Link>
+            <Link href="/blog">Blog</Link>
           </div>
         </div>
-      </div>
-    </footer>
+
+        <div className="foot-awards">
+          <div className="foot-award">
+            ISO 9001<span className="sm">Certified 2025</span>
+          </div>
+          <div className="foot-award">
+            China Sourcing<span className="sm">Partner 2025</span>
+          </div>
+        </div>
+
+        <div className="foot-bottom">
+          <span>© {new Date().getFullYear()} MoveEast Trading</span>
+          <Link href="/privacy">Privacy Policy</Link>
+          <Link href="/terms">Terms &amp; Conditions</Link>
+          <span className="spacer" />
+          <div className="credits">
+            <span>Design by MoveEast Studio</span>
+            <span>Built in Shenzhen &amp; Rome</span>
+          </div>
+          <div className="foot-social">
+            <a href="https://www.instagram.com/" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <rect x="3" y="3" width="18" height="18" rx="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
+              </svg>
+            </a>
+            <a href="https://www.linkedin.com/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M4 4h4v4H4zM4 10h4v10H4zM10 10h4v2c.7-1.2 2-2.3 4-2.3 3 0 4 2 4 5V20h-4v-4.5c0-1.5-.5-2.5-2-2.5s-2 1-2 2.5V20h-4z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </footer>
+
+      <ThemeToggle />
+    </>
   );
 }
