@@ -1,15 +1,15 @@
 /**
- * Instagram feed (hand-picked posts per About).
- * Riferimenti reali ai contenuti di @petrini.alex estratti da instagram-scrape.json.
- * Al momento dati statici; in futuro fetcher schedulato che riempie la collection "Media" Payload.
+ * Instagram feed preview (About page) — 3 post curati.
+ * Cambiarli quando Petrini pubblica cose nuove e significative.
  */
 
 export type IgPost = {
   id: string;
+  shortcode: string;
   location: string;
-  dateLabel: string; // "Apr 10"
-  dateIso: string; // "2026-04-10"
-  dateFormatted: string; // "10 APR"
+  dateLabel: string;
+  dateIso: string;
+  dateFormatted: string;
   likes: number;
   comments: number;
   caption: string;
@@ -18,19 +18,8 @@ export type IgPost = {
 
 export const igPosts: readonly IgPost[] = [
   {
-    id: "cmef-2026",
-    location: "Shanghai · CMEF 2026",
-    dateLabel: "Apr 10",
-    dateIso: "2026-04-10",
-    dateFormatted: "10 APR",
-    likes: 9,
-    comments: 2,
-    caption:
-      "Oggi alla CMEF di Shanghai, una delle più grandi fiere al mondo nel settore medicale. Seminario \"What Italy Can Offer to China\".",
-    href: "https://www.instagram.com/petrini.alex/",
-  },
-  {
-    id: "cicc-guangzhou",
+    id: "cicc-spring-gala",
+    shortcode: "DWqlaDbAW2Y7x8aWD7Z0isCJn3xjDxizzLHhG80",
     location: "Guangzhou · CICC Spring Gala",
     dateLabel: "Apr 3",
     dateIso: "2026-04-03",
@@ -43,6 +32,7 @@ export const igPosts: readonly IgPost[] = [
   },
   {
     id: "byd-shenzhen",
+    shortcode: "DUvi9Z4CF4foybi4dkNRe4RN-24gGPe5xaNPdA0",
     location: "Shenzhen · BYD HQ",
     dateLabel: "Feb 14",
     dateIso: "2026-02-14",
@@ -51,6 +41,19 @@ export const igPosts: readonly IgPost[] = [
     comments: 1,
     caption:
       "Tornato al quartier generale di BYD a Shenzhen, accompagnando la delegazione della Camera di Commercio Italiana in Cina.",
+    href: "https://www.instagram.com/petrini.alex/",
+  },
+  {
+    id: "palazzo-madama",
+    shortcode: "DVLPRg6iKP04c9Dc6xdHwqm9QwnCfCKCFqjhzw0",
+    location: "Roma · Palazzo Madama",
+    dateLabel: "Feb 25",
+    dateIso: "2026-02-25",
+    dateFormatted: "25 FEB",
+    likes: 11,
+    comments: 2,
+    caption:
+      "Incontro al Senato della Repubblica con il Presidente CICC e parlamentari italiani per presentare il rapporto annuale sugli investimenti italiani in Cina.",
     href: "https://www.instagram.com/petrini.alex/",
   },
 ];

@@ -38,15 +38,14 @@ export function HeaderInteractive() {
     <div className={styles.wrap}>
       <header className={styles.header} aria-label="Main navigation">
         <Link href="/" className={styles.logo} aria-label="Move East home">
-          <span className={styles.logoMark} aria-hidden="true">
-            <svg viewBox="0 0 22 22" fill="none">
-              <rect x="3" y="3" width="7" height="7" fill="currentColor" rx="1.2" />
-              <rect x="12" y="3" width="7" height="7" fill="var(--accent)" rx="1.2" />
-              <rect x="3" y="12" width="7" height="7" fill="var(--accent)" fillOpacity=".6" rx="1.2" />
-              <rect x="12" y="12" width="7" height="7" fill="currentColor" rx="1.2" />
-            </svg>
-          </span>
-          MoveEast
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={theme === "dark" ? "/logo/logo-dark.webp" : "/logo/logo-light.webp"}
+            alt="Move East Trading"
+            className={styles.logoImg}
+            width={160}
+            height={58}
+          />
         </Link>
 
         <nav className={styles.nav} aria-label="Primary">
@@ -60,7 +59,7 @@ export function HeaderInteractive() {
           >
             <Link href="/services" className={styles.navLink} aria-haspopup="menu" aria-expanded={mega === "svc"}>
               Services
-              <ChevronDown className="chev" />
+              <ChevronDown className={styles.chev} />
             </Link>
           </div>
           <div
@@ -72,13 +71,13 @@ export function HeaderInteractive() {
           >
             <Link href="/sectors" className={styles.navLink} aria-haspopup="menu" aria-expanded={mega === "sec"}>
               Sectors
-              <ChevronDown className="chev" />
+              <ChevronDown className={styles.chev} />
             </Link>
           </div>
           <Link href="/blog" className={styles.navLink}>Blog</Link>
         </nav>
 
-        <Link href="/contact" className="cta">
+        <Link href="/contact" className={`cta ${styles.headerCta}`}>
           <span>Let&apos;s talk</span>
           <span className="arrow" aria-hidden="true"><ArrowUpRight /></span>
         </Link>
@@ -91,6 +90,8 @@ export function HeaderInteractive() {
         >
           {theme === "dark" ? <SunIcon /> : <MoonIcon />}
         </button>
+
+        <span className={styles.spacer} aria-hidden="true" />
 
         <MobileDrawer services={services} sectors={sectors} />
       </header>
@@ -133,7 +134,13 @@ export function HeaderInteractive() {
                 key={s.slug}
                 className={`${styles.megaSlide} ${svcHoverIdx === i ? styles.on : ""}`}
               >
-                <div className={styles.megaSlideBg} />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`/images/services/${s.slug}.webp`}
+                  alt=""
+                  loading="lazy"
+                  style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+                />
                 <span className={styles.megaChip}>{s.shortLabel}</span>
               </div>
             ))}
@@ -185,7 +192,13 @@ export function HeaderInteractive() {
                 key={s.slug}
                 className={`${styles.megaSlide} ${secHoverIdx === i ? styles.on : ""}`}
               >
-                <div className={styles.megaSlideBg} />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`/images/sectors/${s.slug}.webp`}
+                  alt=""
+                  loading="lazy"
+                  style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+                />
                 <span className={styles.megaChip}>{s.shortLabel}</span>
               </div>
             ))}

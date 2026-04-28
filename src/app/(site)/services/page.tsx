@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
 import { services } from "@/content/services";
 import { site } from "@/content/site";
-import { PageHero } from "@/components/pages/PageHero";
-import { ServiceCard } from "@/components/pages/ServiceCard";
-import { Cta } from "@/components/ui/Cta";
+import { ServicesHero } from "@/components/services/ServicesHero";
+import { ServicesCards } from "@/components/services/ServicesCards";
+import { ServicesMethod } from "@/components/services/ServicesMethod";
+import { ServicesPillars } from "@/components/services/ServicesPillars";
+import { ServicesSectorsLink } from "@/components/services/ServicesSectorsLink";
+import { ServicesFaq } from "@/components/services/ServicesFaq";
+import { Results } from "@/components/home/Results";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { breadcrumbSchema } from "@/lib/seo/schema";
-import { serviceIcons } from "@/components/layout/MegaMenuIcons";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -49,27 +52,13 @@ export default function ServicesHubPage() {
         ]}
       />
 
-      <PageHero
-        eyebrow="What we do"
-        title={<>Three service lines, one <em>integrated</em> approach.</>}
-        lede="We manage complex procurement operations where reliability, technical alignment, and communication efficiency are essential — from Shenzhen to your market."
-        actions={<Cta href="/contact">Talk to our team</Cta>}
-      />
-
-      <section style={{ padding: "24px 0 80px" }}>
-        <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 32px", display: "grid", gap: 16 }}>
-          {services.map((s) => (
-            <ServiceCard
-              key={s.slug}
-              href={`/services/${s.slug}`}
-              index={s.order}
-              title={s.title}
-              description={s.description}
-              icon={serviceIcons[s.slug as keyof typeof serviceIcons]}
-            />
-          ))}
-        </div>
-      </section>
+      <ServicesHero />
+      <ServicesCards />
+      <ServicesMethod />
+      <ServicesPillars />
+      <ServicesSectorsLink />
+      <Results />
+      <ServicesFaq />
     </>
   );
 }

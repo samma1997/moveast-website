@@ -1,6 +1,6 @@
 /**
- * Timeline aziendale — 6 milestone 2018–2025.
- * Usata nella pagina About (sezione Timeline) + schema Organization.foundingDate/Event.
+ * Timeline aziendale — milestone reali documentate.
+ * Usata nella pagina About (sezione Timeline).
  */
 
 export type TimelineEntry = {
@@ -8,7 +8,8 @@ export type TimelineEntry = {
   title: string;
   description: string;
   tag: string;
-  caption: string; // etichetta sull'immagine placeholder
+  caption: string;
+  photo?: string; // path in /public/images/timeline/
 };
 
 export const timeline: readonly TimelineEntry[] = [
@@ -18,15 +19,8 @@ export const timeline: readonly TimelineEntry[] = [
     description:
       "Alessandro Petrini relocates to China. Begins building sourcing networks across Guangdong Province.",
     tag: "Founded · Shenzhen",
-    caption: "Shenzhen — day one",
-  },
-  {
-    year: 2020,
-    title: "COVID emergency response",
-    description:
-      "COVID-19 emergency: Move East sources and delivers critical medical equipment to European partners under crisis conditions.",
-    tag: "Crisis response · EU partners",
-    caption: "COVID emergency response",
+    caption: "Italian Consulate · Hong Kong",
+    photo: "/images/timeline/2018-consulate-hong-kong.webp",
   },
   {
     year: 2021,
@@ -34,30 +28,25 @@ export const timeline: readonly TimelineEntry[] = [
     description:
       "Appointed official outsourcing agent in China for the Ethiopia-Djibouti Railway. Addis Ababa office established.",
     tag: "Railway · East Africa",
-    caption: "Ethiopia-Djibouti Railway",
-  },
-  {
-    year: 2022,
-    title: "CICC Board · Rome office",
-    description:
-      "Alessandro Petrini joins the Board of the China-Italy Chamber of Commerce. Rome office opens to serve European clients.",
-    tag: "CICC Board · 3 offices",
-    caption: "CICC Board · Rome office",
+    caption: "Interchamber Networking · Shenzhen",
+    photo: "/images/timeline/2021-interchamber-shenzhen.webp",
   },
   {
     year: 2024,
-    title: "UNGM · Hong Kong",
+    title: "CICC Board · UNGM · Hong Kong",
     description:
-      "UNGM registration completed. Hong Kong office established for trade finance and compliance. Procurement expanded across Gulf region.",
-    tag: "UNGM · 4 offices",
-    caption: "UNGM · Hong Kong",
+      "Alessandro Petrini joins the Board of the China-Italy Chamber of Commerce. UNGM registration completed. Hong Kong office established for trade finance and compliance.",
+    tag: "CICC Board · UNGM · 4 offices",
+    caption: "Business Forum Italia-Cina",
+    photo: "/images/timeline/2024-business-forum-italia-cina.webp",
   },
   {
     year: 2025,
     title: "Technology Transfer line launched",
     description:
-      "Launch of Technology Transfer service line. Team expanded across four offices on three continents. Renewable energy and BESS sourcing added.",
+      "Launch of the Technology Transfer service line, structuring know-how, IP governance, and engineer training as a dedicated offering — with operations across the four Move East offices.",
     tag: "Today · 4 offices · 3 continents",
-    caption: "Today",
+    caption: "CICC · Guangzhou",
+    photo: "/images/timeline/2025-cicc-guangzhou.webp",
   },
 ] as const;

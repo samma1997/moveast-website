@@ -24,7 +24,13 @@ export function SectorsShowcase() {
           <aside className={styles.media} aria-hidden="true">
             {sectors.map((s, i) => (
               <div key={s.slug} className={`${styles.slide} ${i === activeIdx ? styles.on : ""}`}>
-                <div className="ph" />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`/images/sectors/${s.slug}.webp`}
+                  alt={s.title}
+                  loading="lazy"
+                  style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+                />
               </div>
             ))}
             <span className={styles.mediaIdx}>

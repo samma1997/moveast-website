@@ -14,7 +14,7 @@ export const contactSchema = z.object({
   message: z.string().trim().min(20, "Tell us a bit more (20+ chars)").max(4000),
   // Honeypot — must be empty
   website: z.string().max(0, "Spam detected").optional().default(""),
-  consent: z.literal(true, { errorMap: () => ({ message: "Privacy consent is required" }) }),
+  consent: z.literal(true, { message: "Privacy consent is required" }),
 });
 
 export type ContactInput = z.infer<typeof contactSchema>;

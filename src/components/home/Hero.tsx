@@ -19,9 +19,9 @@ export function Hero() {
         </div>
 
         <h1 id="home-hero-title" className={styles.headline}>
-          <span className="line">Strategic</span>
-          <span className="line"><em>Procurement</em></span>
-          <span className="line">from China</span>
+          <span className={styles.line}>Strategic</span>
+          <span className={styles.line}><em>Procurement</em></span>
+          <span className={styles.line}>from China</span>
         </h1>
 
         <div className={styles.lower}>
@@ -38,12 +38,12 @@ export function Hero() {
 
           {featuredCase && (
             <Link
-              href={featuredCase.href ?? "/case-studies"}
+              href={featuredCase.href ?? "/blog"}
               className={styles.case}
               aria-label={`Case study: ${featuredCase.client}`}
             >
               <div className={styles.caseCopy}>
-                <p>Official outsourcing agent for the Ethiopia-Djibouti Railway — managing procurement across four countries.</p>
+                <p>Ethiopia-Djibouti Railway — $4B procurement corridor since 2018.</p>
                 <div className={styles.caseMeta}>
                   <span className={styles.caseClient}>
                     {featuredCase.client}
@@ -54,8 +54,13 @@ export function Hero() {
                 </div>
               </div>
               <div className={styles.caseMedia}>
-                <div className="ph" />
-                <span className={styles.caseLabel}>case photo</span>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/images/hero-edr-railway.webp"
+                  alt="Train crossing the desert along the East Africa corridor"
+                  loading="eager"
+                  style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+                />
               </div>
             </Link>
           )}

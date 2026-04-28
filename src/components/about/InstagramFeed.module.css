@@ -19,7 +19,7 @@
 }
 
 .title {
-  font-size: clamp(32px, 4.2vw, 56px);
+  font-size: clamp(28px, 3.4vw, 44px);
   line-height: 1.02;
   letter-spacing: -0.035em;
   font-weight: 600;
@@ -37,6 +37,7 @@
 .headR {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 20px;
   padding-bottom: 6px;
 }
@@ -217,7 +218,7 @@
   margin-top: 32px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 980px) {
   .section { padding: 16px 24px 64px; }
   .head { grid-template-columns: 1fr; gap: 24px; margin-bottom: 28px; }
   .grid { grid-template-columns: 1fr; }

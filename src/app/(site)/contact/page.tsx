@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { site } from "@/content/site";
-import { PageHero } from "@/components/pages/PageHero";
-import { ContactForm } from "@/components/contact/ContactForm";
+import { ContactChat } from "@/components/contact/ContactChat";
+import { SectorPartners } from "@/components/sectors/SectorPartners";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { breadcrumbSchema } from "@/lib/seo/schema";
+import styles from "@/components/contact/ContactPage.module.css";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -17,6 +18,50 @@ export const metadata: Metadata = {
   },
 };
 
+type Office = {
+  flag: string;
+  city: string;
+  addr: string;
+  addrLine2?: string;
+  email: string;
+  role: string;
+};
+
+const offices: readonly Office[] = [
+  {
+    flag: "🇨🇳",
+    city: "Shenzhen · Headquarters",
+    addr: "Sourcing, supplier qualification, factory audits, operations",
+    addrLine2: "Guangdong Province, China",
+    email: "info@moveasttrading.com",
+    role: "Role: sourcing & operations",
+  },
+  {
+    flag: "🇭🇰",
+    city: "Hong Kong",
+    addr: "Trade finance, documentation, export compliance",
+    addrLine2: "Hong Kong SAR",
+    email: "info@moveasttrading.com",
+    role: "Role: trade finance & compliance",
+  },
+  {
+    flag: "🇮🇹",
+    city: "Rome",
+    addr: "European business development and client relations",
+    addrLine2: "Lazio, Italy",
+    email: "info@moveasttrading.com",
+    role: "+39 06 4200 1212",
+  },
+  {
+    flag: "🇪🇹",
+    city: "Addis Ababa",
+    addr: "African corridor operations, infrastructure & public-sector clients",
+    addrLine2: "Federal Democratic Republic of Ethiopia",
+    email: "info@moveasttrading.com",
+    role: "Role: Africa corridor",
+  },
+];
+
 export default function ContactPage() {
   return (
     <>
@@ -28,8 +73,6 @@ export default function ContactPage() {
             url: `${site.url}/contact`,
             name: `Contact — ${site.name}`,
             description: "Contact form and office addresses for Move East Trading.",
-            isPartOf: { "@id": `${site.url}/#website` },
-            mainEntity: { "@id": `${site.url}/#organization` },
           },
           breadcrumbSchema([
             { name: "Home", url: "/" },
@@ -38,78 +81,74 @@ export default function ContactPage() {
         ]}
       />
 
-      <PageHero
-        eyebrow="Get in touch"
-        title={<>Let&apos;s talk about your <em>project.</em></>}
-        lede="Tell us your target market, volume, and technical requirements. Our Shenzhen team qualifies suppliers and returns a shortlist within a week."
-      />
-
-      <section style={{ padding: "24px 0 96px" }}>
-        <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 32px", display: "grid", gridTemplateColumns: "minmax(0, 1.2fr) minmax(0, 1fr)", gap: 64, alignItems: "start" }}>
-          <ContactForm />
-
-          <aside style={{ display: "flex", flexDirection: "column", gap: 32, position: "sticky", top: 120 }}>
-            <div>
-              <span style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: 11,
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-                color: "var(--muted)",
-              }}>Direct contact</span>
-              <div style={{ marginTop: 12, display: "flex", flexDirection: "column", gap: 8 }}>
-                <a href={`mailto:${site.email}`} style={{ fontSize: 18, fontWeight: 600, letterSpacing: "-0.02em", color: "var(--ink)" }}>
-                  {site.email}
-                </a>
-                <a href={`tel:${site.phone.replace(/\s/g, "")}`} style={{ fontSize: 15, color: "var(--ink-2)" }}>
-                  {site.phone}
-                </a>
+      {/* HERO */}
+      <section className={styles.heroSec}>
+        <div className={styles.container}>
+          <div className={styles.heroGrid}>
+            <div className={styles.heroLeft}>
+              <div>
+                <div className={styles.eyebrow}>
+                  <span className={styles.dot} aria-hidden="true" />
+                  <span>Contact · Shenzhen · Hong Kong · Rome · Addis Ababa</span>
+                </div>
+                <h1 className={styles.heroTitle}>
+                  Talk to the <em>team in Shenzhen</em>.
+                </h1>
               </div>
-            </div>
-
-            <div>
-              <span style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: 11,
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-                color: "var(--muted)",
-              }}>Offices</span>
-              <div style={{ marginTop: 12, display: "flex", flexDirection: "column", gap: 16 }}>
-                {site.offices.map((o) => (
-                  <div key={o.city}>
-                    <div style={{ fontSize: 15, fontWeight: 600, letterSpacing: "-0.01em", color: "var(--ink)" }}>
-                      {o.city}{o.label === "HQ" ? " (HQ)" : ""}
-                    </div>
-                    <div style={{ fontSize: 13, color: "var(--ink-2)", marginTop: 2 }}>
-                      {o.region ? `${o.region}, ${o.country}` : o.country}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <span style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: 11,
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-                color: "var(--muted)",
-              }}>Response</span>
-              <p style={{
-                marginTop: 12,
-                fontSize: 14,
-                lineHeight: 1.55,
-                color: "var(--ink-2)",
-                maxWidth: "38ch",
-              }}>
-                We reply within 24–48 hours. For urgent briefs reference your target market in the message.
+              <p className={styles.heroLede}>
+                Move East Trading is a China-based procurement company. We work with
+                governments, EPC contractors, industrial buyers, and distributors
+                who need a reliable counterpart on the ground. Every message is read
+                by a member of the team, not by a chatbot.
               </p>
+              <div className={styles.footline}>
+                <span className={styles.live} aria-hidden="true" />
+                <span>Shenzhen office · GMT+8</span>
+              </div>
             </div>
-          </aside>
+
+            <ContactChat />
+          </div>
         </div>
       </section>
+
+      {/* CONTACT INFO (4 offices) */}
+      <section className={styles.infoSec}>
+        <div className={styles.container}>
+          <div className={styles.infoGrid}>
+            {offices.map((o) => (
+              <article key={o.city} className={styles.infoCard}>
+                <span className={styles.flag} aria-hidden="true">{o.flag}</span>
+                <span className={styles.city}>{o.city}</span>
+                <p className={styles.addr}>
+                  {o.addr}
+                  {o.addrLine2 ? (
+                    <>
+                      <br />
+                      {o.addrLine2}
+                    </>
+                  ) : null}
+                </p>
+                <div className={styles.contactRow}>
+                  <a href={`mailto:${o.email}`}>{o.email}</a>
+                  <span>{o.role}</span>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* STRATEGIC PARTNERS (marquee) */}
+      <SectorPartners
+        partners={{
+          eyebrow: "Direct channels",
+          titlePre: "Prefer to ",
+          titleEm: "skip the form",
+          titlePost: "?",
+          lede: "Use the channel that best matches your request. General inquiries at info@moveasttrading.com. Phone (EU line) +39 06 4200 1212. Founder direct: Alessandro Petrini on LinkedIn. Press & media or partnerships — email with the matching subject line.",
+        }}
+      />
     </>
   );
 }

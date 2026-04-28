@@ -62,9 +62,9 @@
 .launcher:not(.open) .btnClose { display: none; }
 
 .panel {
-  width: 340px;
+  width: 360px;
   max-width: calc(100vw - 36px);
-  height: 440px;
+  height: 460px;
   max-height: calc(100vh - 120px);
   background: var(--surface);
   border: 1px solid var(--line);
@@ -75,8 +75,10 @@
   overflow: hidden;
   transform-origin: bottom right;
   animation: panelIn .25s var(--ease-out);
+  transition: height .3s var(--ease-out);
 }
 .launcher.open .panel { display: flex; }
+.launcher.open.chat .panel { height: 540px; }
 
 @keyframes panelIn {
   from { opacity: 0; transform: scale(0.92) translateY(10px); }
@@ -178,28 +180,193 @@
   transition: background .2s var(--ease-out), color .2s var(--ease-out), border-color .2s var(--ease-out);
 }
 .cta a:hover { border-color: var(--ink); }
-.cta a.primary {
+.cta a.primary,
+.cta button.primary {
   background: var(--ink);
   color: var(--bg);
   border-color: var(--ink);
 }
-.cta a.primary:hover {
+.cta a.primary:hover,
+.cta button.primary:hover {
   background: var(--accent);
   border-color: var(--accent);
 }
 
-@media (max-width: 900px) {
+/* ---- In-widget chat states ---- */
+.startBtn {
+  flex: 1;
+  font-size: 12.5px;
+  font-weight: 500;
+  padding: 10px 12px;
+  border-radius: 10px;
+  text-align: center;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  background: var(--bg);
+  cursor: pointer;
+  transition: border-color .2s var(--ease-out), background .2s var(--ease-out);
+  font-family: inherit;
+}
+.startBtn:hover {
+  border-color: var(--ink);
+}
+
+.userBubble {
+  align-self: flex-end;
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+}
+
+.typing {
+  align-self: flex-start;
+  display: inline-flex;
+  gap: 4px;
+  padding: 10px 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+.typing i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--muted);
+  animation: typingDot 1.2s infinite ease-in-out;
+}
+.typing i:nth-child(2) { animation-delay: 0.2s; }
+.typing i:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typingDot {
+  0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-3px); }
+}
+
+.chips {
+  padding: 12px 14px;
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.chip {
+  font-size: 11.5px;
+  font-weight: 500;
+  padding: 7px 11px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+  cursor: pointer;
+  transition: all .15s var(--ease-out);
+  font-family: inherit;
+}
+.chip:hover {
+  border-color: var(--ink);
+}
+.chipOn {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+}
+
+.inline {
+  padding: 12px 14px;
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.input,
+.textarea {
+  flex: 1;
+  font-size: 13px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+  font-family: inherit;
+  resize: none;
+  outline: none;
+  transition: border-color .15s var(--ease-out);
+}
+.input:focus,
+.textarea:focus {
+  border-color: var(--ink);
+}
+.textarea {
+  line-height: 1.4;
+  min-height: 40px;
+  max-height: 80px;
+}
+
+.sendBtn {
+  width: 40px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--bg);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background .15s var(--ease-out);
+}
+.sendBtn:hover:not(:disabled) {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.sendBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.sendBtn svg {
+  width: 13px;
+  height: 13px;
+}
+
+.resetBtn {
+  margin-left: auto;
+  font-size: 10.5px;
+  font-family: var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  border-radius: 5px;
+  border: 1px solid color-mix(in oklab, var(--bg) 25%, transparent);
+  background: transparent;
+  color: var(--bg);
+  cursor: pointer;
+  transition: background .15s var(--ease-out);
+  font-weight: 500;
+}
+.resetBtn:hover {
+  background: color-mix(in oklab, var(--bg) 12%, transparent);
+}
+
+@media (max-width: 980px) {
   .launcher {
     bottom: 16px;
     right: 16px;
   }
+  /* On mobile: only icon, no "Let's talk" label — keep it compact, off the content */
   .btn {
-    padding: 10px 14px 10px 12px;
-    font-size: 12.5px;
+    padding: 12px;
+    width: 48px;
+    height: 48px;
+    border-radius: 999px;
   }
+  .btnLabel { display: none; }
   .panel {
     width: calc(100vw - 32px);
-    height: 420px;
+    height: 460px;
+  }
+  .launcher.open.chat .panel {
+    height: calc(100vh - 100px);
+    max-height: 600px;
   }
 }
 

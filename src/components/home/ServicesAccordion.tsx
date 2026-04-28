@@ -23,7 +23,13 @@ export function ServicesAccordion() {
           <aside className={styles.media} aria-hidden="true">
             {services.map((s, i) => (
               <div key={s.slug} className={`${styles.slide} ${i === openIdx ? styles.on : ""}`}>
-                <div className="ph" />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`/images/services/${s.slug}-portrait.webp`}
+                  alt={s.title}
+                  loading="lazy"
+                  style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+                />
                 <span className="idx">{String(i + 1).padStart(2, "0")} / {s.title.toUpperCase()}</span>
                 <span className="tag">{s.shortLabel.toLowerCase()}</span>
               </div>
@@ -64,7 +70,13 @@ export function ServicesAccordion() {
                         </Link>
                       </div>
                       <div className={styles.thumb}>
-                        <div className="ph" />
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={`/images/services/${s.slug}.webp`}
+                          alt=""
+                          loading="lazy"
+                          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+                        />
                       </div>
                     </div>
                   </div>

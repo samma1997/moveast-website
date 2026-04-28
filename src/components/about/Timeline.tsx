@@ -97,13 +97,24 @@ export function Timeline() {
 function TimelineCard({ entry }: { entry: TimelineEntry }) {
   return (
     <li className={styles.year}>
-      <div className={styles.yearLabel}>{entry.year}</div>
-      <div className={styles.ticks} aria-hidden="true">
-        <i className="big" /><i /><i /><i />
+      <div className={styles.yearLabel}>
+        {entry.year}
+        <i className={styles.big} aria-hidden="true" />
       </div>
+      <div className={styles.ticks} aria-hidden="true" />
       <article className={styles.card}>
         <div className={styles.media}>
-          <div className="ph" />
+          {entry.photo ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={entry.photo}
+              alt={entry.caption}
+              loading="lazy"
+              style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+            />
+          ) : (
+            <div className="ph" />
+          )}
           <span className="cap">{entry.caption}</span>
         </div>
         <div className={styles.body}>

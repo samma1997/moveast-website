@@ -21,7 +21,7 @@
 .headL { padding-bottom: 8px; }
 
 .title {
-  font-size: clamp(36px, 4.6vw, 60px);
+  font-size: clamp(28px, 3.4vw, 44px);
   line-height: 1.02;
   letter-spacing: -0.035em;
   font-weight: 600;
@@ -98,63 +98,127 @@
 .rail {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: 300px;
+  grid-auto-columns: 360px;
   gap: 0;
   padding: 0 32px 0 0;
   position: relative;
 }
 @media (min-width: 1200px) {
-  .rail { grid-auto-columns: 340px; }
+  .rail { grid-auto-columns: 400px; }
 }
-@media (max-width: 900px) {
-  .rail { grid-auto-columns: 78vw; padding-right: 24px; }
+@media (max-width: 980px) {
+  .rail { grid-auto-columns: 82vw; padding-right: 24px; }
 }
 
 .year {
   position: relative;
-  padding: 0 20px 0 0;
+  padding: 0 24px 0 0;
   scroll-snap-align: start;
   display: flex;
   flex-direction: column;
 }
 
 .yearLabel {
-  font-size: clamp(48px, 4.4vw, 80px);
+  font-size: clamp(28px, 3.2vw, 42px);
   font-weight: 600;
   letter-spacing: -0.04em;
   line-height: 1;
   color: var(--ink);
-  margin-bottom: 18px;
+  margin-bottom: 20px;
+  position: relative;
+  width: max-content;
 }
 
+/* Tacca bold — centrata sotto il numero dell'anno, corta */
+.yearLabel i {
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 4px);
+  transform: translateX(-50%);
+  width: 2px;
+  height: 36px;
+  background: var(--ink);
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Tacchette piccole — ancorate al centro del numero, equispaziate a 60px */
+.yearLabel::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 14px);
+  width: 360px;
+  height: 16px;
+  background-image: linear-gradient(
+    to right,
+    var(--ink-2) 0,
+    var(--ink-2) 1px,
+    transparent 1px,
+    transparent 60px
+  );
+  background-size: 60px 16px;
+  background-position: 60px 0;
+  background-repeat: repeat-x;
+  opacity: 0.5;
+  z-index: 1;
+  pointer-events: none;
+}
+
+@media (min-width: 1200px) {
+  .yearLabel::after {
+    width: 400px;
+    background-size: 68px 16px;
+    background-position: 68px 0;
+    background-image: linear-gradient(
+      to right,
+      var(--ink-2) 0,
+      var(--ink-2) 1px,
+      transparent 1px,
+      transparent 68px
+    );
+  }
+}
+
+/* ---- Timeline axis — centered line + very long ticks passing behind cards ---- */
 .ticks {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-.ticks i {
+  position: relative;
+  height: 20px;
+  margin-bottom: 24px;
   display: block;
-  width: 4px;
-  height: 4px;
-  background: var(--muted);
-  border-radius: 50%;
-  flex-shrink: 0;
+  overflow: visible;
 }
-.ticks i.big {
-  width: 10px;
-  height: 10px;
-  background: var(--accent);
+
+/* Linea orizzontale centrale */
+.ticks::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 0;
+  right: -80px;
+  height: 1px;
+  background: var(--ink-2);
+  opacity: 0.45;
+  z-index: 1;
 }
+
+
 
 .card {
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: 18px;
+  border-radius: 20px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  min-height: 380px;
+  height: 460px;
+  position: relative;
+  z-index: 2;
+  transition: border-color .25s var(--ease-out), transform .25s var(--ease-out);
+}
+.card:hover {
+  border-color: var(--ink);
+  transform: translateY(-2px);
 }
 
 .media {
@@ -209,13 +273,13 @@
   align-self: flex-start;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 980px) {
   .timeline { padding: 48px 0 80px; }
   .head {
     grid-template-columns: 1fr;
     gap: 24px;
     margin-bottom: 28px;
   }
-  .title { font-size: clamp(32px, 8vw, 52px); }
+  .title { font-size: clamp(26px, 6vw, 38px); }
   .navArrows { align-self: flex-start; }
 }

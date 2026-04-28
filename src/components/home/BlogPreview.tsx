@@ -12,7 +12,18 @@ type ArticlePreview = {
   excerpt: string;
   publishedAt: string | null;
   readingTime?: number;
+  coverUrl?: string;
+  coverAlt?: string;
 };
+
+function extractCoverUrl(cover: unknown): { url?: string; alt?: string } {
+  if (!cover || typeof cover !== "object") return {};
+  const c = cover as { url?: unknown; sizes?: { card?: { url?: unknown } }; alt?: unknown };
+  const cardUrl = c.sizes?.card && typeof c.sizes.card.url === "string" ? c.sizes.card.url : undefined;
+  const mainUrl = typeof c.url === "string" ? c.url : undefined;
+  const alt = typeof c.alt === "string" ? c.alt : undefined;
+  return { url: cardUrl ?? mainUrl, alt };
+}
 
 async function getLatestArticles(): Promise<ArticlePreview[]> {
   try {
@@ -22,16 +33,21 @@ async function getLatestArticles(): Promise<ArticlePreview[]> {
       where: { status: { equals: "published" } },
       limit: 4,
       sort: "-publishedAt",
-      depth: 0,
+      depth: 1,
     });
-    return docs.map((d) => ({
-      id: String(d.id),
-      slug: String(d.slug),
-      title: String(d.title ?? ""),
-      excerpt: String(d.excerpt ?? ""),
-      publishedAt: d.publishedAt ? String(d.publishedAt) : null,
-      readingTime: typeof d.readingTime === "number" ? d.readingTime : undefined,
-    }));
+    return docs.map((d) => {
+      const cov = extractCoverUrl(d.cover);
+      return {
+        id: String(d.id),
+        slug: String(d.slug),
+        title: String(d.title ?? ""),
+        excerpt: String(d.excerpt ?? ""),
+        publishedAt: d.publishedAt ? String(d.publishedAt) : null,
+        readingTime: typeof d.readingTime === "number" ? d.readingTime : undefined,
+        coverUrl: cov.url,
+        coverAlt: cov.alt,
+      };
+    });
   } catch {
     return [];
   }
@@ -67,7 +83,17 @@ export async function BlogPreview() {
         {featured ? (
           <Link href={`/blog/${featured.slug}`} className={styles.featured}>
             <div className={styles.featMedia}>
-              <div className="ph" />
+              {featured.coverUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={featured.coverUrl}
+                  alt={featured.coverAlt ?? featured.title}
+                  loading="lazy"
+                  style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+                />
+              ) : (
+                <div className="ph" />
+              )}
               <span className={styles.featTag}>Featured</span>
             </div>
             <div className={styles.featCopy}>
@@ -103,7 +129,17 @@ export async function BlogPreview() {
             {rest.map((a) => (
               <Link key={a.id} href={`/blog/${a.slug}`} className={styles.article}>
                 <div className={styles.artMedia}>
-                  <div className="ph" />
+                  {a.coverUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={a.coverUrl}
+                      alt={a.coverAlt ?? a.title}
+                      loading="lazy"
+                      style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+                    />
+                  ) : (
+                    <div className="ph" />
+                  )}
                 </div>
                 <div className={styles.artBody}>
                   <span className={styles.artChip}>{formatDate(a.publishedAt)}</span>

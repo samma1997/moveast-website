@@ -53,15 +53,15 @@ export function Results() {
           <div>
             <Eyebrow>Results</Eyebrow>
             <h2 id="results-title" className={styles.title}>
-              Projects delivered across <em>three</em> continents
+              Our flagship <em>case.</em>
             </h2>
           </div>
           <div className={styles.right}>
             <p className={styles.lede}>
-              From railway infrastructure in East Africa to medical equipment supply during COVID-19 — structured procurement with measurable results.
+              Official outsourcing agent in China for the Ethiopia-Djibouti Railway — a $4 billion Belt &amp; Road Initiative corridor we have served since 2018.
             </p>
             <div className={styles.actions}>
-              <PillBtn href="/case-studies/ethiopia-railway">See the flagship case</PillBtn>
+              <PillBtn href="/blog/ethiopia-djibouti-railway-china-africa-procurement">See the flagship case</PillBtn>
               <div className={styles.navArrows} role="group" aria-label="Case studies navigation">
                 <button
                   type="button"
@@ -92,27 +92,39 @@ export function Results() {
         <div className={styles.trackWrap} ref={trackRef}>
           <div className={styles.track}>
             {cases.map((c) => {
-              const Wrapper = c.href ? Link : "div";
-              const props = c.href ? { href: c.href } : {};
-              return (
-                <Wrapper
-                  key={c.slug}
-                  // @ts-expect-error union
-                  {...props}
-                  className={styles.card}
-                >
+              const inner = (
+                <>
                   <div className={styles.logo}>
-                    <span className={styles.logoText}>{c.client}</span>
+                    {c.image ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={c.image}
+                        alt={c.client}
+                        loading="lazy"
+                        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+                      />
+                    ) : (
+                      <span className={styles.logoText}>{c.client}</span>
+                    )}
                   </div>
                   <div className={styles.metrics}>
                     {c.metrics.map((m) => (
                       <div key={m.label} className={styles.metric}>
-                        <div className="val">{m.value}</div>
-                        <div className="lbl">{m.label}</div>
+                        <div className={styles.val}>{m.value}</div>
+                        <div className={styles.lbl}>{m.label}</div>
                       </div>
                     ))}
                   </div>
-                </Wrapper>
+                </>
+              );
+              return c.href ? (
+                <Link key={c.slug} href={c.href} className={styles.card}>
+                  {inner}
+                </Link>
+              ) : (
+                <div key={c.slug} className={styles.card}>
+                  {inner}
+                </div>
               );
             })}
           </div>

@@ -27,7 +27,6 @@ export const site = {
   credentials: [
     { label: "CICC Board Member", year: 2024, description: "China-Italy Chamber of Commerce" },
     { label: "UNGM Registered Vendor", year: 2024, description: "United Nations Global Marketplace" },
-    { label: "ISO 9001", year: 2025, description: "Quality Management certified" },
   ],
 } as const;
 

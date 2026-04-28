@@ -1,17 +1,16 @@
 /* ============================================================
-   Footer — dark block with awards + credits
+   Footer — structured, breathable
    ============================================================ */
 
 .footer {
   background: #0E0E0C;
   color: #F4F3EF;
-  border-radius: 24px 24px 0 0;
-  margin-top: 40px;
-  padding: 56px 40px 28px;
+  border-radius: 28px 28px 0 0;
+  margin-top: 48px;
+  padding: 64px 48px 28px;
   position: relative;
   overflow: hidden;
 }
-
 :global(html[data-theme="dark"]) .footer {
   background: #181816;
   border: 1px solid #2A2A27;
@@ -21,130 +20,350 @@
 .inner {
   max-width: var(--container);
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr) 1.1fr repeat(3, 0.9fr);
-  gap: 32px;
-  padding-bottom: 40px;
 }
 
-.col h5 {
-  margin: 0 0 16px;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  color: #F4F3EF;
-}
-.col p,
-.col a {
-  display: block;
-  font-size: 13px;
-  line-height: 1.7;
-  color: color-mix(in oklab, #F4F3EF 70%, transparent);
-  margin: 0;
-  transition: color .2s var(--ease-out);
-}
-.col a:hover { color: #F4F3EF; }
-.colMenu a { padding: 3px 0; }
-
-.awards {
-  max-width: var(--container);
-  margin: 0 auto;
-  display: flex;
-  gap: 14px;
-  padding: 28px 0;
-  border-top: 1px solid color-mix(in oklab, #F4F3EF 12%, transparent);
-  flex-wrap: wrap;
-}
-.award {
-  background: #1A1A18;
-  border: 1px solid #2A2A27;
-  border-radius: 10px;
-  padding: 14px 16px;
-  font-size: 11px;
-  line-height: 1.25;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  color: #F4F3EF;
-  min-width: 92px;
-}
-.awardSmall {
-  display: block;
-  font-size: 9px;
-  font-weight: 500;
-  opacity: 0.7;
-  margin-top: 4px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.bottom {
-  max-width: var(--container);
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  padding-top: 24px;
-  border-top: 1px solid color-mix(in oklab, #F4F3EF 12%, transparent);
-  font-size: 12px;
-  color: color-mix(in oklab, #F4F3EF 60%, transparent);
-  flex-wrap: wrap;
-}
-.bottom a {
-  color: color-mix(in oklab, #F4F3EF 80%, transparent);
-  transition: color .2s var(--ease-out);
-}
-.bottom a:hover { color: #F4F3EF; }
-.spacer { flex: 1; }
-.credits {
-  display: inline-flex;
-  gap: 20px;
-}
-
-.social {
-  display: inline-flex;
-  gap: 8px;
-}
-.social a {
-  width: 32px;
-  height: 32px;
-  background: #1A1A18;
-  border: 1px solid #2A2A27;
-  border-radius: 8px;
-  display: grid;
-  place-items: center;
-  color: #F4F3EF;
-  transition: background .2s var(--ease-out);
-}
-.social a:hover { background: #2A2A27; }
-.social svg { width: 14px; height: 14px; }
-
+/* ---- Decor (3 squares top-right) ---- */
 .decor {
   position: absolute;
-  top: 20px;
-  right: 24px;
+  top: 24px;
+  right: 32px;
   display: grid;
-  grid-template-columns: repeat(3, 14px);
-  gap: 6px;
+  grid-template-columns: repeat(3, 12px);
+  gap: 5px;
   pointer-events: none;
 }
 .decor i {
   display: block;
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
   background: var(--accent);
   border-radius: 2px;
 }
 .decor i:nth-child(1) { opacity: 0.4; }
 .decor i:nth-child(3) { opacity: 0.7; }
 
-@media (max-width: 1100px) {
-  .inner {
-    grid-template-columns: repeat(3, 1fr);
-  }
+/* ============================================================
+   Top brand row — logo + tagline + CTA
+   ============================================================ */
+.brandRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: 48px;
+  align-items: start;
+  padding-bottom: 40px;
+  border-bottom: 1px solid color-mix(in oklab, #F4F3EF 10%, transparent);
 }
-@media (max-width: 700px) {
-  .footer { padding: 40px 20px 20px; }
-  .inner { grid-template-columns: 1fr 1fr; gap: 24px; }
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #F4F3EF;
+  font-weight: 600;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  width: max-content;
+}
+.logoMark {
+  width: 24px;
+  height: 24px;
+  display: inline-grid;
+  place-items: center;
+}
+
+.tagline {
+  font-size: clamp(22px, 2.2vw, 32px);
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  font-weight: 600;
+  color: #F4F3EF;
+  margin: 0;
+  max-width: 22ch;
+}
+.tagline em {
+  font-style: italic;
+  font-family: var(--font-serif);
+  font-weight: 500;
+  color: var(--accent);
+}
+
+.ctaBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+.ctaHint {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, #F4F3EF 55%, transparent);
+}
+.ctaBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: #F4F3EF;
+  color: #0E0E0C;
+  padding: 14px 18px 14px 22px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: transform .2s var(--ease-out), background .2s var(--ease-out);
+}
+.ctaBtn:hover {
+  transform: translateY(-1px);
+  background: var(--accent);
+  color: #fff;
+}
+.ctaArrow {
+  width: 28px;
+  height: 28px;
+  display: inline-grid;
+  place-items: center;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 999px;
+  transition: background .2s var(--ease-out);
+}
+.ctaBtn:hover .ctaArrow { background: #0E0E0C; }
+.ctaArrow svg { width: 12px; height: 12px; stroke: currentColor; }
+
+/* ============================================================
+   Navigation grid
+   ============================================================ */
+.nav {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 40px;
+  padding: 40px 0 40px;
+  border-bottom: 1px solid color-mix(in oklab, #F4F3EF 10%, transparent);
+}
+
+.col h5 {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, #F4F3EF 55%, transparent);
+  font-weight: 500;
+  margin: 0 0 16px;
+}
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.col a {
+  color: color-mix(in oklab, #F4F3EF 82%, transparent);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color .2s var(--ease-out), transform .2s var(--ease-out);
+  width: max-content;
+}
+.col a:hover {
+  color: var(--accent);
+  transform: translateX(2px);
+}
+
+/* ============================================================
+   Offices compact row
+   ============================================================ */
+.officesBlock {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 40px;
+  padding: 32px 0;
+  border-bottom: 1px solid color-mix(in oklab, #F4F3EF 10%, transparent);
+  align-items: center;
+}
+
+.officesLabel {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, #F4F3EF 55%, transparent);
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+.offices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  font-size: 14px;
+  color: #F4F3EF;
+  font-weight: 500;
+}
+.officeItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.officeItem:not(:last-child)::after {
+  content: '·';
+  margin-left: 8px;
+  color: color-mix(in oklab, #F4F3EF 40%, transparent);
+}
+
+.contactBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: right;
+}
+.contactLabel {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, #F4F3EF 55%, transparent);
+  font-weight: 500;
+}
+.contactBlock a {
+  color: #F4F3EF;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color .2s var(--ease-out);
+}
+.contactBlock a:hover { color: var(--accent); }
+.contactBlock .phone {
+  color: color-mix(in oklab, #F4F3EF 70%, transparent);
+  font-size: 13px;
+}
+
+/* ============================================================
+   Credentials row
+   ============================================================ */
+.creds {
+  display: flex;
+  gap: 12px;
+  padding: 28px 0;
+  flex-wrap: wrap;
+  border-bottom: 1px solid color-mix(in oklab, #F4F3EF 10%, transparent);
+}
+.cred {
+  flex: 1;
+  min-width: 180px;
+  background: #1A1A18;
+  border: 1px solid #2A2A27;
+  border-radius: 14px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: border-color .2s var(--ease-out), background .2s var(--ease-out);
+}
+.cred:hover {
+  border-color: var(--accent);
+}
+.credLabel {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #F4F3EF;
+}
+.credMeta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, #F4F3EF 55%, transparent);
+  font-weight: 500;
+}
+
+/* ============================================================
+   Bottom bar
+   ============================================================ */
+.bottom {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding-top: 24px;
+  font-size: 12.5px;
+  color: color-mix(in oklab, #F4F3EF 55%, transparent);
+  flex-wrap: wrap;
+}
+.bottom a {
+  color: color-mix(in oklab, #F4F3EF 75%, transparent);
+  text-decoration: none;
+  transition: color .2s var(--ease-out);
+}
+.bottom a:hover { color: var(--accent); }
+.bottomDivider::before {
+  content: '';
+  display: inline-block;
+  width: 3px;
+  height: 3px;
+  background: currentColor;
+  border-radius: 50%;
+  margin: 0 4px 3px 0;
+  vertical-align: middle;
+  opacity: 0.5;
+}
+.spacer { flex: 1; }
+
+.social {
+  display: inline-flex;
+  gap: 8px;
+}
+.social a {
+  width: 34px;
+  height: 34px;
+  background: #1A1A18;
+  border: 1px solid #2A2A27;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  color: #F4F3EF;
+  transition: background .2s var(--ease-out), border-color .2s var(--ease-out), color .2s var(--ease-out);
+}
+.social a:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #0E0E0C;
+}
+.social svg { width: 14px; height: 14px; }
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 980px) {
+  .footer { padding: 48px 24px 24px; border-radius: 24px 24px 0 0; }
+  .decor { right: 24px; top: 20px; }
+  .brandRow {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding-bottom: 32px;
+  }
+  .nav {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px 24px;
+    padding: 32px 0;
+  }
+  .officesBlock {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 24px 0;
+  }
+  .contactBlock { text-align: left; }
   .bottom { gap: 12px; }
-  .credits { order: 3; width: 100%; }
+  .spacer { display: none; }
+  .social { margin-left: auto; }
+}
+
+@media (max-width: 560px) {
+  .nav { grid-template-columns: 1fr; }
+  .creds { flex-direction: column; gap: 10px; }
+  .cred { min-width: 0; }
 }

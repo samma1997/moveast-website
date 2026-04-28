@@ -1,6 +1,6 @@
 /**
  * Settori — 4 settori di operatività
- * Slug live: /sectors/mobility, /sectors/energy, /sectors/medical, /sectors/industrial
+ * Slug live: /sectors/mobility, /sectors/renewable-energy, /sectors/medical-devices, /sectors/industrial-machinery
  */
 
 export type Sector = {
@@ -40,14 +40,14 @@ export const sectors: readonly Sector[] = [
     },
   },
   {
-    slug: "energy",
+    slug: "renewable-energy",
     order: 2,
     title: "Renewable Energy & Storage",
     shortLabel: "Renewable Energy & Storage",
     eyebrow: "02 / Renewable energy",
-    headline: "Solar modules, BESS, inverters from the world's largest clean energy supply base.",
+    headline: "Solar modules, BESS, inverters from the Chinese clean energy supply base.",
     description:
-      "Solar modules, wind components, battery energy storage systems, and inverters from the world's largest clean energy supply base.",
+      "Solar modules, wind components, battery energy storage systems, and inverters sourced from established Chinese clean-energy manufacturers.",
     miniDescription: "Solar, BESS, inverters",
     seo: {
       title: "BESS & Solar Procurement from China | Move East",
@@ -58,7 +58,7 @@ export const sectors: readonly Sector[] = [
     },
   },
   {
-    slug: "medical",
+    slug: "medical-devices",
     order: 3,
     title: "Medical Devices & Healthcare",
     shortLabel: "Medical Devices & Healthcare",
@@ -76,7 +76,7 @@ export const sectors: readonly Sector[] = [
     },
   },
   {
-    slug: "industrial",
+    slug: "industrial-machinery",
     order: 4,
     title: "Industrial Machinery & Smart Devices",
     shortLabel: "Industrial Machinery",

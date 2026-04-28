@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import { sectors } from "@/content/sectors";
 import { site } from "@/content/site";
-import { PageHero } from "@/components/pages/PageHero";
-import { ServiceCard } from "@/components/pages/ServiceCard";
-import { Cta } from "@/components/ui/Cta";
+import { SectorsHero } from "@/components/sectors/SectorsHero";
+import { SectorsCards } from "@/components/sectors/SectorsCards";
+import { SectorsRationale } from "@/components/sectors/SectorsRationale";
+import { SectorsServicesLink } from "@/components/sectors/SectorsServicesLink";
+import { SectorsFaq } from "@/components/sectors/SectorsFaq";
+import { Results } from "@/components/home/Results";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { breadcrumbSchema } from "@/lib/seo/schema";
-import { sectorIcons } from "@/components/layout/MegaMenuIcons";
 
 export const metadata: Metadata = {
   title: "Sectors",
@@ -31,7 +33,7 @@ export default function SectorsHubPage() {
             "@type": "CollectionPage",
             url: `${site.url}/sectors`,
             name: `Sectors — ${site.name}`,
-            description: "Four sectors where we operate.",
+            description: "Four sectors of excellence.",
             mainEntity: {
               "@type": "ItemList",
               itemListElement: sectors.map((s, i) => ({
@@ -49,27 +51,12 @@ export default function SectorsHubPage() {
         ]}
       />
 
-      <PageHero
-        eyebrow="Sectors we operate in"
-        title={<>Industries where technology and infrastructure <em>converge.</em></>}
-        lede="We operate across four high-impact sectors, ensuring reliable access to China's industrial excellence."
-        actions={<Cta href="/contact">Start a project</Cta>}
-      />
-
-      <section style={{ padding: "24px 0 80px" }}>
-        <div style={{ maxWidth: "var(--container)", margin: "0 auto", padding: "0 32px", display: "grid", gap: 16 }}>
-          {sectors.map((s) => (
-            <ServiceCard
-              key={s.slug}
-              href={`/sectors/${s.slug}`}
-              index={s.order}
-              title={s.title}
-              description={s.description}
-              icon={sectorIcons[s.slug as keyof typeof sectorIcons]}
-            />
-          ))}
-        </div>
-      </section>
+      <SectorsHero />
+      <SectorsCards />
+      <SectorsRationale />
+      <SectorsServicesLink />
+      <Results />
+      <SectorsFaq />
     </>
   );
 }

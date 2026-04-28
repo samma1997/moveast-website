@@ -51,3 +51,10 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .env*.local
+
+# claude code local state
+.claude/
+
+# instagram ingestion dumps (generated locally, not used by app)
+/instagram-analysis.json
+/instagram-media-map.json

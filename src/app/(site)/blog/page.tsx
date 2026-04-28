@@ -1,12 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { site } from "@/content/site";
-import { PageHero } from "@/components/pages/PageHero";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { breadcrumbSchema } from "@/lib/seo/schema";
-import { ArrowUpRight } from "@/components/ui/ArrowIcon";
 import { getPayloadClient } from "@/lib/payload";
-import styles from "@/components/blog/Blog.module.css";
+import { BlogHub, type BlogArticle } from "@/components/blog/BlogHub";
 
 export const revalidate = 600;
 
@@ -23,17 +20,27 @@ export const metadata: Metadata = {
   },
 };
 
-type ArticlePreview = {
-  id: string;
-  slug: string;
-  title: string;
-  excerpt: string;
-  publishedAt: string | null;
-  readingTime?: number;
-  primaryKeyword?: string;
-};
+const VARIANTS: readonly ("c2" | "c3" | "c4" | undefined)[] = [undefined, "c2", "c3", "c4"];
 
-async function getArticles(): Promise<ArticlePreview[]> {
+function inferCategory(primary?: string): string {
+  const p = (primary ?? "").toLowerCase();
+  if (p.includes("case") || p.includes("edr") || p.includes("railway")) return "Case Studies";
+  if (p.includes("data") || p.includes("report")) return "Data Reports";
+  if (p.includes("compliance") || p.includes("mdr") || p.includes("ce ")) return "Policy & Compliance";
+  if (p.includes("africa") || p.includes("corridor")) return "China-Africa";
+  return "Sourcing Guides";
+}
+
+function extractCoverUrl(cover: unknown): { url?: string; alt?: string } {
+  if (!cover || typeof cover !== "object") return {};
+  const c = cover as { url?: unknown; sizes?: { card?: { url?: unknown } }; alt?: unknown };
+  const cardUrl = c.sizes?.card && typeof c.sizes.card.url === "string" ? c.sizes.card.url : undefined;
+  const mainUrl = typeof c.url === "string" ? c.url : undefined;
+  const alt = typeof c.alt === "string" ? c.alt : undefined;
+  return { url: cardUrl ?? mainUrl, alt };
+}
+
+async function getArticles(): Promise<BlogArticle[]> {
   try {
     const payload = await getPayloadClient();
     const { docs } = await payload.find({
@@ -41,30 +48,35 @@ async function getArticles(): Promise<ArticlePreview[]> {
       where: { status: { equals: "published" } },
       limit: 30,
       sort: "-publishedAt",
-      depth: 0,
+      depth: 1,
     });
-    return docs.map((d) => ({
-      id: String(d.id),
-      slug: String(d.slug),
-      title: String(d.title ?? ""),
-      excerpt: String(d.excerpt ?? ""),
-      publishedAt: d.publishedAt ? String(d.publishedAt) : null,
-      readingTime: typeof d.readingTime === "number" ? d.readingTime : undefined,
-      primaryKeyword: typeof d.primaryKeyword === "string" ? d.primaryKeyword : undefined,
-    }));
+    return docs.map((d, i): BlogArticle => {
+      const category = inferCategory(typeof d.primaryKeyword === "string" ? d.primaryKeyword : undefined);
+      const publishedAt = d.publishedAt ? new Date(String(d.publishedAt)) : null;
+      const cov = extractCoverUrl(d.cover);
+      return {
+        slug: String(d.slug),
+        title: String(d.title ?? ""),
+        tag: typeof d.primaryKeyword === "string" && d.primaryKeyword.length > 0
+          ? `${category} · ${d.primaryKeyword}`
+          : category,
+        date: publishedAt
+          ? publishedAt.toLocaleDateString("en-US", { month: "short", year: "numeric" })
+          : "",
+        readingTime: typeof d.readingTime === "number" ? d.readingTime : undefined,
+        category,
+        variant: VARIANTS[i % VARIANTS.length],
+        coverUrl: cov.url,
+        coverAlt: cov.alt,
+      };
+    });
   } catch {
     return [];
   }
 }
 
-function formatDate(iso: string | null) {
-  if (!iso) return "";
-  return new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-}
-
 export default async function BlogHubPage() {
   const articles = await getArticles();
-  const [featured, ...rest] = articles;
 
   return (
     <>
@@ -81,8 +93,6 @@ export default async function BlogHubPage() {
               "@type": "BlogPosting",
               url: `${site.url}/blog/${a.slug}`,
               headline: a.title,
-              description: a.excerpt,
-              datePublished: a.publishedAt ?? undefined,
             })),
           },
           breadcrumbSchema([
@@ -92,71 +102,7 @@ export default async function BlogHubPage() {
         ]}
       />
 
-      <PageHero
-        eyebrow="Insights"
-        title={<>Sourcing insights, <em>from the ground.</em></>}
-        lede="Guides, data reports, and field notes on China sourcing, technology transfer, and China-Africa industrial corridors. Written on the ground in Shenzhen."
-      />
-
-      <section className={styles.hub}>
-        <div className={styles.hubInner}>
-          {featured ? (
-            <>
-              <Link href={`/blog/${featured.slug}`} className={styles.featured}>
-                <div className={styles.featMedia}>
-                  <div className="ph" />
-                  <span className={styles.featMediaTag}>Featured</span>
-                </div>
-                <div className={styles.featBody}>
-                  <div>
-                    <span className={styles.featMeta}>
-                      {formatDate(featured.publishedAt)}
-                      {featured.readingTime ? ` · ${featured.readingTime} min read` : ""}
-                    </span>
-                    <h2 className={styles.featTitle}>{featured.title}</h2>
-                    <p className={styles.featExcerpt}>{featured.excerpt}</p>
-                  </div>
-                  <div className={styles.featFoot}>
-                    <span className={styles.readMore}>
-                      Read article
-                      <span className="arrow" aria-hidden="true"><ArrowUpRight /></span>
-                    </span>
-                  </div>
-                </div>
-              </Link>
-
-              {rest.length > 0 && (
-                <div className={styles.grid}>
-                  {rest.map((a) => (
-                    <Link key={a.id} href={`/blog/${a.slug}`} className={styles.card}>
-                      <div className={styles.cardMedia}>
-                        <div className="ph" />
-                      </div>
-                      <div className={styles.cardBody}>
-                        <span className={styles.cardChip}>{formatDate(a.publishedAt)}</span>
-                        <h3 className={styles.cardTitle}>{a.title}</h3>
-                        <p className={styles.cardExcerpt}>{a.excerpt}</p>
-                        <div className={styles.cardMeta}>
-                          <span>{a.readingTime ? `${a.readingTime} min read` : ""}</span>
-                          <span className={styles.cardArrow} aria-hidden="true"><ArrowUpRight /></span>
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </>
-          ) : (
-            <div className={styles.empty}>
-              <h3>First articles coming soon.</h3>
-              <p>
-                Our Shenzhen team is working on a series of sourcing guides, case narratives, and China-Africa corridor reports.
-                Subscribe by emailing <a href={`mailto:${site.email}`} style={{ color: "var(--accent)" }}>{site.email}</a>.
-              </p>
-            </div>
-          )}
-        </div>
-      </section>
+      <BlogHub articles={articles} />
     </>
   );
 }

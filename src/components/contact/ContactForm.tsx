@@ -66,7 +66,7 @@ export function ContactForm() {
       <div className={styles.success}>
         <h3>Message <em>received.</em></h3>
         <p>
-          Thank you. Our team in Shenzhen will respond within 24–48 hours — typically sooner for sector-specific briefs.
+          Thank you. Our team in Shenzhen has received your request and will get back to you shortly.
         </p>
       </div>
     );
@@ -191,7 +191,7 @@ export function ContactForm() {
           {submitting ? "Sending…" : "Send message"}
           <span className={styles.arrow} aria-hidden="true"><ArrowUpRight /></span>
         </button>
-        <span className={styles.help}>Response within 24–48h</span>
+        <span className={styles.help}>Routed directly to the Shenzhen team</span>
       </div>
     </form>
   );

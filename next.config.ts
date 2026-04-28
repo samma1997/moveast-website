@@ -6,6 +6,8 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
 
+  allowedDevOrigins: ["*.trycloudflare.com"],
+
   experimental: {
     // Payload richiede Node workers per alcune operazioni admin
     serverActions: { bodySizeLimit: "8mb" }, // upload media
@@ -20,6 +22,21 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "images.pexels.com" },
       { protocol: "https", hostname: "*.public.blob.vercel-storage.com" },
     ],
+  },
+
+  async redirects() {
+    return [
+      {
+        source: "/case-studies/ethiopia-railway",
+        destination: "/blog/ethiopia-djibouti-railway-china-africa-procurement",
+        permanent: true,
+      },
+      {
+        source: "/case-studies",
+        destination: "/blog",
+        permanent: true,
+      },
+    ];
   },
 
   async headers() {

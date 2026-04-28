@@ -1,0 +1,186 @@
+/* ============================================================
+   Sectors Cards — 4 grandi card 2x2 con head, media, text, foot
+   1:1 da sectors.html .sec-cards
+   ============================================================ */
+
+.section { padding: 24px 0 96px; }
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+  gap: 64px;
+  align-items: start;
+  margin-bottom: 48px;
+}
+.headRight { max-width: 640px; }
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--ink-2);
+  font-weight: 500;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  background: var(--accent);
+  border-radius: 3px;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.title {
+  font-size: clamp(28px, 3.2vw, 44px);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  font-weight: 600;
+  margin: 0 0 20px;
+}
+.title em {
+  font-style: italic;
+  font-family: var(--font-serif);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.lede {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink-2);
+  margin: 0;
+  font-weight: 500;
+  max-width: 54ch;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.card {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform .2s var(--ease-out), border-color .2s var(--ease-out);
+}
+.card:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in oklab, var(--ink) 14%, transparent);
+}
+
+.cardHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.cardTitle {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  margin: 0;
+  max-width: 22ch;
+  color: var(--ink);
+}
+.mark {
+  display: block;
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+.mark.c2 { background: #B3C6FF; }
+.mark.c3 { background: #FFC791; }
+.mark.c4 { background: #E1B8F5; }
+
+.media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+.media .ph {
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(135deg, color-mix(in oklab, var(--ink) 5%, transparent) 0 10px, transparent 10px 20px),
+    var(--surface);
+}
+.media.c2 .ph {
+  background:
+    repeating-linear-gradient(135deg, color-mix(in oklab, #3A52B8 14%, transparent) 0 10px, transparent 10px 20px),
+    #EEF1FC;
+}
+.media.c3 .ph {
+  background:
+    repeating-linear-gradient(135deg, color-mix(in oklab, #A15A1A 14%, transparent) 0 10px, transparent 10px 20px),
+    #FCF2E6;
+}
+.media.c4 .ph {
+  background:
+    repeating-linear-gradient(135deg, color-mix(in oklab, #8334B0 14%, transparent) 0 10px, transparent 10px 20px),
+    #F5E8FC;
+}
+
+.text {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink-2);
+  margin: 0;
+  font-weight: 500;
+}
+
+.foot {
+  margin-top: auto;
+  padding-top: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-top: 1px solid var(--line);
+}
+.tags {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.arrow {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--bg);
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  transition: transform .2s var(--ease-out);
+}
+.arrow svg { width: 12px; height: 12px; }
+.card:hover .arrow { transform: translate(2px, -2px); }
+
+@media (max-width: 980px) {
+  .container { padding: 0 20px; }
+  .head { grid-template-columns: 1fr; gap: 20px; margin-bottom: 32px; }
+  .grid { grid-template-columns: 1fr; }
+  .card { padding: 22px; }
+  .cardTitle { font-size: 19px; }
+}

@@ -76,7 +76,21 @@ function TeamCard({ member }: { member: TeamMember }) {
       <span className={styles.num}>
         {String(member.order).padStart(2, "0")} / {member.roleCategory}
       </span>
-      <div className={styles.photo} data-initials={member.initials} aria-hidden="true" />
+      <div
+        className={styles.photo}
+        data-initials={member.photo ? undefined : member.initials}
+        aria-hidden="true"
+      >
+        {member.photo ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={member.photo}
+            alt={member.name}
+            loading="lazy"
+            style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        ) : null}
+      </div>
       <div className={styles.body}>
         <h3 className={styles.name}>{member.name}</h3>
         <p className={styles.role}>{member.role}</p>

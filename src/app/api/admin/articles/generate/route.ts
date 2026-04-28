@@ -97,12 +97,10 @@ export async function POST(req: NextRequest) {
     // 6. Revalidate if published
     if (parsed.data.status === "published") {
       try {
-        // @ts-expect-error Next.js cache API
-        const { revalidatePath, revalidateTag } = await import("next/cache");
+        const { revalidatePath } = await import("next/cache");
         revalidatePath(`/blog/${generated.slug}`);
         revalidatePath("/blog");
         revalidatePath("/sitemap.xml");
-        revalidateTag("articles");
       } catch (err) {
         console.warn("[articles/generate] revalidate failed:", err);
       }

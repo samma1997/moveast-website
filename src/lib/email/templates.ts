@@ -31,7 +31,7 @@ export function leadConfirmationEmail(lead: LeadInput) {
           We've received your message and our team in Shenzhen will be in touch within <b>24–48 hours</b>.
         </p>
         <p style="font-size: 15px; line-height: 1.55; color: #2A2A27; margin: 0 0 24px;">
-          In the meantime, feel free to explore our <a href="${site.url}/services" style="color: #0E0E0C; font-weight: 500;">services</a> and <a href="${site.url}/case-studies/ethiopia-railway" style="color: #0E0E0C; font-weight: 500;">flagship case study</a>.
+          In the meantime, feel free to explore our <a href="${site.url}/services" style="color: #0E0E0C; font-weight: 500;">services</a> and <a href="${site.url}/blog/ethiopia-djibouti-railway-china-africa-procurement" style="color: #0E0E0C; font-weight: 500;">flagship case study</a>.
         </p>
         <div style="border-top: 1px solid #D9D7CF; padding-top: 24px;">
           <p style="font-size: 12px; color: #8C8B84; line-height: 1.6; margin: 0;">
@@ -50,7 +50,7 @@ export function leadConfirmationEmail(lead: LeadInput) {
 
 Hi ${lead.name} — we've received your message and our team in Shenzhen will be in touch within 24–48 hours.
 
-In the meantime: ${site.url}/services · ${site.url}/case-studies/ethiopia-railway
+In the meantime: ${site.url}/services · ${site.url}/blog/ethiopia-djibouti-railway-china-africa-procurement
 
 ${site.name} · ${site.offices.map((o) => o.city).join(" · ")}
 ${site.email} · ${site.phone}`,

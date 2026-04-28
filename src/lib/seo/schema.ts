@@ -31,7 +31,7 @@ export function organizationSchema() {
       "@type": "PostalAddress",
       addressLocality: o.city,
       addressCountry: o.country,
-      ...(o.region ? { addressRegion: o.region } : {}),
+      ...("region" in o && o.region ? { addressRegion: o.region } : {}),
     })),
     sameAs: [site.social.instagram, site.social.linkedin].filter(Boolean),
     knowsAbout: [

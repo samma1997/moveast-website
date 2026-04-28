@@ -9,11 +9,11 @@ import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 import { seoPlugin } from "@payloadcms/plugin-seo";
 import { redirectsPlugin } from "@payloadcms/plugin-redirects";
 
-import { Users } from "./src/collections/Users.ts";
-import { Media } from "./src/collections/Media.ts";
-import { Articles } from "./src/collections/Articles.ts";
-import { Pages } from "./src/collections/Pages.ts";
-import { Leads } from "./src/collections/Leads.ts";
+import { Users } from "./src/collections/Users";
+import { Media } from "./src/collections/Media";
+import { Articles } from "./src/collections/Articles";
+import { Pages } from "./src/collections/Pages";
+import { Leads } from "./src/collections/Leads";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
