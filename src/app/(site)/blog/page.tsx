@@ -8,8 +8,8 @@ import { BlogHub, type BlogArticle } from "@/components/blog/BlogHub";
 export const revalidate = 600;
 
 export const metadata: Metadata = {
-  title: "Blog",
-  description: `Sourcing insights, China-Africa corridor analysis, and procurement guides from ${site.name} — written on the ground in Shenzhen.`,
+  title: "China Sourcing Insights — Move East Trading Blog",
+  description: `China sourcing guides, technology transfer insights, and China-Africa corridor analysis from ${site.name} — written on the ground in Shenzhen.`,
   alternates: { canonical: "/blog" },
   openGraph: {
     title: `Blog — ${site.name}`,

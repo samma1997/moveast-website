@@ -12,7 +12,7 @@ type CardProps = {
 const cards: readonly CardProps[] = [
   {
     slug: "mobility",
-    title: "Mobility & Smart Transport",
+    title: "Mobility & Smart Transport Systems",
     text: "Railway equipment, rolling stock, electric vehicles, drones, and urban mobility infrastructure — official outsourcing agent in China for the $4B Ethiopia-Djibouti Railway.",
     tags: "Railway · EV · Drones",
   },
@@ -75,7 +75,7 @@ export function SectorsCards() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={`/images/sectors/${c.slug}.webp`}
-                  alt=""
+                  alt={`${c.title} — Chinese manufacturers and procurement`}
                   loading="lazy"
                   style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
                 />

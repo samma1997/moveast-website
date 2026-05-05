@@ -81,6 +81,11 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "/",
+    languages: {
+      en: "/",
+      it: "/it",
+      "x-default": "/",
+    },
   },
   icons: {
     icon: [

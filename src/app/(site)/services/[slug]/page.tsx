@@ -5,17 +5,24 @@ import { servicePages } from "@/content/service-pages";
 import { site } from "@/content/site";
 import { ServiceDetailHero } from "@/components/services/ServiceDetailHero";
 import { ServiceProcessTrack } from "@/components/services/ServiceProcessTrack";
+import { ServicesSectorsLink } from "@/components/services/ServicesSectorsLink";
 import {
   ServiceBlogRelated,
   type RelatedArticle,
 } from "@/components/services/ServiceBlogRelated";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { breadcrumbSchema, serviceSchema } from "@/lib/seo/schema";
+import { breadcrumbSchema, serviceSchema, faqPageSchema } from "@/lib/seo/schema";
 import { getPayloadClient } from "@/lib/payload";
 
 export async function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
 }
+
+// Mapping EN service slug → IT landing page slug (only for IT-translated services).
+const IT_LANGUAGE_PATH: Record<string, string> = {
+  sourcing: "/it/sourcing-cina",
+  "technology-transfer": "/it/trasferimento-tecnologico-cina-italia",
+};
 
 export async function generateMetadata(
   { params }: { params: Promise<{ slug: string }> }
@@ -23,10 +30,22 @@ export async function generateMetadata(
   const { slug } = await params;
   const s = getService(slug);
   if (!s) return {};
+  const itPath = IT_LANGUAGE_PATH[s.slug];
   return {
     title: s.seo.title,
     description: s.seo.description,
-    alternates: { canonical: `/services/${s.slug}` },
+    alternates: {
+      canonical: `/services/${s.slug}`,
+      ...(itPath
+        ? {
+            languages: {
+              en: `/services/${s.slug}`,
+              it: itPath,
+              "x-default": `/services/${s.slug}`,
+            },
+          }
+        : {}),
+    },
     keywords: [...s.seo.keywords],
     openGraph: {
       title: s.seo.title,
@@ -83,11 +102,17 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
 
   const related = await getRelatedArticles(slug, s.seo.keywords);
 
+  const faqs = [
+    { question: page.faq.featured.chip, answer: page.faq.featured.title },
+    ...page.faq.articles.map((a) => ({ question: a.chip, answer: a.title })),
+  ];
+
   return (
     <>
       <JsonLd
         data={[
           serviceSchema(s.slug),
+          faqPageSchema(faqs),
           breadcrumbSchema([
             { name: "Home", url: "/" },
             { name: "Services", url: "/services" },
@@ -98,6 +123,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
 
       <ServiceDetailHero hero={page.hero} slug={s.slug} />
       <ServiceProcessTrack process={page.process} />
+      <ServicesSectorsLink />
       <ServiceBlogRelated
         eyebrow={`Insights · ${s.shortLabel}`}
         titlePre="Related "

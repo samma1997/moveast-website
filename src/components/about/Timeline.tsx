@@ -55,7 +55,7 @@ export function Timeline() {
         </div>
         <div className={styles.headR}>
           <p className={styles.lede}>
-            Founded by Alessandro Petrini in 2018, Move East grew from a single operation in Shenzhen to four offices across three continents.
+            Founded in 2018 in Shenzhen, Move East grew from a single operation to four offices across three continents.
           </p>
           <div className={styles.navArrows} role="group" aria-label="Timeline navigation">
             <button

@@ -17,10 +17,10 @@ export const timeline: readonly TimelineEntry[] = [
     year: 2018,
     title: "Founded in Shenzhen",
     description:
-      "Alessandro Petrini relocates to China. Begins building sourcing networks across Guangdong Province.",
+      "Move East Trading Co., Ltd. is established in Shenzhen. Operations begin across the Guangdong industrial ecosystem.",
     tag: "Founded · Shenzhen",
-    caption: "Italian Consulate · Hong Kong",
-    photo: "/images/timeline/2018-consulate-hong-kong.webp",
+    caption: "Shenzhen · 2018",
+    photo: "/images/about/2018-shenzhen-founded.webp",
   },
   {
     year: 2021,
@@ -28,17 +28,17 @@ export const timeline: readonly TimelineEntry[] = [
     description:
       "Appointed official outsourcing agent in China for the Ethiopia-Djibouti Railway. Addis Ababa office established.",
     tag: "Railway · East Africa",
-    caption: "Interchamber Networking · Shenzhen",
-    photo: "/images/timeline/2021-interchamber-shenzhen.webp",
+    caption: "Ethiopia-Djibouti Railway",
+    photo: "/images/about/2021-edr-appointment.webp",
   },
   {
     year: 2024,
-    title: "CICC Board · UNGM · Hong Kong",
+    title: "CICC member · UNGM · Hong Kong",
     description:
-      "Alessandro Petrini joins the Board of the China-Italy Chamber of Commerce. UNGM registration completed. Hong Kong office established for trade finance and compliance.",
-    tag: "CICC Board · UNGM · 4 offices",
-    caption: "Business Forum Italia-Cina",
-    photo: "/images/timeline/2024-business-forum-italia-cina.webp",
+      "Move East joins the China-Italy Chamber of Commerce. UNGM registration completed. Hong Kong office established for trade finance and compliance.",
+    tag: "CICC · UNGM · 4 offices",
+    caption: "Hong Kong · 2024",
+    photo: "/images/about/2024-hong-kong-office.webp",
   },
   {
     year: 2025,
@@ -46,7 +46,7 @@ export const timeline: readonly TimelineEntry[] = [
     description:
       "Launch of the Technology Transfer service line, structuring know-how, IP governance, and engineer training as a dedicated offering — with operations across the four Move East offices.",
     tag: "Today · 4 offices · 3 continents",
-    caption: "CICC · Guangzhou",
-    photo: "/images/timeline/2025-cicc-guangzhou.webp",
+    caption: "Technology Transfer · 2025",
+    photo: "/images/about/2025-technology-transfer.webp",
   },
 ] as const;

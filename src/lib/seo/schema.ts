@@ -20,20 +20,19 @@ export function organizationSchema() {
     logo: `${site.url}/favicon.svg`,
     description: site.description,
     foundingDate: String(site.founded),
-    founder: {
-      "@type": "Person",
-      name: team[0]?.name ?? "Alessandro Petrini",
-      jobTitle: team[0]?.role ?? "Founder & Director",
+    foundingLocation: {
+      "@type": "Place",
+      name: "Shenzhen, China",
     },
     email: site.email,
     telephone: site.phone,
     address: site.offices.map((o) => ({
       "@type": "PostalAddress",
       addressLocality: o.city,
-      addressCountry: o.country,
+      addressCountry: o.countryCode,
       ...("region" in o && o.region ? { addressRegion: o.region } : {}),
     })),
-    sameAs: [site.social.instagram, site.social.linkedin].filter(Boolean),
+    sameAs: [site.social.linkedin].filter(Boolean),
     knowsAbout: [
       ...services.map((s) => s.title),
       ...sectors.map((s) => s.title),
@@ -80,7 +79,7 @@ export function aboutPageSchema() {
     "@type": "AboutPage",
     url: `${site.url}/about`,
     name: `About — ${site.name}`,
-    description: "Leadership team, company timeline, and global offices of Move East Trading — bridging global industry with China's manufacturing power.",
+    description: "Leadership team, company timeline, and global offices of Move East Trading — connecting markets, technologies, and people.",
     isPartOf: { "@id": `${site.url}/#website` },
     mainEntity: {
       "@type": "Organization",
@@ -128,6 +127,49 @@ export function faqPageSchema(faqs: Array<{ question: string; answer: string }>)
       },
     })),
   } as const;
+}
+
+/** DefinedTermSet schema — pagina /glossary, ottimo per AI/GEO citation */
+export function definedTermSetSchema(terms: Array<{ term: string; definition: string }>) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "DefinedTermSet",
+    "@id": `${site.url}/glossary#termset`,
+    name: "Move East Procurement Glossary",
+    description:
+      "Definitions of key terms in China procurement, technology transfer, supply chain, compliance, and industrial verticals.",
+    url: `${site.url}/glossary`,
+    hasDefinedTerm: terms.map((t) => ({
+      "@type": "DefinedTerm",
+      name: t.term,
+      description: t.definition,
+      inDefinedTermSet: `${site.url}/glossary#termset`,
+    })),
+  } as const;
+}
+
+/** LocalBusiness schema — uno per ogni ufficio, da iniettare su /contact */
+export function localBusinessSchemas() {
+  return site.offices.map((o) => ({
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": `${site.url}/#office-${o.city.toLowerCase().replace(/\s+/g, "-")}`,
+    name: `${site.name} — ${o.city}`,
+    parentOrganization: { "@id": `${site.url}/#organization` },
+    url: `${site.url}/contact`,
+    email: site.email,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: o.city,
+      addressCountry: o.countryCode,
+      ...("region" in o && o.region ? { addressRegion: o.region } : {}),
+    },
+    areaServed: [
+      { "@type": "Continent", name: "Europe" },
+      { "@type": "Continent", name: "Africa" },
+      { "@type": "Continent", name: "Asia" },
+    ],
+  }));
 }
 
 /** Helper: serializza uno o più schemas in stringa safe per <script type="application/ld+json"> */

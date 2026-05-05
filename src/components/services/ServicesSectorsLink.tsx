@@ -13,7 +13,7 @@ type Item = {
 const items: readonly Item[] = [
   {
     slug: "mobility",
-    title: "Mobility & Smart Transport",
+    title: "Mobility & Smart Transport Systems",
     text: "Railway equipment, EVs, drones, and urban mobility infrastructure — Ethiopia-Djibouti Railway flagship.",
     tags: "Railway · EV · Drones",
   },
@@ -66,7 +66,7 @@ export function ServicesSectorsLink() {
             <Link key={it.slug} href={`/sectors/${it.slug}`} className={styles.card}>
               <div className={styles.media}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={`/images/sectors/${it.slug}.webp`} alt="" loading="lazy" />
+                <img src={`/images/sectors/${it.slug}.webp`} alt={`${it.title} — China sector procurement`} loading="lazy" />
               </div>
               <div className={styles.body}>
                 <h3 className={styles.cardTitle}>{it.title}</h3>

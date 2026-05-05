@@ -68,7 +68,7 @@ export function SectorsServicesLink() {
             <Link key={it.slug} href={`/services/${it.slug}`} className={styles.card}>
               <div className={styles.media}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={it.image} alt="" loading="lazy" />
+                <img src={it.image} alt={`${it.title} — Move East service line from Shenzhen`} loading="lazy" />
                 <span className={styles.kicker}>{it.kicker}</span>
               </div>
               <div className={styles.body}>

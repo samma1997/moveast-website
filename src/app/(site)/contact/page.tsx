@@ -3,12 +3,12 @@ import { site } from "@/content/site";
 import { ContactChat } from "@/components/contact/ContactChat";
 import { SectorPartners } from "@/components/sectors/SectorPartners";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { breadcrumbSchema } from "@/lib/seo/schema";
+import { breadcrumbSchema, localBusinessSchemas } from "@/lib/seo/schema";
 import styles from "@/components/contact/ContactPage.module.css";
 
 export const metadata: Metadata = {
-  title: "Contact",
-  description: `Contact ${site.name} — our team responds within 24–48h. Offices in Shenzhen, Hong Kong, Rome, Addis Ababa.`,
+  title: "Contact Move East — China Procurement Office in Shenzhen",
+  description: `Contact ${site.name} for China sourcing, technology transfer, supply chain projects. Replies within 24–48h. Offices: Shenzhen, Hong Kong, Rome, Addis Ababa.`,
   alternates: { canonical: "/contact" },
   openGraph: {
     title: `Contact — ${site.name}`,
@@ -74,6 +74,7 @@ export default function ContactPage() {
             name: `Contact — ${site.name}`,
             description: "Contact form and office addresses for Move East Trading.",
           },
+          ...localBusinessSchemas(),
           breadcrumbSchema([
             { name: "Home", url: "/" },
             { name: "Contact", url: "/contact" },
@@ -146,7 +147,7 @@ export default function ContactPage() {
           titlePre: "Prefer to ",
           titleEm: "skip the form",
           titlePost: "?",
-          lede: "Use the channel that best matches your request. General inquiries at info@moveasttrading.com. Phone (EU line) +39 06 4200 1212. Founder direct: Alessandro Petrini on LinkedIn. Press & media or partnerships — email with the matching subject line.",
+          lede: "Use the channel that best matches your request. General inquiries at info@moveasttrading.com. Phone (EU line) +39 06 4200 1212. Press & media or partnerships — email with the matching subject line. Replies within 24–48 hours from our Shenzhen, Hong Kong, Rome, or Addis Ababa offices.",
         }}
       />
     </>

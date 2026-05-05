@@ -5,6 +5,7 @@ import { sectorPages } from "@/content/sector-pages";
 import { site } from "@/content/site";
 import { SectorHero } from "@/components/sectors/SectorHero";
 import { SectorPartners } from "@/components/sectors/SectorPartners";
+import { SectorsServicesLink } from "@/components/sectors/SectorsServicesLink";
 import {
   ServiceBlogRelated,
   type RelatedArticle,
@@ -106,6 +107,7 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
 
       <SectorHero hero={page.hero} slug={s.slug} />
       <SectorPartners partners={page.partners} />
+      <SectorsServicesLink />
       <ServiceBlogRelated
         eyebrow="From the blog"
         titlePre="How Move East sources "

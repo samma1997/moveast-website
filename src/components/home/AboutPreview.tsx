@@ -10,24 +10,24 @@ type ReelTile = {
 
 const reel: readonly ReelTile[] = [
   {
-    src: "/images/about/mattarella-guangzhou.webp",
-    caption: "Mattarella · Guangzhou 2024",
-    alt: "Meeting with Italian President Sergio Mattarella in Guangzhou",
+    src: "/images/about/shenzhen-port.webp",
+    caption: "Shenzhen · HQ",
+    alt: "Yantian container port and Shenzhen skyline at blue hour",
   },
   {
-    src: "/images/about/cicc-confindustria-beijing.webp",
-    caption: "CICC · Confindustria Beijing",
-    alt: "CICC-Confindustria China Roundtable in Beijing",
+    src: "/images/about/edr-corridor.webp",
+    caption: "EDR · 752.7 km",
+    alt: "Electric high-speed train crossing a viaduct along the Ethiopia-Djibouti corridor",
   },
   {
-    src: "/images/about/shenzhen-italy-business.webp",
-    caption: "Shenzhen-Italy Business 2024",
-    alt: "Shenzhen-Italy Business Exchange Seminar",
+    src: "/images/about/smart-manufacturing.webp",
+    caption: "Smart manufacturing",
+    alt: "Robotic arms on a Chinese smart factory production line in Shenzhen",
   },
   {
-    src: "/images/about/parliamentary-hearing-roma.webp",
-    caption: "Montecitorio · Roma 2025",
-    alt: "Parliamentary hearing at Palazzo Montecitorio as CICC board member",
+    src: "/images/about/renewable-energy.webp",
+    caption: "Renewable energy",
+    alt: "Utility-scale solar photovoltaic farm with BESS battery storage at golden hour",
   },
 ];
 
@@ -54,14 +54,14 @@ export function AboutPreview() {
             <PillBtn href="/about">About the team</PillBtn>
           </div>
 
-          <div className={styles.media} aria-hidden="true">
+          <div className={styles.media}>
             <div className={styles.reel}>
               {tiles.map((t, i) => (
                 <div key={`${t.src}-${i}`} className={styles.tile}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={t.src}
-                    alt=""
+                    alt={t.alt}
                     loading="lazy"
                     style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
                   />

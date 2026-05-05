@@ -12,8 +12,8 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { breadcrumbSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
-  title: "Services",
-  description: `${site.name} services: strategic sourcing, technology transfer, and supply chain management from Shenzhen. Serving EU, Africa, Middle East.`,
+  title: "China Procurement Services — Sourcing, Technology Transfer, Supply Chain",
+  description: `${site.name} services from Shenzhen: strategic sourcing, technology transfer, supply chain management. Three integrated lines for EU, Africa, Gulf buyers.`,
   alternates: { canonical: "/services" },
   openGraph: {
     title: `Services — ${site.name}`,

@@ -173,7 +173,12 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             description: String(a.excerpt ?? ""),
             datePublished: a.publishedAt ? String(a.publishedAt) : undefined,
             dateModified: a.updatedAt ? String(a.updatedAt) : undefined,
-            author: { "@id": `${site.url}/#organization` },
+            author: {
+              "@type": "Organization",
+              name: "Move East Editorial",
+              url: `${site.url}/about`,
+              parentOrganization: { "@id": `${site.url}/#organization` },
+            },
             publisher: { "@id": `${site.url}/#organization` },
             mainEntityOfPage: `${site.url}/blog/${slug}`,
             url: `${site.url}/blog/${slug}`,
@@ -216,8 +221,8 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
               <div className={styles.author}>
                 <span className={styles.authorAvatar} aria-hidden="true" />
                 <div className={styles.authorMeta}>
-                  <b>Alessandro Petrini</b>
-                  <span>Founder &amp; Director · Move East Trading · Board Member, CICC</span>
+                  <b>Move East Editorial</b>
+                  <span>Move East Trading · Shenzhen · Hong Kong · Rome · Addis Ababa</span>
                 </div>
               </div>
             </div>

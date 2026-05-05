@@ -1,6 +1,6 @@
 /**
  * Team leadership — 4 membri.
- * SSOT per seed Payload. Una volta in CMS, Alessandro può modificare.
+ * SSOT per seed Payload. Una volta in CMS, il team può modificare.
  */
 
 export type TeamMember = {
@@ -43,8 +43,8 @@ export const team: readonly TeamMember[] = [
     roleCategory: "Deputy",
     location: "Addis Ababa",
     languages: ["Amharic", "English", "Mandarin"],
-    bio: "Medical doctor and entrepreneur with over seven years of experience in China. She coordinates Move East's operations with a focus on strategic sourcing and institutional trade development. Her work mainly involves partnerships across Africa and the Gulf region, where she manages cooperation with industrial and healthcare clients. Her medical background and multilingual skills make her a key bridge between business, institutions, and operational partners.",
-    bioHighlights: ["strategic sourcing and institutional trade development"],
+    bio: "Medical doctor and entrepreneur with over seven years of experience in China. She coordinates Move East's operations with a focus on strategic sourcing, supplier verification, and institutional trade development. Her work mainly involves partnerships across Africa and the Gulf region, where she manages cooperation with industrial and healthcare clients. Her medical background and multilingual skills make her a key bridge between business, institutions, and operational partners.",
+    bioHighlights: ["strategic sourcing, supplier verification, and institutional trade development"],
     bioBolds: [],
     photo: "/images/team/feven-birara-tesfaye.webp",
   },

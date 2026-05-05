@@ -21,7 +21,14 @@ const SectorsShowcase = dynamic(
 export const metadata: Metadata = {
   title: `${site.tagline}`,
   description: site.description,
-  alternates: { canonical: "/" },
+  alternates: {
+    canonical: "/",
+    languages: {
+      en: "/",
+      it: "/it",
+      "x-default": "/",
+    },
+  },
   openGraph: {
     title: `${site.name} — ${site.tagline}`,
     description: site.description,

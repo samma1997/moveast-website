@@ -9,27 +9,27 @@ type Tile = {
 
 const tiles: readonly Tile[] = [
   {
-    src: "/images/about/mattarella-guangzhou.webp",
-    caption: "Mattarella · Guangzhou",
-    alt: "Meeting with Italian President Sergio Mattarella in Guangzhou",
+    src: "/images/about/shenzhen-port.webp",
+    caption: "Shenzhen · HQ",
+    alt: "Yantian container port and Shenzhen skyline at blue hour",
     position: "f1",
   },
   {
-    src: "/images/about/cmef-shanghai.webp",
-    caption: "CMEF · Shanghai",
-    alt: "CMEF Shanghai medical fair + Italy-China seminar",
+    src: "/images/about/hong-kong-branch.webp",
+    caption: "Hong Kong · Branch",
+    alt: "Victoria Harbour skyline at sunset — Hong Kong office",
     position: "f2",
   },
   {
-    src: "/images/about/pingshan-rome.webp",
-    caption: "Rome × Pingshan",
-    alt: "Rome delegation in Pingshan District Shenzhen",
+    src: "/images/about/rome-europe.webp",
+    caption: "Rome · Europe",
+    alt: "Rome historic skyline with St. Peter's Basilica — European office",
     position: "f3",
   },
   {
-    src: "/images/about/changsha-mission.webp",
-    caption: "Changsha · 2025",
-    alt: "Institutional mission to Changsha, Hunan with Italian delegation",
+    src: "/images/about/addis-ababa-africa.webp",
+    caption: "Addis Ababa · Africa",
+    alt: "Addis Ababa modern downtown skyline — African office",
     position: "f4",
   },
 ];
@@ -42,12 +42,11 @@ export function AboutHero() {
           <div
             key={t.position}
             className={`${styles.float} ${styles[t.position]}`}
-            aria-hidden="true"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={t.src}
-              alt=""
+              alt={t.alt}
               loading="eager"
               style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
             />
@@ -61,8 +60,8 @@ export function AboutHero() {
             <span>About MoveEast</span>
           </div>
           <h1 id="about-hero-title" className={styles.title}>
-            Bridging global industry with China&apos;s{" "}
-            <em>manufacturing</em> power.
+            Connecting markets,{" "}
+            <em>technologies</em>, and people.
           </h1>
         </div>
       </div>

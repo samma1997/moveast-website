@@ -32,6 +32,10 @@ export const staticPages: readonly StaticPage[] = [
   { path: "/contact", label: "Contact", indexable: true, priority: 0.7, changefreq: "yearly" },
   { path: "/privacy", label: "Privacy Policy", indexable: true, priority: 0.1, changefreq: "yearly" },
   { path: "/terms", label: "Terms & Conditions", indexable: true, priority: 0.1, changefreq: "yearly" },
+  // Italian landing pages (mercato italiano, ufficio Roma)
+  { path: "/it", label: "Move East Italia", indexable: true, priority: 0.85, changefreq: "monthly" },
+  { path: "/it/sourcing-cina", label: "Sourcing Cina (IT)", indexable: true, priority: 0.8, changefreq: "monthly" },
+  { path: "/it/trasferimento-tecnologico-cina-italia", label: "Trasferimento Tecnologico (IT)", indexable: true, priority: 0.8, changefreq: "monthly" },
 ];
 
 export const navItems = staticPages.filter((p) => p.inNav);

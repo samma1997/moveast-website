@@ -24,7 +24,7 @@ export const sectors: readonly Sector[] = [
   {
     slug: "mobility",
     order: 1,
-    title: "Mobility & Smart Transport",
+    title: "Mobility & Smart Transport Systems",
     shortLabel: "Mobility & Smart Transport",
     eyebrow: "01 / Mobility & transport",
     headline: "Railway systems, EVs, drones, and urban mobility infrastructure.",
@@ -32,7 +32,7 @@ export const sectors: readonly Sector[] = [
       "Railway equipment, electric vehicles, drones, and urban mobility infrastructure sourced from China's leading manufacturers.",
     miniDescription: "Railway, EV, drones",
     seo: {
-      title: "Railway & Mobility Procurement from China | Move East",
+      title: "Railway & Mobility Procurement from China",
       description:
         "Railway equipment, EV components, and smart transport sourcing from Chinese Tier-1 manufacturers. Ethiopia-Djibouti Railway agent.",
       keywords: ["railway equipment china procurement", "china EV sourcing", "smart transport china"],
@@ -50,7 +50,7 @@ export const sectors: readonly Sector[] = [
       "Solar modules, wind components, battery energy storage systems, and inverters sourced from established Chinese clean-energy manufacturers.",
     miniDescription: "Solar, BESS, inverters",
     seo: {
-      title: "BESS & Solar Procurement from China | Move East",
+      title: "BESS & Solar Procurement from China",
       description:
         "Battery Energy Storage Systems, solar PV modules, and inverters sourced from Tier-1 Chinese manufacturers. UN/CICC network.",
       keywords: ["BESS china procurement", "china solar sourcing", "renewable energy equipment china"],
@@ -68,7 +68,7 @@ export const sectors: readonly Sector[] = [
       "CE-marked, FDA-registered, and MDR-compliant diagnostic equipment, hospital devices, and healthcare technology from certified Chinese producers.",
     miniDescription: "CE/FDA/MDR, imaging",
     seo: {
-      title: "Medical Devices from China — EU MDR Compliant | Move East",
+      title: "Medical Devices from China — EU MDR Compliant",
       description:
         "CE/FDA/MDR-compliant medical devices sourced from certified Chinese manufacturers. Healthcare equipment procurement.",
       keywords: ["medical devices china EU", "medical equipment sourcing china", "china CE medical devices"],
@@ -86,7 +86,7 @@ export const sectors: readonly Sector[] = [
       "CNC machining, industrial robotics, automation lines, sensors, and semiconductor equipment from leading Chinese industrial producers.",
     miniDescription: "CNC, robots, automation",
     seo: {
-      title: "Industrial Machinery Sourcing from China | Move East",
+      title: "Industrial Machinery Sourcing from China",
       description:
         "CNC, robotics, and automation machinery sourced from Chinese industrial manufacturers. End-to-end supply chain management.",
       keywords: ["industrial machinery china sourcing", "china automation equipment", "china CNC procurement"],

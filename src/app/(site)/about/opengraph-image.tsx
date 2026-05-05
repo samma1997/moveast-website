@@ -52,7 +52,7 @@ export default function OGImage() {
             maxWidth: 960,
           }}
         >
-          Bridging global industry with China&apos;s manufacturing power.
+          Connecting markets, technologies, and people.
         </h1>
 
         <div

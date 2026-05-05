@@ -30,7 +30,7 @@ export function Footer() {
               MoveEast
             </Link>
             <p className={styles.tagline}>
-              Your bridge to China&apos;s <em>industrial</em> power.
+              Connecting markets, <em>technologies</em>, and people.
             </p>
           </div>
 
@@ -110,13 +110,6 @@ export function Footer() {
           <Link href="/terms" className={styles.bottomDivider}>Terms</Link>
           <span className={styles.spacer} />
           <div className={styles.social}>
-            <a href={site.social.instagram} aria-label="Instagram" target="_blank" rel="noopener noreferrer">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <rect x="3" y="3" width="18" height="18" rx="5" />
-                <circle cx="12" cy="12" r="4" />
-                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
-              </svg>
-            </a>
             <a href={site.social.linkedin} aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
               <svg viewBox="0 0 24 24" fill="currentColor">
                 <path d="M4 4h4v4H4zM4 10h4v10H4zM10 10h4v2c.7-1.2 2-2.3 4-2.3 3 0 4 2 4 5V20h-4v-4.5c0-1.5-.5-2.5-2-2.5s-2 1-2 2.5V20h-4z" />

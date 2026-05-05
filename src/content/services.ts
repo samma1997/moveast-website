@@ -32,9 +32,9 @@ export const services: readonly Service[] = [
       "We identify, vet, and manage Chinese manufacturers on your behalf — ensuring quality, compliance, and competitive pricing through a structured, transparent process.",
     miniDescription: "Discovery, audits, contracts",
     seo: {
-      title: "Strategic Sourcing from China — Verified Suppliers | Move East",
+      title: "Strategic Sourcing from China — Verified Suppliers",
       description:
-        "Structured supplier discovery, factory audits, and contract management across Shenzhen and Guangdong. CICC Board-level access.",
+        "Structured supplier discovery, factory audits, and contract management across Shenzhen and Guangdong. CICC institutional access.",
       keywords: ["strategic sourcing china", "china sourcing services", "china sourcing agent", "factory audit shenzhen"],
       primaryKeyword: "strategic sourcing china",
     },
@@ -50,7 +50,7 @@ export const services: readonly Service[] = [
       "From specification alignment to regulatory compliance, we facilitate the transfer of advanced Chinese technology into international infrastructure and industrial projects.",
     miniDescription: "Project integration, local assembly",
     seo: {
-      title: "Technology Transfer from China — Shenzhen Integration | Move East",
+      title: "Technology Transfer from China — Shenzhen Integration",
       description:
         "Specification alignment, regulatory compliance, and local assembly for tech transfer from Chinese manufacturers to international projects.",
       keywords: ["technology transfer china", "shenzhen technology transfer", "chinese technology integration"],
@@ -68,7 +68,7 @@ export const services: readonly Service[] = [
       "End-to-end coordination from the world's 4th busiest port — managing logistics, customs, quality control, and delivery with full visibility at every stage.",
     miniDescription: "Trading, freight, consolidation",
     seo: {
-      title: "Supply Chain Management from China to Europe | Move East",
+      title: "Supply Chain Management from China to Europe",
       description:
         "End-to-end trading, freight, consolidation, customs, and delivery — managed from Shenzhen port with full visibility.",
       keywords: ["supply chain management china", "china europe supply chain", "shenzhen logistics"],

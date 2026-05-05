@@ -11,8 +11,8 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { breadcrumbSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
-  title: "Sectors",
-  description: `${site.name} operates across four high-impact sectors: mobility, renewable energy, medical devices, industrial machinery.`,
+  title: "Industrial Sectors — Mobility, Energy, Medical, Machinery from China",
+  description: `${site.name} sources four industrial sectors from China: mobility & smart transport, renewable energy & storage, medical devices, industrial machinery.`,
   alternates: { canonical: "/sectors" },
   openGraph: {
     title: `Sectors — ${site.name}`,

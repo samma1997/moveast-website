@@ -56,7 +56,7 @@ export function ServicesCards() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={`/images/services/${c.slug}.webp`}
-                  alt=""
+                  alt={`${c.title} — China procurement service from Shenzhen`}
                   loading="lazy"
                   style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
                 />

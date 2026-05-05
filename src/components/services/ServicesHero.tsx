@@ -15,9 +15,9 @@ export function ServicesHero() {
             </h1>
             <div
               className={styles.partners}
-              aria-label="CICC Board Member, UNGM Registered Vendor, operating since 2018"
+              aria-label="CICC Member, UNGM Registered Vendor, operating since 2018"
             >
-              <span className={styles.partner}>CICC Board · 2024</span>
+              <span className={styles.partner}>CICC Member · 2024</span>
               <span className={styles.partner}>UNGM Vendor · 2024</span>
               <span className={styles.partner}>Since 2018</span>
             </div>
@@ -28,11 +28,11 @@ export function ServicesHero() {
               one accountable operator.
             </p>
           </div>
-          <div className={styles.media} aria-hidden="true">
+          <div className={styles.media}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/images/services/sourcing.webp"
-              alt=""
+              alt="China procurement services from Shenzhen — strategic sourcing, technology transfer, supply chain"
               loading="eager"
               style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
             />

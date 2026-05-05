@@ -76,7 +76,7 @@ export const servicePages: Record<string, ServicePage> = {
       titlePre: "Strategic ",
       titleEm: "Sourcing",
       titlePost: " in China, run from the factory floor.",
-      lede: "Move East Trading identifies, verifies, and contracts Chinese manufacturers on behalf of global buyers — with physical teams in Shenzhen, Hong Kong, Rome, and Addis Ababa. Backed by CICC Board membership, UNGM vendor status, and procurement operations for the $4 billion Ethiopia-Djibouti Railway.",
+      lede: "Move East Trading identifies, verifies, and contracts Chinese manufacturers on behalf of global buyers — with physical teams in Shenzhen, Hong Kong, Rome, and Addis Ababa. Backed by CICC membership, UNGM vendor status, and procurement operations for the $4 billion Ethiopia-Djibouti Railway.",
       blogCard: {
         kicker: "Pillar guide · Shenzhen",
         title: "How to choose a china sourcing agent — the full 2026 guide",
@@ -128,7 +128,7 @@ export const servicePages: Record<string, ServicePage> = {
           label: "EDR Railway · proof",
           metrics: [
             { val: "$4B", lbl: "Belt & Road programme, 752.7 km of rolling stock procurement" },
-            { val: "Since 2018", lbl: "Official outsourcing agent in China for the Ethiopia-Djibouti Railway" },
+            { val: "Belt & Road", lbl: "Official outsourcing agent in China for the Ethiopia-Djibouti Railway" },
           ],
           href: "/blog/ethiopia-djibouti-railway-china-africa-procurement",
         },
@@ -229,7 +229,7 @@ export const servicePages: Record<string, ServicePage> = {
         {
           label: "EDR Railway · proof",
           metrics: [
-            { val: "$4B", lbl: "Belt & Road programme, transferred and operating since 2018" },
+            { val: "$4B", lbl: "Belt & Road programme — East Africa strategic transport corridor" },
             { val: "Bilingual", lbl: "Engineer training and SOPs delivered in Amharic and English" },
           ],
           href: "/blog/ethiopia-djibouti-railway-china-africa-procurement",
@@ -283,7 +283,7 @@ export const servicePages: Record<string, ServicePage> = {
       lede: "Move East Trading runs supply chain management china from Shenzhen — one of the world's busiest container ports — coordinating logistics, customs, compliance, and delivery into Europe, Africa, and the Gulf. One contract for the buyer, one operation for the project.",
       blogCard: {
         kicker: "EDR Railway · Belt & Road",
-        title: "Continuous procurement and logistics for the Ethiopia-Djibouti Railway since 2018",
+        title: "Continuous procurement and logistics for the Ethiopia-Djibouti Railway",
         meta: "Map your supply chain from Shenzhen",
         href: "/blog/ethiopia-djibouti-railway-china-africa-procurement",
         ariaLabel: "Read EDR case study",
@@ -331,8 +331,8 @@ export const servicePages: Record<string, ServicePage> = {
         {
           label: "EDR Railway · proof",
           metrics: [
-            { val: "Since 2018", lbl: "Continuous procurement and logistics into Ethiopia" },
-            { val: "Crisis-tested", lbl: "Operating through the 2020-2022 disruption" },
+            { val: "Africa corridor", lbl: "Continuous procurement and logistics into Ethiopia" },
+            { val: "Crisis-tested", lbl: "Continuous operations across the 2020-2022 supply disruption" },
           ],
           href: "/blog/ethiopia-djibouti-railway-china-africa-procurement",
         },

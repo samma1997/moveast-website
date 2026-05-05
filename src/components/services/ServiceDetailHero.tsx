@@ -34,7 +34,7 @@ export function ServiceDetailHero({ hero, slug }: { hero: ServiceHero; slug: str
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={`/images/services/${slug}.webp`}
-                    alt=""
+                    alt={`Move East ${slug.replace(/-/g, " ")} service — China procurement from Shenzhen`}
                     loading="lazy"
                     style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
                   />

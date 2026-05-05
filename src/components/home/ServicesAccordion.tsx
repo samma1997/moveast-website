@@ -73,7 +73,7 @@ export function ServicesAccordion() {
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={`/images/services/${s.slug}.webp`}
-                          alt=""
+                          alt={`${s.title} — Move East service from Shenzhen`}
                           loading="lazy"
                           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
                         />

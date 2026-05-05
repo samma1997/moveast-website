@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { AboutHero } from "@/components/about/AboutHero";
 import { Team } from "@/components/about/Team";
-import { InstagramFeed } from "@/components/about/InstagramFeed";
 import { aboutPageSchema, breadcrumbSchema, jsonLd } from "@/lib/seo/schema";
 import { site } from "@/content/site";
 
@@ -13,12 +12,12 @@ const Timeline = dynamic(
 );
 
 export const metadata: Metadata = {
-  title: "About",
-  description: `Leadership team and story of ${site.name} — from Shenzhen to four offices on three continents. Founded by Alessandro Petrini, CICC Board Member, UNGM Registered Vendor.`,
+  title: "About Move East — China Procurement Company in Shenzhen",
+  description: `Leadership team and story of ${site.name} — Shenzhen-based China procurement, with offices in Hong Kong, Rome, Addis Ababa. Founded 2018. CICC Member.`,
   alternates: { canonical: "/about" },
   openGraph: {
     title: `About — ${site.name}`,
-    description: `Bridging global industry with China's manufacturing power. Leadership team, company timeline, and global offices of ${site.name}.`,
+    description: `Connecting markets, technologies, and people. Leadership team, company timeline, and global offices of ${site.name}.`,
     url: `${site.url}/about`,
     type: "profile",
     // opengraph-image.tsx in stessa cartella genera dinamicamente
@@ -49,7 +48,6 @@ export default function AboutPage() {
       <AboutHero />
       <Timeline />
       <Team />
-      <InstagramFeed />
     </>
   );
 }

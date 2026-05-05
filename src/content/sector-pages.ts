@@ -50,7 +50,7 @@ export const sectorPages: Record<string, SectorPage> = {
       titlePre: "Solar, wind, and ",
       titleEm: "BESS",
       titlePost: " from tier-one Chinese makers.",
-      lede: "Move East Trading sources solar PV modules, battery energy storage systems, inverters, and wind components from tier-one Chinese manufacturers. The company operates from Shenzhen, is led by a CICC Board Member, and is a UNGM Registered Vendor.",
+      lede: "Move East Trading sources solar PV modules, battery energy storage systems, inverters, and wind components from tier-one Chinese manufacturers. The company operates from Shenzhen, is a CICC member, and is a UNGM Registered Vendor.",
       mediaTag: "placeholder · renewable energy & BESS",
     },
     partners: {

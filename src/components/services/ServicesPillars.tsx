@@ -11,9 +11,9 @@ type Pillar = {
 const pillars: readonly Pillar[] = [
   {
     kicker: "Institutional",
-    title: "CICC Board Member.",
-    text: "Founder Alessandro Petrini sits on the Board of the China-Italy Chamber of Commerce — direct working relationships with Italian and Chinese institutional procurement.",
-    foot: "Board · 2024",
+    title: "China-Italy Chamber of Commerce member.",
+    text: "Move East is a member of the China-Italy Chamber of Commerce — the only business association officially recognized by both governments, representing over 800 Italian companies operating in China.",
+    foot: "CICC · Member",
   },
   {
     kicker: "Multilateral",

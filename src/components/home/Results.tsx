@@ -58,7 +58,7 @@ export function Results() {
           </div>
           <div className={styles.right}>
             <p className={styles.lede}>
-              Official outsourcing agent in China for the Ethiopia-Djibouti Railway — a $4 billion Belt &amp; Road Initiative corridor we have served since 2018.
+              Official outsourcing agent in China for the Ethiopia-Djibouti Railway — a $4 billion Belt &amp; Road Initiative corridor across East Africa.
             </p>
             <div className={styles.actions}>
               <PillBtn href="/blog/ethiopia-djibouti-railway-china-africa-procurement">See the flagship case</PillBtn>

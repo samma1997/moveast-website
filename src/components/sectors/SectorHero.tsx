@@ -17,17 +17,17 @@ export function SectorHero({ hero, slug }: { hero: SectorHeroData; slug: string 
               {hero.titlePost}
             </h1>
             <div className={styles.partners} aria-label="Move East credentials">
-              <span className={styles.partner}>CICC Board · 2024</span>
+              <span className={styles.partner}>CICC Member · 2024</span>
               <span className={styles.partner}>UNGM Vendor · 2024</span>
               <span className={styles.partner}>Since 2018</span>
             </div>
             <p className={styles.lede}>{hero.lede}</p>
           </div>
-          <div className={styles.media} aria-hidden="true">
+          <div className={styles.media}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={`/images/sectors/${slug}.webp`}
-              alt=""
+              alt={`${hero.eyebrow} — Move East China sourcing from Shenzhen`}
               loading="lazy"
               style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
             />

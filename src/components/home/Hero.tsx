@@ -43,7 +43,7 @@ export function Hero() {
               aria-label={`Case study: ${featuredCase.client}`}
             >
               <div className={styles.caseCopy}>
-                <p>Ethiopia-Djibouti Railway — $4B procurement corridor since 2018.</p>
+                <p>Ethiopia-Djibouti Railway — $4B Belt &amp; Road Initiative corridor across East Africa.</p>
                 <div className={styles.caseMeta}>
                   <span className={styles.caseClient}>
                     {featuredCase.client}

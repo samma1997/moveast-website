@@ -21,7 +21,7 @@ export const cases: readonly CaseCard[] = [
     image: "/images/hero-edr-railway.webp",
     metrics: [
       { value: "752.7 km", label: "Electrified railway — Addis Ababa to Djibouti" },
-      { value: "$4B", label: "Belt & Road Initiative project — operating since 2018" },
+      { value: "$4B", label: "Belt & Road Initiative · Africa's strategic transport corridor" },
     ],
   },
 ] as const;
