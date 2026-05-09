@@ -51,6 +51,15 @@ export const Articles: CollectionConfig = {
               admin: { description: "Hero cover immagine (1920×1080 minimo)" },
             },
             {
+              name: "coverAlt",
+              type: "text",
+              maxLength: 200,
+              admin: {
+                description:
+                  "Override alt per la cover. Lascia vuoto per usare Media.alt.",
+              },
+            },
+            {
               name: "body",
               type: "richText",
               required: true,

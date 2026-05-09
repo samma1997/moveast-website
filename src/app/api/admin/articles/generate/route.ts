@@ -19,6 +19,17 @@ const requestSchema = z.object({
   model: z.enum(["haiku", "sonnet", "opus"]).optional(),
   articleId: z.union([z.string(), z.number()]).optional(),
   status: z.enum(["draft", "published"]).default("draft"),
+  coverImageId: z.union([z.string(), z.number()]).optional(),
+  bodyImages: z
+    .array(
+      z.object({
+        id: z.union([z.string(), z.number()]),
+        alt: z.string().min(1).max(200),
+        description: z.string().max(400).optional(),
+      })
+    )
+    .max(5)
+    .optional(),
 });
 
 export async function POST(req: NextRequest) {
@@ -44,23 +55,35 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // 3. Call Claude
+    // 3. Prepare available images (zero-indexed)
+    const availableImages = (parsed.data.bodyImages ?? []).map((img, i) => ({
+      index: i,
+      alt: img.alt,
+      description: img.description,
+      mediaId: img.id,
+    }));
+
+    // 4. Call Claude
     const opts: GenerateOptions = {
       rawPaste: parsed.data.rawPaste,
       targetKeyword: parsed.data.targetKeyword,
       angle: parsed.data.angle,
       model: parsed.data.model,
+      availableImages: availableImages.length > 0 ? availableImages : undefined,
     };
     const generated = await generateArticle(opts);
 
-    // 4. Convert to Lexical state
-    const lexicalBody = articleToLexicalState(generated);
+    // 5. Convert to Lexical state (replaces [IMG:N] markers with upload nodes)
+    const lexicalBody = articleToLexicalState(
+      generated,
+      availableImages.length > 0 ? availableImages : undefined
+    );
 
     // 5. Upsert article in Payload
     const modelKey = parsed.data.model ?? "sonnet";
     const seoDescription = generated.excerpt.slice(0, 170);
 
-    const data = {
+    const data: Record<string, unknown> = {
       title: generated.title,
       slug: generated.slug,
       excerpt: generated.excerpt,
@@ -79,6 +102,9 @@ export async function POST(req: NextRequest) {
       aiModel: MODELS[modelKey],
       aiLastGeneratedAt: new Date().toISOString(),
     };
+    if (parsed.data.coverImageId !== undefined) {
+      data.cover = parsed.data.coverImageId;
+    }
 
     let saved;
     if (parsed.data.articleId) {

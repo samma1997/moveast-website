@@ -58,8 +58,27 @@ export type ArticleGeneration = z.infer<typeof articleGenerationSchema>;
    System prompt
    ============================================================= */
 
-function buildSystemPrompt() {
-  return `You are a senior B2B editorial strategist for ${site.name}, an international sourcing and procurement company based in Shenzhen, China.
+function buildSystemPrompt(availableImages?: readonly AvailableImage[]) {
+  const imagesBlock =
+    availableImages && availableImages.length > 0
+      ? `
+
+INLINE IMAGES (${availableImages.length} available):
+The user has uploaded ${availableImages.length} image(s) you may reference inline. Use markers in the form [IMG:N] (zero-indexed) inside paragraph text where the image should appear. Place each marker on its OWN LINE inside the paragraph (split paragraphs as needed). Use each image AT MOST ONCE. Do NOT use markers if no image fits the section. Available images:
+${availableImages
+  .map(
+    (img) =>
+      `  [IMG:${img.index}] alt="${img.alt}"${
+        img.description ? ` — context: "${img.description}"` : ""
+      }`
+  )
+  .join("\n")}`
+      : "";
+
+  const servicesList = services.map((s) => `${s.slug}: ${s.title}`).join("; ");
+  const sectorsList = sectors.map((s) => `${s.slug}: ${s.title}`).join("; ");
+
+  return `You are a senior B2B editorial strategist for ${site.name}, an international sourcing and procurement company based in Shenzhen, China.${imagesBlock}
 
 Company credentials (always available as context — do not hallucinate anything beyond these):
 - Founded 2018 in Shenzhen
@@ -76,9 +95,31 @@ EDITORIAL VOICE:
 - Professional, institutional, factual — NOT startup/casual.
 - Third person for the company, precise tone for industry experts.
 - Cite concrete numbers and affiliations (CICC, UNGM, $4B) when relevant — NEVER fabricate figures.
+- If citing statistics beyond company credentials (market size, adoption rates, technical specs), include source year or framework (e.g. "according to BloombergNEF 2024", "per IEA 2025"). Never hallucinate numbers.
 - Never denigrate competitors — factual comparison only.
 - Avoid marketing fluff. Every sentence must carry information.
 - NEVER name the founder or any individual team member by name in the article body. Write about "Move East" as a company in third person. CICC and UNGM are company affiliations, never personal credentials.
+- Vary paragraph openings: do NOT start more than 2 consecutive paragraphs with the same word ("The", "A", "In", "When"). Mix structures: lead with subject, condition, time, contrast, or specific noun.
+- When using sector-specific acronyms (BESS, MDR, NNN, EPC, FAT/SAT, IRIS, EN 50155, GCC, BNEF Tier-1, EDR), spell out the meaning on first mention.
+
+INTERNAL LINKING (mandatory):
+The article body must include 3–8 internal links to deepen reader navigation. Use this marker format inline within paragraph text:
+
+  [link:service:<slug>|<anchor text>]      → routes to /services/<slug>
+  [link:sector:<slug>|<anchor text>]       → routes to /sectors/<slug>
+  [link:glossary:<term>|<anchor text>]     → routes to /glossary#<term-kebab>
+  [link:page:/<path>|<anchor text>]        → routes to <path> (use for /about, /contact, etc.)
+
+Available service slugs: ${servicesList}
+Available sector slugs: ${sectorsList}
+Common glossary terms: bess-battery-energy-storage-system, mdr-medical-device-regulation, nnn-agreement-non-use-non-disclosure-non-circumvention, fat-factory-acceptance-test, sat-site-acceptance-test, epc-contractor-engineering-procurement-construction, belt-and-road-initiative-bri, ethiopia-djibouti-railway-edr, china-sourcing-agent, technology-transfer.
+
+Examples:
+  "Move East provides [link:service:sourcing|strategic sourcing] from Shenzhen for European buyers."
+  "...for [link:sector:renewable-energy|renewable energy & storage] projects across Africa..."
+  "[link:glossary:nnn-agreement-non-use-non-disclosure-non-circumvention|NNN clauses] enforceable in Chinese courts protect IP..."
+
+Place each link AT MOST ONCE per article. Anchor text must read naturally — do NOT force keyword stuffing.
 
 SEO RULES:
 - H1 must contain the primary keyword verbatim.
@@ -101,11 +142,24 @@ Return structured JSON matching the provided schema exactly. Do not wrap in code
    Prompt utente (paste + options)
    ============================================================= */
 
+export type AvailableImage = {
+  /** Index in the array — used as the [IMG:N] marker */
+  index: number;
+  /** Alt text — also serves as caption hint */
+  alt: string;
+  /** Optional contextual description to help the AI place the image well */
+  description?: string;
+  /** Payload Media id to be linked at post-processing time */
+  mediaId: string | number;
+};
+
 export type GenerateOptions = {
   rawPaste: string;
   targetKeyword?: string;
   angle?: string; // "guide" | "case-study" | "data-report" | "comparison"
   model?: AiModel;
+  /** Optional body images the AI can reference inline via [IMG:N] markers */
+  availableImages?: readonly AvailableImage[];
 };
 
 function buildUserPrompt(opts: GenerateOptions) {
@@ -138,7 +192,7 @@ export async function generateArticle(opts: GenerateOptions): Promise<ArticleGen
   const response = await client.messages.parse({
     model,
     max_tokens: 16000,
-    system: buildSystemPrompt(),
+    system: buildSystemPrompt(opts.availableImages),
     messages: [{ role: "user", content: buildUserPrompt(opts) }],
     output_config: {
       format: zodOutputFormat(articleGenerationSchema),
@@ -162,20 +216,68 @@ export async function generateArticle(opts: GenerateOptions): Promise<ArticleGen
    Lexical editor state structure compatible with Payload Articles.body
    ============================================================= */
 
-export function articleToLexicalState(article: ArticleGeneration) {
+export function articleToLexicalState(
+  article: ArticleGeneration,
+  availableImages?: readonly AvailableImage[]
+) {
   const children: unknown[] = [];
+  const imagesById = new Map<number, AvailableImage>();
+  if (availableImages) {
+    for (const img of availableImages) imagesById.set(img.index, img);
+  }
+  const usedImages = new Set<number>();
 
-  // Lede paragraph (excerpt as opener)
+  // Lede paragraph (excerpt as opener) — never contains markers
   children.push(paragraphNode(article.excerpt));
 
   // Sections
   for (const sec of article.sections) {
     children.push(headingNode(sec.heading, "h2"));
     for (const p of sec.paragraphs) {
-      children.push(paragraphNode(p));
+      // Split paragraph by markers (images + links) and emit nodes inline
+      const parts = splitImageMarkers(p);
+      // Group consecutive text+link parts into a single paragraph; images break the paragraph.
+      let buffer: (TextPart | LinkPart)[] = [];
+      const flushBuffer = () => {
+        if (buffer.length === 0) return;
+        const inlineChildren: unknown[] = [];
+        for (const b of buffer) {
+          if (b.type === "text") {
+            if (b.text.length > 0) inlineChildren.push(textNode(b.text));
+          } else {
+            inlineChildren.push(linkNode(b.label, b.href));
+          }
+        }
+        if (inlineChildren.length > 0) {
+          children.push(paragraphWithChildren(inlineChildren));
+        }
+        buffer = [];
+      };
+      for (const part of parts) {
+        if (part.type === "img") {
+          flushBuffer();
+          const img = imagesById.get(part.index);
+          if (img && !usedImages.has(part.index)) {
+            children.push(uploadNode(img.mediaId));
+            usedImages.add(part.index);
+          }
+        } else {
+          buffer.push(part);
+        }
+      }
+      flushBuffer();
     }
     if (sec.bullets && sec.bullets.length > 0) {
       children.push(listNode(sec.bullets, "bullet"));
+    }
+  }
+
+  // Append unused images at the end (so they don't get lost)
+  if (availableImages) {
+    for (const img of availableImages) {
+      if (!usedImages.has(img.index)) {
+        children.push(uploadNode(img.mediaId));
+      }
     }
   }
 
@@ -188,6 +290,66 @@ export function articleToLexicalState(article: ArticleGeneration) {
       direction: "ltr" as const,
       children,
     },
+  };
+}
+
+type ImgPart = { type: "img"; index: number };
+type LinkPart = { type: "link"; href: string; label: string };
+type TextPart = { type: "text"; text: string };
+type Part = TextPart | ImgPart | LinkPart;
+
+const IMG_RE = /\[IMG:(\d+)\]/;
+const LINK_RE =
+  /\[link:(service|sector|glossary|page):([^|\]]+)\|([^\]]+)\]/;
+const COMBINED_RE = new RegExp(`${IMG_RE.source}|${LINK_RE.source}`, "g");
+
+function resolveLinkHref(type: string, slugOrPath: string): string {
+  if (type === "service") return `/services/${slugOrPath}`;
+  if (type === "sector") return `/sectors/${slugOrPath}`;
+  if (type === "glossary") return `/glossary#${slugOrPath}`;
+  if (type === "page") {
+    return slugOrPath.startsWith("/") ? slugOrPath : `/${slugOrPath}`;
+  }
+  return "/";
+}
+
+function splitImageMarkers(input: string): Part[] {
+  const parts: Part[] = [];
+  let lastIndex = 0;
+  let m: RegExpExecArray | null;
+  COMBINED_RE.lastIndex = 0;
+  while ((m = COMBINED_RE.exec(input)) !== null) {
+    if (m.index > lastIndex) {
+      parts.push({ type: "text", text: input.slice(lastIndex, m.index) });
+    }
+    if (m[1] !== undefined) {
+      // image marker
+      parts.push({ type: "img", index: Number(m[1]) });
+    } else if (m[2] && m[3] && m[4]) {
+      // link marker
+      parts.push({
+        type: "link",
+        href: resolveLinkHref(m[2], m[3].trim()),
+        label: m[4].trim(),
+      });
+    }
+    lastIndex = m.index + m[0].length;
+  }
+  if (lastIndex < input.length) {
+    parts.push({ type: "text", text: input.slice(lastIndex) });
+  }
+  if (parts.length === 0) parts.push({ type: "text", text: input });
+  return parts;
+}
+
+function uploadNode(mediaId: string | number) {
+  return {
+    type: "upload",
+    version: 3,
+    fields: null,
+    format: "",
+    relationTo: "media",
+    value: typeof mediaId === "string" ? Number(mediaId) || mediaId : mediaId,
   };
 }
 
@@ -204,6 +366,10 @@ function textNode(text: string) {
 }
 
 function paragraphNode(text: string) {
+  return paragraphWithChildren([textNode(text)]);
+}
+
+function paragraphWithChildren(inlineChildren: unknown[]) {
   return {
     type: "paragraph",
     version: 1,
@@ -212,7 +378,23 @@ function paragraphNode(text: string) {
     direction: "ltr",
     textFormat: 0,
     textStyle: "",
-    children: [textNode(text)],
+    children: inlineChildren,
+  };
+}
+
+function linkNode(label: string, url: string) {
+  return {
+    type: "link",
+    version: 3,
+    fields: {
+      url,
+      newTab: false,
+      linkType: "custom",
+    },
+    format: "",
+    indent: 0,
+    direction: "ltr",
+    children: [textNode(label)],
   };
 }
 

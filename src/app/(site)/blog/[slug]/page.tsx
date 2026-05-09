@@ -82,6 +82,44 @@ async function getRelated(currentSlug: string, keywords: readonly string[]) {
   }
 }
 
+function extractImageMeta(field: unknown): { url: string; alt?: string; width?: number; height?: number } | null {
+  if (!field || typeof field !== "object") return null;
+  const f = field as {
+    url?: unknown;
+    alt?: unknown;
+    width?: unknown;
+    height?: unknown;
+    sizes?: { og?: { url?: unknown; width?: unknown; height?: unknown }; hero?: { url?: unknown } };
+  };
+  const ogUrl = f.sizes?.og?.url;
+  const heroUrl = f.sizes?.hero?.url;
+  const url =
+    typeof ogUrl === "string"
+      ? ogUrl
+      : typeof heroUrl === "string"
+        ? heroUrl
+        : typeof f.url === "string"
+          ? f.url
+          : null;
+  if (!url) return null;
+  return {
+    url: url.startsWith("http") ? url : `${site.url}${url}`,
+    alt: typeof f.alt === "string" ? f.alt : undefined,
+    width:
+      typeof f.sizes?.og?.width === "number"
+        ? f.sizes.og.width
+        : typeof f.width === "number"
+          ? f.width
+          : undefined,
+    height:
+      typeof f.sizes?.og?.height === "number"
+        ? f.sizes.og.height
+        : typeof f.height === "number"
+          ? f.height
+          : undefined,
+  };
+}
+
 export async function generateMetadata(
   { params }: { params: Promise<{ slug: string }> }
 ): Promise<Metadata> {
@@ -90,6 +128,17 @@ export async function generateMetadata(
   if (!a) return {};
   const title = (typeof a.seoTitle === "string" && a.seoTitle) || String(a.title);
   const description = (typeof a.seoDescription === "string" && a.seoDescription) || String(a.excerpt ?? "");
+  const ogImage = extractImageMeta(a.ogImage) ?? extractImageMeta(a.cover);
+  const ogImages = ogImage
+    ? [
+        {
+          url: ogImage.url,
+          alt: ogImage.alt ?? title,
+          ...(ogImage.width ? { width: ogImage.width } : {}),
+          ...(ogImage.height ? { height: ogImage.height } : {}),
+        },
+      ]
+    : undefined;
   return {
     title,
     description,
@@ -102,6 +151,16 @@ export async function generateMetadata(
       url: `${site.url}/blog/${slug}`,
       type: "article",
       publishedTime: a.publishedAt ? String(a.publishedAt) : undefined,
+      modifiedTime: a.updatedAt ? String(a.updatedAt) : undefined,
+      images: ogImages,
+      authors: ["Move East Editorial"],
+      tags: Array.isArray(a.keywords) ? (a.keywords as string[]) : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: ogImages?.map((img) => img.url),
     },
   };
 }
@@ -112,6 +171,25 @@ function slugify(s: string): string {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "")
     .slice(0, 60);
+}
+
+function countBodyWords(body: SerializedEditorState | null): number {
+  if (!body) return 0;
+  let count = 0;
+  const walk = (node: { type?: string; children?: unknown[]; text?: string }) => {
+    if (typeof node.text === "string") {
+      count += node.text.trim().split(/\s+/).filter(Boolean).length;
+      return;
+    }
+    if (Array.isArray(node.children)) {
+      for (const c of node.children) walk(c as typeof node);
+    }
+  };
+  const root = body.root as { children?: unknown[] };
+  if (Array.isArray(root.children)) {
+    for (const child of root.children) walk(child as Parameters<typeof walk>[0]);
+  }
+  return count;
 }
 
 function extractHeadings(body: SerializedEditorState | null): { text: string; slug: string }[] {
@@ -148,6 +226,8 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
   const bodyData = a.body as SerializedEditorState | null;
   const headings = extractHeadings(bodyData);
   const headingSlugs = headings.map((h) => h.slug);
+  const wordCount = countBodyWords(bodyData);
+  const ogImage = extractImageMeta(a.ogImage) ?? extractImageMeta(a.cover);
 
   const related = await getRelated(
     slug,
@@ -173,6 +253,18 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             description: String(a.excerpt ?? ""),
             datePublished: a.publishedAt ? String(a.publishedAt) : undefined,
             dateModified: a.updatedAt ? String(a.updatedAt) : undefined,
+            inLanguage: "en-US",
+            wordCount: wordCount > 0 ? wordCount : undefined,
+            ...(ogImage
+              ? {
+                  image: {
+                    "@type": "ImageObject",
+                    url: ogImage.url,
+                    ...(ogImage.width ? { width: ogImage.width } : {}),
+                    ...(ogImage.height ? { height: ogImage.height } : {}),
+                  },
+                }
+              : {}),
             author: {
               "@type": "Organization",
               name: "Move East Editorial",
@@ -226,16 +318,26 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 </div>
               </div>
             </div>
-            <div className={styles.heroMedia} aria-hidden="true">
+            <div className={styles.heroMedia}>
               {(() => {
-                const cov = a.cover as { url?: string; sizes?: { hero?: { url?: string }; og?: { url?: string } } } | null;
+                const cov = a.cover as
+                  | {
+                      url?: string;
+                      alt?: string;
+                      sizes?: { hero?: { url?: string }; og?: { url?: string } };
+                    }
+                  | null;
                 const url = cov?.sizes?.hero?.url ?? cov?.sizes?.og?.url ?? cov?.url;
+                const altText =
+                  (typeof a.coverAlt === "string" && a.coverAlt) ||
+                  cov?.alt ||
+                  String(a.title);
                 if (url) {
                   return (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src={url}
-                      alt=""
+                      alt={altText}
                       loading="eager"
                       style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
                     />

@@ -1,0 +1,90 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.drop {
+  border: 2px dashed var(--dash-line);
+  border-radius: var(--dash-radius);
+  padding: 28px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  text-align: center;
+  background: var(--dash-bg);
+  transition: border-color 120ms ease, background 120ms ease;
+}
+
+.drop:hover,
+.drop:focus-visible {
+  border-color: var(--dash-accent);
+  outline: none;
+}
+
+.dropActive {
+  border-color: var(--dash-accent);
+  background: var(--dash-accent-soft);
+}
+
+.dropDisabled {
+  cursor: progress;
+  opacity: 0.6;
+}
+
+.fileInput {
+  display: none;
+}
+
+.icon {
+  width: 28px;
+  height: 28px;
+  color: var(--dash-ink-muted);
+}
+
+.dropHint {
+  font-size: 13px;
+  color: var(--dash-ink-muted);
+  line-height: 1.5;
+}
+
+.dropHint strong {
+  color: var(--dash-ink);
+  font-weight: 600;
+}
+
+.dropSubhint {
+  font-size: 11px;
+  color: var(--dash-ink-muted);
+  font-style: italic;
+}
+
+.parsedInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.parsedLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--dash-success);
+}
+
+.parsedHint {
+  font-size: 11px;
+  color: var(--dash-ink-muted);
+}
+
+.error {
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  color: var(--dash-danger);
+  border-radius: var(--dash-radius-sm);
+  padding: 8px 12px;
+  font-size: 12px;
+  line-height: 1.45;
+}
